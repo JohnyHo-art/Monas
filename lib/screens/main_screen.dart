@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/color.dart';
+import 'package:monas/constants/text_style.dart';
 import 'package:monas/screens/home_tab/home_screen.dart';
 import 'package:monas/screens/personal_tab/personal_screen.dart';
 import 'package:monas/screens/plan_tab/planning_screen.dart';
@@ -41,12 +42,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
             Text(
               name,
-              style: TextStyle(
-                fontFamily: 'Roboto',
-                fontSize: 12,
-                fontWeight: FontWeight.normal,
-                color: _currentTabIndex == index ? primaryColor : iconColor,
-              ),
+              style: BodyText.caption(_currentTabIndex == index ? primaryColor : iconColor)
             ),
           ],
         ),
