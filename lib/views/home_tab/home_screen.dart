@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/color.dart';
 import 'package:monas/constants/dimens.dart';
-import 'package:monas/screens/home_tab/components/home_header.dart';
-import 'package:monas/screens/home_tab/components/home_total_balance.dart';
+
+import 'components/home_header.dart';
+import 'components/home_total_balance.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
