@@ -17,7 +17,7 @@ const Color secondaryColorLight = Color(0xFFE0FFFF);
 const Color textOnPrimaryColor = Color(0xFFFFFFFF);
 const Color textOnSecondaryColor = Color(0xFF000000);
 const Color subTextColor = Color(0xFFD8D8D8);
-const Color subTextColor2 = Color(0xFFBEBEBE);
+const Color subTextColor2 = Color(0xFF979797);
 
 //* Color for background
 const Color appBackground = Color(0xFFF4F4F4);
