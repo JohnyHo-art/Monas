@@ -21,12 +21,13 @@ class HomeTotalBalance extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      //TODO: Add total balance
+                        //TODO: Add total balance
                         text: '2.000.000',
                         style: HeaderText.header1(textOnPrimaryColor)),
                     TextSpan(
-                      //TODO: Add currency unit
-                        text: ' VNĐ', style: BodyText.body1(textOnPrimaryColor)),
+                        //TODO: Add currency unit
+                        text: ' VNĐ',
+                        style: BodyText.body1(textOnPrimaryColor)),
                   ],
                 ),
               )
@@ -80,14 +81,13 @@ class HomeTotalBalance extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      //TODO: Add income money
+                        //TODO: Add income money
                         text: '3.000.000',
                         style: HeaderText.header3(textOnPrimaryColor)),
                     TextSpan(
-                      //TODO: Add currency unit
-                      text: 'VNĐ',
-                      style: BodyText.caption(textOnPrimaryColor),
-                    ),
+                        //TODO: Add currency unit
+                        text: 'VNĐ',
+                        style: BodyText.caption(textOnPrimaryColor)),
                   ],
                 ),
               )
@@ -122,7 +122,7 @@ class HomeTotalBalance extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      //TODO: Add expenses
+                        //TODO: Add expenses
                         text: '1.000.000',
                         style: HeaderText.header3(textOnPrimaryColor)),
                     TextSpan(
