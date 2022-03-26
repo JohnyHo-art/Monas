@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
-import 'package:monas/screens/home_tab/home_screen.dart';
+import 'package:monas/views/home_tab/home_screen.dart';
 import 'package:monas/views/personal_tab/personal_screen.dart';
 import 'package:monas/views/plan_tab/planning_screen.dart';
 import 'package:monas/views/report_tab/report_screen.dart';

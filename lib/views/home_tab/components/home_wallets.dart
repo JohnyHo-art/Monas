@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monas/constants/color.dart';
-import 'package:monas/constants/dimens.dart';
-import 'package:monas/constants/text_style.dart';
+import 'package:monas/constants/constants.dart';
 
 class HomeWallets extends StatelessWidget {
   const HomeWallets({Key? key}) : super(key: key);
@@ -9,23 +7,24 @@ class HomeWallets extends StatelessWidget {
   Padding _walletItem(String iconUrl, String name, double totalBalance,
       String currencyUnit, VoidCallback onPressed) {
     return Padding(
-      padding: const EdgeInsets.only(left: Dimens.padding),
+      padding: EdgeInsets.only(left: S.dimens.padding),
       child: InkWell(
         onTap: onPressed,
-        splashColor: primaryColorShadeThirty,
-        borderRadius: BorderRadius.circular(Dimens.cardCornerRadiusMedium),
+        splashColor: S.colors.primaryColorShadeThirty,
+        borderRadius: BorderRadius.circular(S.dimens.cardCornerRadiusMedium),
         child: Container(
           height: 100,
           width: 170,
           decoration: BoxDecoration(
-            border: Border.all(color: primaryColor),
-            borderRadius: BorderRadius.circular(Dimens.cardCornerRadiusMedium),
+            border: Border.all(color: S.colors.primaryColor),
+            borderRadius:
+                BorderRadius.circular(S.dimens.cardCornerRadiusMedium),
           ),
           child: Padding(
-            padding: const EdgeInsets.only(
-              left: Dimens.smallPadding,
-              top: Dimens.tinyPadding,
-              right: Dimens.smallPadding,
+            padding: EdgeInsets.only(
+              left: S.dimens.smallPadding,
+              top: S.dimens.tinyPadding,
+              right: S.dimens.smallPadding,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,31 +37,32 @@ class HomeWallets extends StatelessWidget {
                         child: Image.asset(
                           iconUrl,
                           fit: BoxFit.cover,
-                          height: Dimens.largeIconSize,
-                          width: Dimens.largeIconSize,
+                          height: S.dimens.largeIconSize,
+                          width: S.dimens.largeIconSize,
                         ),
                       ),
                       TextSpan(
                         text: '  ' + name,
                         //TODO: text overflow
-                        style: BodyText.body1(primaryColor),
+                        style: S.bodyTextStyles.body1(S.colors.primaryColor),
                       )
                     ],
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: Dimens.tinyPadding),
+                SizedBox(height: S.dimens.tinyPadding),
                 Text.rich(
                   TextSpan(
                     children: [
                       TextSpan(
                         text: totalBalance.toString(),
-                        style: HeaderText.header3(primaryColor),
+                        style:
+                            S.headerTextStyles.header3(S.colors.primaryColor),
                       ),
                       TextSpan(
                         text: ' ' + currencyUnit.toUpperCase(),
-                        style: BodyText.caption(primaryColor),
+                        style: S.bodyTextStyles.caption(S.colors.primaryColor),
                       ),
                     ],
                   ),
@@ -82,22 +82,23 @@ class HomeWallets extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Dimens.padding),
+          padding: EdgeInsets.symmetric(horizontal: S.dimens.padding),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Ví của bạn',
-                style: HeaderText.header3(textOnSecondaryColor),
+                style:
+                    S.headerTextStyles.header3(S.colors.textOnSecondaryColor),
               ),
               TextButton(
                   style: ButtonStyle(
                       overlayColor: MaterialStateColor.resolveWith(
-                          (states) => primaryColorShadeThirty)),
+                          (states) => S.colors.primaryColorShadeThirty)),
                   onPressed: () {},
                   child: Text(
                     'Xem tất cả',
-                    style: BodyText.buttonText(primaryColor),
+                    style: S.bodyTextStyles.buttonText(S.colors.primaryColor),
                   ))
             ],
           ),
