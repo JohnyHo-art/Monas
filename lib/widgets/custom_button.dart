@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monas/constants/color.dart';
-import 'package:monas/constants/dimens.dart';
-import 'package:monas/constants/text_style.dart';
+import 'package:monas/constants/constants.dart';
 
 // ignore: must_be_immutable
 class CustomButton extends StatelessWidget {
@@ -34,30 +32,31 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height ?? Dimens.buttonHeight,
-      width: width ?? Dimens.buttonWidth,
+      height: height ?? S.dimens.buttonHeight,
+      width: width ?? S.dimens.buttonWidth,
       decoration: BoxDecoration(
         border: Border.all(
-            width: borderWidth ?? 1, color: borderColor ?? primaryColor),
+            width: borderWidth ?? 1,
+            color: borderColor ?? S.colors.primaryColor),
         borderRadius:
-            BorderRadius.circular(cornerRadius ?? Dimens.buttonCornerRadius),
+            BorderRadius.circular(cornerRadius ?? S.dimens.buttonCornerRadius),
       ),
       child: ElevatedButton(
-          onPressed: onPressed,
-          child: Text(
-            textUppercase == true ? text.toUpperCase() : text,
-            style: BodyText.buttonText(textColor ?? textOnPrimaryColor)
-          ),
-          style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(cornerRadius ?? Dimens.buttonCornerRadius),
-              ),
+        onPressed: onPressed,
+        child: Text(textUppercase == true ? text.toUpperCase() : text,
+            style: S.bodyTextStyles
+                .buttonText(textColor ?? S.colors.textOnPrimaryColor)),
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                  cornerRadius ?? S.dimens.buttonCornerRadius),
             ),
-            backgroundColor:
-                MaterialStateProperty.all<Color>(color ?? primaryColor),
           ),
+          backgroundColor:
+              MaterialStateProperty.all<Color>(color ?? S.colors.primaryColor),
         ),
+      ),
     );
   }
 }

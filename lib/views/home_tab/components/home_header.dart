@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:monas/constants/color.dart';
-import 'package:monas/constants/text_style.dart';
+
+import '../../../constants/constants.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({Key? key}) : super(key: key);
 
   String _getGreeting() {
     int currentHour = DateTime.now().hour;
-    if(currentHour >= 0 && currentHour <= 10) {
+    if (currentHour >= 0 && currentHour <= 10) {
       return 'Good morning,';
     } else if (currentHour > 10 && currentHour <= 17) {
       return 'Good afternoon,';
@@ -29,12 +29,12 @@ class HomeHeader extends StatelessWidget {
             children: [
               Text(
                 _getGreeting(),
-                style: BodyText.body1(subTextColor2),
+                style: S.bodyTextStyles.body1(S.colors.subTextColor2),
               ),
               Text(
                 //TODO: Add user name
                 'User name',
-                style: HeaderText.header2(primaryColor),
+                style: S.headerTextStyles.header2(S.colors.primaryColor),
               ),
             ],
           ),
@@ -45,14 +45,14 @@ class HomeHeader extends StatelessWidget {
             height: 45,
             width: 45,
             decoration: BoxDecoration(
-              color: primaryColorShadeThirty,
+              color: S.colors.primaryColorShadeThirty,
               borderRadius: BorderRadius.circular(10),
             ),
             child: IconButton(
               onPressed: () {},
-              icon: const Icon(
+              icon: Icon(
                 Icons.notifications,
-                color: primaryColor,
+                color: S.colors.primaryColor,
               ),
             ),
           ),
