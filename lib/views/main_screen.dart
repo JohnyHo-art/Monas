@@ -1,20 +1,9 @@
 import 'package:flutter/material.dart';
-<<<<<<< Updated upstream:lib/views/main_screen.dart
-import 'package:monas/constants/color.dart';
-import 'package:monas/constants/text_style.dart';
-
-import 'home_tab/home_screen.dart';
-import 'personal_tab/personal_screen.dart';
-import 'plan_tab/planning_screen.dart';
-import 'report_tab/report_screen.dart';
-
-=======
 import 'package:monas/constants/constants.dart';
 import 'package:monas/screens/home_tab/home_screen.dart';
-import 'package:monas/screens/personal_tab/personal_screen.dart';
-import 'package:monas/screens/plan_tab/planning_screen.dart';
-import 'package:monas/screens/report_tab/report_screen.dart';
->>>>>>> Stashed changes:lib/screens/main_screen.dart
+import 'package:monas/views/personal_tab/personal_screen.dart';
+import 'package:monas/views/plan_tab/planning_screen.dart';
+import 'package:monas/views/report_tab/report_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
-
-import 'components/home_header.dart';
-import 'components/home_total_balance.dart';
+import 'package:monas/views/home_tab/components/home_total_balance.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,7 +14,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: S.dimens.padding),
-              const HomeHeader(),
+              const HomeScreen(),
               SizedBox(height: S.dimens.padding),
               const HomeTotalBalance(),
               SizedBox(height: S.dimens.padding),

@@ -27,12 +27,8 @@ class HomeTotalBalance extends StatelessWidget {
                     TextSpan(
                         //TODO: Add currency unit
                         text: ' VNĐ',
-<<<<<<< Updated upstream:lib/views/home_tab/components/home_total_balance.dart
-                        style: BodyText.body1(textOnPrimaryColor)),
-=======
                         style: S.bodyTextStyles
                             .body1(S.colors.textOnPrimaryColor)),
->>>>>>> Stashed changes:lib/screens/home_tab/components/home_total_balance.dart
                   ],
                 ),
               )
@@ -92,17 +88,11 @@ class HomeTotalBalance extends StatelessWidget {
                         style: S.headerTextStyles
                             .header3(S.colors.textOnPrimaryColor)),
                     TextSpan(
-<<<<<<< Updated upstream:lib/views/home_tab/components/home_total_balance.dart
-                        //TODO: Add currency unit
-                        text: 'VNĐ',
-                        style: BodyText.caption(textOnPrimaryColor)),
-=======
                       //TODO: Add currency unit
                       text: 'VNĐ',
                       style:
                           S.bodyTextStyles.caption(S.colors.textOnPrimaryColor),
                     ),
->>>>>>> Stashed changes:lib/screens/home_tab/components/home_total_balance.dart
                   ],
                 ),
               )
