@@ -14,7 +14,7 @@ class HomeTotalBalance extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Total balance',
+              Text('Tổng số dư',
                   style: S.bodyTextStyles.body2(S.colors.textOnPrimaryColor)),
               Text.rich(
                 TextSpan(
@@ -72,7 +72,7 @@ class HomeTotalBalance extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: ' Income',
+                      text: ' Tiền vào',
                       style:
                           S.bodyTextStyles.body2(S.colors.textOnPrimaryColor),
                     ),
@@ -109,7 +109,7 @@ class HomeTotalBalance extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Expenses ',
+                      text: 'Tiền ra ',
                       style:
                           S.bodyTextStyles.body2(S.colors.textOnPrimaryColor),
                     ),

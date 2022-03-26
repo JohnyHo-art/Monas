@@ -8,11 +8,11 @@ class HomeHeader extends StatelessWidget {
   String _getGreeting() {
     int currentHour = DateTime.now().hour;
     if (currentHour >= 0 && currentHour <= 10) {
-      return 'Good morning,';
+      return 'Buổi sáng tốt lành,';
     } else if (currentHour > 10 && currentHour <= 17) {
-      return 'Good afternoon,';
+      return 'Chào buổi chiều,';
     } else {
-      return 'Good evening,';
+      return 'Buổi tối vui vẻ,';
     }
   }
 
