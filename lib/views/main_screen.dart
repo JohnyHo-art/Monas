@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:monas/constants/color.dart';
-import 'package:monas/constants/text_style.dart';
-import 'package:monas/screens/home_tab/home_screen.dart';
-import 'package:monas/screens/personal_tab/personal_screen.dart';
-import 'package:monas/screens/plan_tab/planning_screen.dart';
-import 'package:monas/screens/report_tab/report_screen.dart';
+import 'package:monas/constants/constants.dart';
+import 'package:monas/views/home_tab/home_screen.dart';
+import 'package:monas/views/personal_tab/personal_screen.dart';
+import 'package:monas/views/plan_tab/planning_screen.dart';
+import 'package:monas/views/report_tab/report_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -24,9 +23,9 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _bottomNavItem(IconData iconData, String name, int index) {
     return SizedBox(
-      width: 80,
+      width: 90,
       child: MaterialButton(
-        splashColor: primaryColorShadeThirty,
+        splashColor: S.colors.primaryColorShadeThirty,
         onPressed: () {
           setState(() {
             _currentTabIndex = index;
@@ -37,13 +36,15 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             Icon(
               iconData,
-              color: _currentTabIndex == index ? primaryColor : iconColor,
+              color: _currentTabIndex == index
+                  ? S.colors.primaryColor
+                  : S.colors.iconColor,
               size: 24,
             ),
-            Text(
-              name,
-              style: BodyText.caption(_currentTabIndex == index ? primaryColor : iconColor)
-            ),
+            Text(name,
+                style: S.bodyTextStyles.caption(_currentTabIndex == index
+                    ? S.colors.primaryColor
+                    : S.colors.iconColor)),
           ],
         ),
       ),
@@ -54,11 +55,10 @@ class _MainScreenState extends State<MainScreen> {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        )
-      ),
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(24),
+        topRight: Radius.circular(24),
+      )),
       builder: (BuildContext context) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -67,20 +67,20 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(height: 10),
             ListTile(
               leading: const Icon(Icons.arrow_upward),
-              title: const Text('Add new income'),
+              title: const Text('Thêm thu nhập mới'),
               onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.arrow_downward),
-              title: const Text('Add new expense'),
+              title: const Text('Thêm chi tiêu mới'),
               onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.account_balance_wallet),
-              title: const Text('Create new wallet'),
+              title: const Text('Thêm ví mới'),
               onTap: () {},
-            ),          
-          ],            
+            ),
+          ],
         );
       },
     );
@@ -90,27 +90,27 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appBackground,
+        backgroundColor: S.colors.appBackground,
         floatingActionButton: FloatingActionButton(
-          backgroundColor: primaryColor,
+          backgroundColor: S.colors.primaryColor,
           onPressed: _showAddingOptions,
-          child: const Icon(Icons.add, color: textOnPrimaryColor),
+          child: Icon(Icons.add, color: S.colors.textOnPrimaryColor),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: screens[_currentTabIndex],
         bottomNavigationBar: BottomAppBar(
           child: Container(
-            color: appBackground,
+            color: S.colors.appBackground,
             height: 70,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _bottomNavItem(Icons.home, 'Home', 0),
-                _bottomNavItem(Icons.insert_chart, 'Report', 1),
-                const SizedBox(width: 40),
-                _bottomNavItem(Icons.view_carousel, 'Planning', 2),
-                _bottomNavItem(Icons.person, 'Personal', 3),
+                _bottomNavItem(Icons.home, 'Monas', 0),
+                _bottomNavItem(Icons.insert_chart, 'Báo cáo', 1),
+                const SizedBox(width: 30),
+                _bottomNavItem(Icons.view_carousel, 'Ngân sách', 2),
+                _bottomNavItem(Icons.person, 'Tài khoản', 3),
               ],
             ),
           ),

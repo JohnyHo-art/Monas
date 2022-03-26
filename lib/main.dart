@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:monas/screens/main_screen.dart';
-import 'package:monas/screens/personal_tab/personal_screen.dart';
-import 'package:monas/screens/plan_tab/planning_screen.dart';
-import 'package:monas/screens/report_tab/report_screen.dart';
+
 
 import 'constants/routes.dart';
+import 'views/main_screen.dart';
+import 'views/personal_tab/personal_screen.dart';
+import 'views/plan_tab/planning_screen.dart';
+import 'views/report_tab/report_screen.dart';
 
 void main() {
   runApp(const Monas());

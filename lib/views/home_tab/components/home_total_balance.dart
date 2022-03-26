@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monas/constants/color.dart';
-import 'package:monas/constants/dimens.dart';
-import 'package:monas/constants/text_style.dart';
+import 'package:monas/constants/constants.dart';
 
 class HomeTotalBalance extends StatelessWidget {
   const HomeTotalBalance({Key? key}) : super(key: key);
@@ -12,21 +10,25 @@ class HomeTotalBalance extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: Dimens.padding),
+          padding: EdgeInsets.only(left: S.dimens.padding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Total balance', style: BodyText.body2(textOnPrimaryColor)),
+              Text('Tổng số dư',
+                  style: S.bodyTextStyles.body2(S.colors.textOnPrimaryColor)),
               Text.rich(
                 TextSpan(
                   children: [
                     TextSpan(
-                      //TODO: Add total balance
+                        //TODO: Add total balance
                         text: '2.000.000',
-                        style: HeaderText.header1(textOnPrimaryColor)),
+                        style: S.headerTextStyles
+                            .header1(S.colors.textOnPrimaryColor)),
                     TextSpan(
-                      //TODO: Add currency unit
-                        text: ' VNĐ', style: BodyText.body1(textOnPrimaryColor)),
+                        //TODO: Add currency unit
+                        text: ' VNĐ',
+                        style: S.bodyTextStyles
+                            .body1(S.colors.textOnPrimaryColor)),
                   ],
                 ),
               )
@@ -34,13 +36,13 @@ class HomeTotalBalance extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(right: Dimens.padding),
+          padding: EdgeInsets.only(right: S.dimens.padding),
           child: IconButton(
             onPressed: () {},
-            splashColor: secondaryColor,
-            icon: const Icon(
+            splashColor: S.colors.secondaryColor,
+            icon: Icon(
               Icons.visibility_off,
-              color: textOnPrimaryColor,
+              color: S.colors.textOnPrimaryColor,
             ),
           ),
         )
@@ -54,24 +56,25 @@ class HomeTotalBalance extends StatelessWidget {
       children: [
         //* Income statistic
         Padding(
-          padding: const EdgeInsets.only(left: Dimens.padding),
+          padding: EdgeInsets.only(left: S.dimens.padding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text.rich(
                 TextSpan(
                   children: [
-                    const WidgetSpan(
+                    WidgetSpan(
                       alignment: PlaceholderAlignment.middle,
                       child: Icon(
                         Icons.arrow_circle_up,
-                        color: textOnPrimaryColor,
-                        size: Dimens.iconSize,
+                        color: S.colors.textOnPrimaryColor,
+                        size: S.dimens.iconSize,
                       ),
                     ),
                     TextSpan(
-                      text: ' Income',
-                      style: BodyText.body2(textOnPrimaryColor),
+                      text: ' Tiền vào',
+                      style:
+                          S.bodyTextStyles.body2(S.colors.textOnPrimaryColor),
                     ),
                   ],
                 ),
@@ -80,13 +83,15 @@ class HomeTotalBalance extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      //TODO: Add income money
+                        //TODO: Add income money
                         text: '3.000.000',
-                        style: HeaderText.header3(textOnPrimaryColor)),
+                        style: S.headerTextStyles
+                            .header3(S.colors.textOnPrimaryColor)),
                     TextSpan(
                       //TODO: Add currency unit
                       text: 'VNĐ',
-                      style: BodyText.caption(textOnPrimaryColor),
+                      style:
+                          S.bodyTextStyles.caption(S.colors.textOnPrimaryColor),
                     ),
                   ],
                 ),
@@ -96,7 +101,7 @@ class HomeTotalBalance extends StatelessWidget {
         ),
         //* Expenses statistic
         Padding(
-          padding: const EdgeInsets.only(right: Dimens.padding),
+          padding: EdgeInsets.only(right: S.dimens.padding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -104,15 +109,16 @@ class HomeTotalBalance extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Expenses ',
-                      style: BodyText.body2(textOnPrimaryColor),
+                      text: 'Tiền ra ',
+                      style:
+                          S.bodyTextStyles.body2(S.colors.textOnPrimaryColor),
                     ),
-                    const WidgetSpan(
+                    WidgetSpan(
                       alignment: PlaceholderAlignment.middle,
                       child: Icon(
                         Icons.arrow_circle_down,
-                        color: textOnPrimaryColor,
-                        size: Dimens.iconSize,
+                        color: S.colors.textOnPrimaryColor,
+                        size: S.dimens.iconSize,
                       ),
                     ),
                   ],
@@ -122,13 +128,15 @@ class HomeTotalBalance extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      //TODO: Add expenses
+                        //TODO: Add expenses
                         text: '1.000.000',
-                        style: HeaderText.header3(textOnPrimaryColor)),
+                        style: S.headerTextStyles
+                            .header3(S.colors.textOnPrimaryColor)),
                     TextSpan(
                       //TODO: Add currency unit
                       text: 'VNĐ',
-                      style: BodyText.caption(textOnPrimaryColor),
+                      style:
+                          S.bodyTextStyles.caption(S.colors.textOnPrimaryColor),
                     ),
                   ],
                 ),
@@ -143,19 +151,19 @@ class HomeTotalBalance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimens.padding),
+      padding: EdgeInsets.symmetric(horizontal: S.dimens.padding),
       child: Container(
         decoration: BoxDecoration(
-          color: primaryColor,
-          borderRadius: BorderRadius.circular(Dimens.cardCornerRadiusMedium),
+          color: S.colors.primaryColor,
+          borderRadius: BorderRadius.circular(S.dimens.cardCornerRadiusMedium),
         ),
         child: Column(
           children: [
-            const SizedBox(height: Dimens.padding),
+            SizedBox(height: S.dimens.padding),
             _totalBalance(),
-            const SizedBox(height: Dimens.smallPadding),
+            SizedBox(height: S.dimens.smallPadding),
             _detailSatistic(),
-            const SizedBox(height: Dimens.padding),
+            SizedBox(height: S.dimens.padding),
           ],
         ),
       ),
