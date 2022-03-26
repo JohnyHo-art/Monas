@@ -26,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _bottomNavItem(IconData iconData, String name, int index) {
     return SizedBox(
-      width: 80,
+      width: 90,
       child: MaterialButton(
         splashColor: primaryColorShadeThirty,
         onPressed: () {
@@ -69,17 +69,17 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(height: 10),
             ListTile(
               leading: const Icon(Icons.arrow_upward),
-              title: const Text('Add new income'),
+              title: const Text('Thêm thu nhập mới'),
               onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.arrow_downward),
-              title: const Text('Add new expense'),
+              title: const Text('Thêm chi tiêu mới'),
               onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.account_balance_wallet),
-              title: const Text('Create new wallet'),
+              title: const Text('Thêm ví mới'),
               onTap: () {},
             ),          
           ],            
@@ -108,11 +108,11 @@ class _MainScreenState extends State<MainScreen> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _bottomNavItem(Icons.home, 'Home', 0),
-                _bottomNavItem(Icons.insert_chart, 'Report', 1),
-                const SizedBox(width: 40),
-                _bottomNavItem(Icons.view_carousel, 'Planning', 2),
-                _bottomNavItem(Icons.person, 'Personal', 3),
+                _bottomNavItem(Icons.home, 'Monas', 0),
+                _bottomNavItem(Icons.insert_chart, 'Báo cáo', 1),
+                const SizedBox(width: 30),
+                _bottomNavItem(Icons.view_carousel, 'Ngân sách', 2),
+                _bottomNavItem(Icons.person, 'Tài khoản', 3),
               ],
             ),
           ),

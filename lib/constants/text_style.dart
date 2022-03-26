@@ -6,6 +6,7 @@ const subText = TextStyle(
   fontSize: 14,
   color: subTextColor,
   fontWeight: FontWeight.w400,
+  overflow: TextOverflow.ellipsis,
 );
 
 const subText2 = TextStyle(
@@ -13,6 +14,7 @@ const subText2 = TextStyle(
   fontSize: 14,
   color: subTextColor2,
   fontWeight: FontWeight.w500,
+  overflow: TextOverflow.ellipsis,
 );
 
 class HeaderText {
@@ -22,6 +24,7 @@ class HeaderText {
       fontSize: 34,
       color: color ?? textOnSecondaryColor,
       fontWeight: FontWeight.w700,
+      overflow: TextOverflow.ellipsis,
     );
   }
 
@@ -31,6 +34,7 @@ class HeaderText {
       fontSize: 24,
       color: color ?? textOnSecondaryColor,
       fontWeight: FontWeight.w700,
+      overflow: TextOverflow.ellipsis,
     );
   }
 
@@ -40,6 +44,7 @@ class HeaderText {
       fontSize: 20,
       color: color ?? textOnSecondaryColor,
       fontWeight: FontWeight.w600,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
@@ -51,6 +56,7 @@ class BodyText {
       fontSize: 16,
       color: color ?? textOnSecondaryColor,
       fontWeight: FontWeight.w500,
+      overflow: TextOverflow.ellipsis,
     );
   }
 
@@ -60,6 +66,7 @@ class BodyText {
       fontSize: 14,
       color: color ?? textOnSecondaryColor,
       fontWeight: FontWeight.w400,
+      overflow: TextOverflow.ellipsis,
     );
   }
 
@@ -69,6 +76,7 @@ class BodyText {
       fontSize: 12,
       color: color ?? textOnSecondaryColor,
       fontWeight: FontWeight.normal,
+      overflow: TextOverflow.ellipsis,
     );
   }
 
@@ -78,6 +86,7 @@ class BodyText {
       fontSize: 14,
       color: color ?? textOnPrimaryColor,
       fontWeight: FontWeight.w600,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
