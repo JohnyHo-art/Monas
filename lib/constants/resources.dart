@@ -3,6 +3,7 @@ class R {
   static final onboarding = _Onboarding();
   static final walletIcon = _WalletIcon();
   static final categoryIcon = _CategoryIcon();
+  static final logIn = _LogIn();
 }
 
 class _Logo {
@@ -17,6 +18,18 @@ class _Onboarding {
   final onboarding2 = '$path/onboarding2';
   final onboarding3 = '$path/onboarding3';
   final onboarding4 = '$path/onboarding4';
+}
+
+class _LogIn {
+  static const path = 'assets/log_in';
+  final logIn = '$path/log_in.png';
+  final signUp = '$path/sign_up.png';
+  final forgotPassword = '$path/forgot_password.svg';
+  final emailIc = '$path/email_ic.svg';
+  final passwordIc = '$path/password_ic.svg';
+  final googleIc = '$path/google_ic.svg';
+  final eyeIc = '$path/eye_ic.svg';
+  final usernameIc = '$path/username_ic.svg';
 }
 
 class _WalletIcon {

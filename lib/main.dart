@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:monas/views/log_in/login_screen.dart';
+import 'package:monas/views/log_in/signup_screen.dart';
 
 import 'constants/routes.dart';
 import 'views/main_screen.dart';
@@ -24,7 +25,7 @@ class Monas extends StatelessWidget {
   }
 
   String getInitialRoute() {
-    return Routes.mainScreen;
+    return Routes.signupScreen;
   }
 
   MaterialPageRoute? getRoute(RouteSettings settings) {
@@ -37,6 +38,10 @@ class Monas extends StatelessWidget {
         return buildRoute(const PlanningScreen(), settings: settings);
       case Routes.personalScreen:
         return buildRoute(const PersonalScreen(), settings: settings);
+      case Routes.loginScreen:
+        return buildRoute(const LoginScreen(), settings: settings);
+      case Routes.signupScreen:
+        return buildRoute(const SignUpScreen(), settings: settings);
       default:
         null;
     }
