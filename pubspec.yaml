@@ -28,9 +28,11 @@ flutter:
   assets:
     - assets/icons/wallet_ic/
     - assets/icons/category_ic/entertainment/
+    - assets/icons/category_ic/incomes/
     - assets/icons/category_ic/investment/
     - assets/icons/category_ic/monthly/
     - assets/icons/category_ic/necessary/
+    - assets/icons/category_ic/other_income/
     - assets/log_in/
     - assets/logo/
     - assets/onboard/
