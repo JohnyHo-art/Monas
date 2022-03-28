@@ -14,10 +14,10 @@ class _Logo {
 
 class _Onboarding {
   static const path = 'assets/onboard';
-  final onboarding1 = '$path/onboarding1';
-  final onboarding2 = '$path/onboarding2';
-  final onboarding3 = '$path/onboarding3';
-  final onboarding4 = '$path/onboarding4';
+  final onboarding1 = '$path/onboarding1.png';
+  final onboarding2 = '$path/onboarding2.png';
+  final onboarding3 = '$path/onboarding3.png';
+  final onboarding4 = '$path/onboarding4.png';
 }
 
 class _LogIn {
