@@ -52,10 +52,10 @@ class _WalletIcon {
 }
 
 class _CategoryIcon {
-  static const pathEntertainmnet = 'assets/entertainment';
-  static const pathInvestment = 'assets/investment';
-  static const pathMonthly = 'assets/monthly';
-  static const pathNecessary = 'assets/necessary';
+  static const pathEntertainmnet = 'assets/icons/category_ic/entertainment';
+  static const pathInvestment = 'assets/icons/category_ic/investment';
+  static const pathMonthly = 'assets/icons/category_ic/monthly';
+  static const pathNecessary = 'assets/icons/category_ic/necessary';
 
   // path entertainment
   final beautyIc = '$pathEntertainmnet/beauty_ic.svg';
