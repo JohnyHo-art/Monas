@@ -21,6 +21,7 @@ class _Onboarding {
 
 class _WalletIcon {
   static const path = 'assets/icons/wallet_ic';
+  final walletIc0 = '$path/wallet_ic0.svg';
   final walletIc1 = '$path/wallet_ic1.svg';
   final walletIc2 = '$path/wallet_ic2.svg';
   final walletIc3 = '$path/wallet_ic3.svg';
@@ -39,10 +40,12 @@ class _WalletIcon {
 }
 
 class _CategoryIcon {
-  static const pathEntertainmnet = 'assets/entertainment';
-  static const pathInvestment = 'assets/investment';
-  static const pathMonthly = 'assets/monthly';
-  static const pathNecessary = 'assets/necessary';
+  static const pathEntertainmnet = 'assets/icons/category_ic/entertainment';
+  static const pathIncomes = 'assets/icons/category_ic/incomes';
+  static const pathInvestment = 'assets/icons/category_ic/investment';
+  static const pathMonthly = 'assets/icons/category_ic/monthly';
+  static const pathNecessary = 'assets/icons/category_icnecessary';
+  static const pathOther = 'assets/icons/category_ic/others';
 
   // path entertainment
   final beautyIc = '$pathEntertainmnet/beauty_ic.svg';
@@ -51,8 +54,17 @@ class _CategoryIcon {
   final onlineIc = '$pathEntertainmnet/online_ic.svg';
   final sportsIC = '$pathEntertainmnet/sports_ic.svg';
 
-  // path debt
+  // path incomes
+  final salaryIc = '$pathIncomes/salary_ic.svg';
+  final othersIncomeIc = '$pathIncomes/others_income_ic.svg';
+
+  // path investment
+  final collectInterestIc = '$pathInvestment/collect_interest_ic.svg';
   final debtIc = '$pathInvestment/debt_ic.svg';
+  final getALoanIc = '$pathInvestment/get_a_loan_ic.svg';
+  final investmentIc = '$pathInvestment/investment_ic.svg';
+  final payInterestIc = '$pathInvestment/pay_interest_ic.svg';
+  final paybackLoanIc = '$pathInvestment/payback_loan_ic.svg';
 
   // path monthly
   final electricityIc = '$pathMonthly/electricity_ic.svg';
@@ -77,4 +89,9 @@ class _CategoryIcon {
   final personalIc = '$pathNecessary/personal_ic.svg';
   final petsIc = '$pathNecessary/pets_ic.svg';
   final repairedHouseIc = '$pathNecessary/repaired_house_ic.svg';
+
+  // path others
+  final moneyInIc = '$pathOther/money_in_ic.svg';
+  final moneyOutIc = '$pathOther/money_out_ic.svg';
+  final unknownIc = '$pathOther/unknown_ic.svg';
 }
