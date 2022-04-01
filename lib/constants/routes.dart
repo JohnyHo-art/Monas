@@ -19,7 +19,8 @@ class Routes {
   static const walletListScreen = homeScreen + '/wallet_list_screen';
   static const walletAddingScreen = walletListScreen + '/wallet_adding_screen';
   static const notificationScreen = homeScreen + '/notification_screen';
+  static const addWalletScreen = homeScreen + '/add_wallet_screen';
 
   //* Routes from report
-  
+
 }

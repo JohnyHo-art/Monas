@@ -10,6 +10,8 @@ class S {
 
 class _Colors {
   final primaryColor = const Color(0xFF4F62C0);
+  final whiteColor = Colors.white;
+  final redColor = Colors.red;
   final primaryColorDark = const Color(0xFF0A398F);
   final primaryColorLight = const Color(0xFF838FF3);
   final primaryColorShadeThirty = const Color(0xFF4F62C0).withOpacity(0.3);

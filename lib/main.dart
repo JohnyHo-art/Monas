@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+
+import 'package:monas/views/home_tab/add_wallet_screen.dart';
+import 'package:monas/views/log_in/login_screen.dart';
+import 'package:monas/views/log_in/signup_screen.dart';
+import 'package:monas/views/onboarding/onboarding_screen.dart';
+import 'package:monas/views/report_tab/components/tab_report_view.dart';
 import 'package:monas/views/adding_tab/adding_expense_screen.dart';
 
 import 'constants/routes.dart';
@@ -25,7 +31,7 @@ class Monas extends StatelessWidget {
   }
 
   String getInitialRoute() {
-    return Routes.mainScreen;
+    return Routes.reportScreen;
   }
 
   MaterialPageRoute? getRoute(RouteSettings settings) {
@@ -38,6 +44,14 @@ class Monas extends StatelessWidget {
         return buildRoute(const PlanningScreen(), settings: settings);
       case Routes.personalScreen:
         return buildRoute(const PersonalScreen(), settings: settings);
+      case Routes.onboardingScreen:
+        return buildRoute(const OnboardingScreen(), settings: settings);
+      case Routes.loginScreen:
+        return buildRoute(const LoginScreen(), settings: settings);
+      case Routes.signupScreen:
+        return buildRoute(const SignUpScreen(), settings: settings);
+      case Routes.addWalletScreen:
+        return buildRoute(const AddWalletScreen(), settings: settings);
       // Adding tab
       case Routes.addExpenseScreen:
         return buildRoute(const AddingExpenseScreen(), settings: settings);

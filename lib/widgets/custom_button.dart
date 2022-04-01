@@ -14,6 +14,7 @@ class CustomButton extends StatelessWidget {
   Color? borderColor;
   TextStyle? textStyle;
   bool? textUppercase;
+  Widget? widgetText;
   CustomButton({
     Key? key,
     required this.onPressed,
@@ -27,6 +28,7 @@ class CustomButton extends StatelessWidget {
     this.borderColor,
     this.textStyle,
     this.textUppercase,
+    this.widgetText,
   }) : super(key: key);
 
   @override
@@ -43,9 +45,10 @@ class CustomButton extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: onPressed,
-        child: Text(textUppercase == true ? text.toUpperCase() : text,
-            style: S.bodyTextStyles
-                .buttonText(textColor ?? S.colors.textOnPrimaryColor)),
+        child: widgetText ??
+            Text(textUppercase == true ? text.toUpperCase() : text,
+                style: S.bodyTextStyles
+                    .buttonText(textColor ?? S.colors.textOnPrimaryColor)),
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(

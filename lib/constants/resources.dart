@@ -3,6 +3,7 @@ class R {
   static final onboarding = _Onboarding();
   static final walletIcon = _WalletIcon();
   static final categoryIcon = _CategoryIcon();
+  static final logIn = _LogIn();
 }
 
 class _Logo {
@@ -13,10 +14,22 @@ class _Logo {
 
 class _Onboarding {
   static const path = 'assets/onboard';
-  final onboarding1 = '$path/onboarding1';
-  final onboarding2 = '$path/onboarding2';
-  final onboarding3 = '$path/onboarding3';
-  final onboarding4 = '$path/onboarding4';
+  final onboarding1 = '$path/onboarding1.png';
+  final onboarding2 = '$path/onboarding2.png';
+  final onboarding3 = '$path/onboarding3.png';
+  final onboarding4 = '$path/onboarding4.png';
+}
+
+class _LogIn {
+  static const path = 'assets/log_in';
+  final logIn = '$path/log_in.png';
+  final signUp = '$path/sign_up.png';
+  final forgotPassword = '$path/forgot_password.svg';
+  final emailIc = '$path/email_ic.svg';
+  final passwordIc = '$path/password_ic.svg';
+  final googleIc = '$path/google_ic.svg';
+  final eyeIc = '$path/eye_ic.svg';
+  final usernameIc = '$path/username_ic.svg';
 }
 
 class _WalletIcon {
@@ -45,9 +58,7 @@ class _CategoryIcon {
   static const pathInvestment = 'assets/icons/category_ic/investment';
   static const pathMonthly = 'assets/icons/category_ic/monthly';
   static const pathNecessary = 'assets/icons/category_icnecessary';
-  static const pathOther = 'assets/icons/category_ic/others';
-
-  // path entertainment
+  static const pathOther = 'assets/icons/category_ic/others'  // path entertainment
   final beautyIc = '$pathEntertainmnet/beauty_ic.svg';
   final entertainmentIc = '$pathEntertainmnet/entertainment_ic.svg';
   final giftIc = '$pathEntertainmnet/gift_ic.svg';
