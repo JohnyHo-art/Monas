@@ -14,6 +14,8 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  flutter_svg: ^1.0.3
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -32,7 +34,7 @@ flutter:
     - assets/icons/category_ic/investment/
     - assets/icons/category_ic/monthly/
     - assets/icons/category_ic/necessary/
-    - assets/icons/category_ic/other_income/
+    - assets/icons/category_ic/others/
     - assets/log_in/
     - assets/logo/
     - assets/onboard/
