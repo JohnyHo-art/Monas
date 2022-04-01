@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/constants/routes.dart';
 import 'package:monas/views/home_tab/home_screen.dart';
 import 'package:monas/views/personal_tab/personal_screen.dart';
 import 'package:monas/views/plan_tab/planning_screen.dart';
@@ -67,13 +68,13 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(height: 10),
             ListTile(
               leading: const Icon(Icons.arrow_upward),
-              title: const Text('Thêm thu nhập mới'),
-              onTap: () {},
+              title: const Text('Thêm chi tiêu mới'),
+              onTap: () => Navigator.pushNamed(context, Routes.addExpenseScreen),
             ),
             ListTile(
               leading: const Icon(Icons.arrow_downward),
-              title: const Text('Thêm chi tiêu mới'),
-              onTap: () {},
+              title: const Text('Thêm thu nhập mới'),
+              onTap: () => Navigator.pushNamed(context, Routes.addIncomeScreen),
             ),
             ListTile(
               leading: const Icon(Icons.account_balance_wallet),

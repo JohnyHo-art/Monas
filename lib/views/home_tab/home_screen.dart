@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/views/home_tab/components/home_transactions.dart';
 import 'package:monas/views/home_tab/components/home_wallets.dart';
 
 import 'components/home_header.dart';
@@ -18,11 +19,12 @@ class HomeScreen extends StatelessWidget {
             children: [
               SizedBox(height: S.dimens.padding),
               const HomeHeader(),
-              SizedBox(height: S.dimens.padding),
+              SizedBox(height: S.dimens.smallPadding),
               const HomeTotalBalance(),
-              SizedBox(height: S.dimens.padding),
+              SizedBox(height: S.dimens.smallPadding),
               const HomeWallets(),
-              SizedBox(height: S.dimens.padding),
+              SizedBox(height: S.dimens.smallPadding),
+              const HomeTransactions(),
             ],
           ),
         ),

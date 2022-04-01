@@ -21,7 +21,7 @@ class HomeTotalBalance extends StatelessWidget {
                   children: [
                     TextSpan(
                         //TODO: Add total balance
-                        text: '2.000.000',
+                        text: '200000',
                         style: S.headerTextStyles
                             .header1(S.colors.textOnPrimaryColor)),
                     TextSpan(

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/constants/format_style.dart';
+import 'package:monas/constants/resources.dart';
+import 'package:monas/constants/string_constants.dart';
 
 class HomeWallets extends StatelessWidget {
   const HomeWallets({Key? key}) : super(key: key);
 
-  Padding _walletItem(String iconUrl, String name, double totalBalance,
-      String currencyUnit, VoidCallback onPressed) {
+  Padding _walletItem(String iconUrl, String name, double totalBalance, String locale, VoidCallback onPressed) {
     return Padding(
       padding: EdgeInsets.only(left: S.dimens.padding),
       child: InkWell(
@@ -34,7 +37,7 @@ class HomeWallets extends StatelessWidget {
                     children: [
                       WidgetSpan(
                         alignment: PlaceholderAlignment.middle,
-                        child: Image.asset(
+                        child: SvgPicture.asset(
                           iconUrl,
                           fit: BoxFit.cover,
                           height: S.dimens.largeIconSize,
@@ -56,13 +59,9 @@ class HomeWallets extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: totalBalance.toString(),
+                        text: F.currencyFormat.compactSimpleFormatCurrency(totalBalance, locale),
                         style:
                             S.headerTextStyles.header3(S.colors.primaryColor),
-                      ),
-                      TextSpan(
-                        text: ' ' + currencyUnit.toUpperCase(),
-                        style: S.bodyTextStyles.caption(S.colors.primaryColor),
                       ),
                     ],
                   ),
@@ -109,17 +108,17 @@ class HomeWallets extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: [
               _walletItem(
-                'assets/icons/wallet_ic/wallet_ic1.png',
+                R.walletIcon.walletIc1,
                 'Saving',
-                2000000,
-                'usd',
+                10230000,
+                StringConstants.localeString.japan,
                 () {},
               ),
               _walletItem(
-                'assets/icons/wallet_ic/wallet_ic5.png',
+                R.walletIcon.walletIc2,
                 'Daily expense',
-                4000000,
-                'vnđ',
+                400000000,
+                StringConstants.localeString.vietnam,
                 () {},
               )
             ],

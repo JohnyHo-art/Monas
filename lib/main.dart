@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:monas/views/home_tab/add_wallet_screen.dart';
 import 'package:monas/views/log_in/login_screen.dart';
 import 'package:monas/views/log_in/signup_screen.dart';
 import 'package:monas/views/onboarding/onboarding_screen.dart';
 import 'package:monas/views/report_tab/components/tab_report_view.dart';
+import 'package:monas/views/adding_tab/adding_expense_screen.dart';
 
 import 'constants/routes.dart';
+import 'views/adding_tab/adding_income_screen.dart';
 import 'views/main_screen.dart';
 import 'views/personal_tab/personal_screen.dart';
 import 'views/plan_tab/planning_screen.dart';
@@ -49,6 +52,11 @@ class Monas extends StatelessWidget {
         return buildRoute(const SignUpScreen(), settings: settings);
       case Routes.addWalletScreen:
         return buildRoute(const AddWalletScreen(), settings: settings);
+      // Adding tab
+      case Routes.addExpenseScreen:
+        return buildRoute(const AddingExpenseScreen(), settings: settings);
+      case Routes.addIncomeScreen:
+        return buildRoute(const AddingIncomeScreen(), settings: settings);
       default:
         null;
     }

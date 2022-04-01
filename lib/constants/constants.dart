@@ -17,6 +17,7 @@ class _Colors {
   final primaryColorShadeThirty = const Color(0xFF4F62C0).withOpacity(0.3);
   final primaryColorShadeFifty = const Color(0xFF4F62C0).withOpacity(0.5);
   final primaryColorShadeSeventy = const Color(0xFF4F62C0).withOpacity(0.7);
+  final shadowElevationColor = Colors.grey.withOpacity(0.5);
 
   //* Secondary color and variants
   final secondaryColor = const Color(0xFFADEAF1);
@@ -35,7 +36,7 @@ class _Colors {
   final backgroundIcon1 = const Color(0xFF427CCE);
   final backgroundIcon2 = const Color(0xFF00D159);
   final backgroundIcon3 = const Color(0xFFFFD468);
-  final backgroundIcon4 = const Color(0xFFED5C4D);
+  final backgroundIcon4 = const Color(0xFFFF1C45);
   final backgroundIcon5 = const Color(0xFFE4AEC5);
   final backgroundIcon6 = const Color(0xFF21325E);
   final backgroundIcon7 = const Color(0xFFAD8B73);
@@ -120,7 +121,7 @@ class _BodyText {
       fontFamily: 'Roboto',
       fontSize: 14,
       color: color ?? S.colors.textOnPrimaryColor,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w700,
     );
   }
 }
@@ -137,4 +138,5 @@ class _Dimens {
   final buttonWidth = 280.0;
   final tinyPadding = 8.0;
   final largeIconSize = 40.0;
+  final smallIconSize = 12.0;
 }
