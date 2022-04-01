@@ -58,7 +58,8 @@ class _CategoryIcon {
   static const pathInvestment = 'assets/icons/category_ic/investment';
   static const pathMonthly = 'assets/icons/category_ic/monthly';
   static const pathNecessary = 'assets/icons/category_icnecessary';
-  static const pathOther = 'assets/icons/category_ic/others'  // path entertainment
+  static const pathOther =
+      'assets/icons/category_ic/others'; // path entertainment
   final beautyIc = '$pathEntertainmnet/beauty_ic.svg';
   final entertainmentIc = '$pathEntertainmnet/entertainment_ic.svg';
   final giftIc = '$pathEntertainmnet/gift_ic.svg';

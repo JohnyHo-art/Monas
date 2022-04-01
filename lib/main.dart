@@ -31,7 +31,7 @@ class Monas extends StatelessWidget {
   }
 
   String getInitialRoute() {
-    return Routes.reportScreen;
+    return Routes.onboardingScreen;
   }
 
   MaterialPageRoute? getRoute(RouteSettings settings) {
