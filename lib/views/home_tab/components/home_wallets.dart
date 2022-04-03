@@ -37,7 +37,7 @@ class HomeWallets extends StatelessWidget {
                     children: [
                       WidgetSpan(
                         alignment: PlaceholderAlignment.middle,
-                        child: SvgPicture.asset(
+                        child: Image.asset(
                           iconUrl,
                           fit: BoxFit.cover,
                           height: S.dimens.largeIconSize,

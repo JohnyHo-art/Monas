@@ -44,7 +44,7 @@ class AddingExpenseScreen extends StatelessWidget {
             elevation: 0.0,
             leading: IconButton(
               icon: Icon(
-                Icons.arrow_back_ios_new,
+                Icons.close,
                 color: S.colors.textOnSecondaryColor,
               ),
               onPressed: () => Navigator.pop(context),
@@ -75,11 +75,12 @@ class AddingExpenseScreen extends StatelessWidget {
                 SizedBox(height: S.dimens.smallPadding),
                 _addMoreInfoButton(),
                 Visibility(
-                  visible: false,
+                  visible: true,
                   child: Column(
                     children: [
                       SizedBox(height: S.dimens.smallPadding),
                       const DetailInfo(),
+                      SizedBox(height: S.dimens.padding),
                     ],
                   ),
                 ),

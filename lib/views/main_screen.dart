@@ -65,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 10),
+            SizedBox(height: S.dimens.tinyPadding),
             ListTile(
               leading: const Icon(Icons.arrow_upward),
               title: const Text('Thêm chi tiêu mới'),

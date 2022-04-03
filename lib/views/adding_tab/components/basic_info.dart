@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/resources.dart';
+import 'package:monas/views/adding_tab/components/add_note_dialog.dart';
 import 'package:monas/widgets/inkwell_row_button.dart';
 
 class BasicInfo extends StatelessWidget {
@@ -13,9 +14,11 @@ class BasicInfo extends StatelessWidget {
           const SizedBox(width: 60),
           Flexible(
             flex: 9,
-            child: TextField(
+            child: TextFormField(
+              initialValue: '0',
+              cursorColor: S.colors.primaryColor,
               keyboardType: TextInputType.number,
-              style: S.headerTextStyles.header1(S.colors.primaryColor),
+              style: S.headerTextStyles.header2(S.colors.primaryColor),
               decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: S.colors.primaryColor)),
@@ -24,7 +27,7 @@ class BasicInfo extends StatelessWidget {
             ),
           ),
           Flexible(
-            flex: 1,
+            flex: 2,
             child: Text(
               NumberFormat.simpleCurrency(locale: locale ?? 'vi_VN')
                   .currencySymbol,
@@ -41,10 +44,11 @@ class BasicInfo extends StatelessWidget {
           onTap: onTap,
           child: Row(
             children: [
-              SvgPicture.asset(R.walletIcon.walletIc4),
+              Image.asset(R.walletIcon.walletIc0),
               SizedBox(width: S.dimens.padding),
               Text('Ví tổng',
-                  style: S.headerTextStyles.header3(S.colors.textOnSecondaryColor)),
+                  style: S.headerTextStyles
+                      .header3(S.colors.textOnSecondaryColor)),
             ],
           ),
         ),
@@ -68,6 +72,26 @@ class BasicInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void _showAddingOptions() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(24),
+        topRight: Radius.circular(24),
+      )),
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            
+          ],
+        );
+      },
+    );
+  }
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: S.dimens.padding),
       padding: EdgeInsets.symmetric(horizontal: S.dimens.padding),
@@ -85,18 +109,22 @@ class BasicInfo extends StatelessWidget {
       ),
       child: Column(
         children: [
+          SizedBox(height: S.dimens.tinyPadding),
           _enterMoneyTextField(null),
-          SizedBox(height: S.dimens.tinyPadding),
+          SizedBox(height: S.dimens.smallPadding),
           _chooseWalletSection(() {}),
-          SizedBox(height: S.dimens.tinyPadding),
+          SizedBox(height: S.dimens.smallPadding),
           _chooseCategorySection(() {}),
-          SizedBox(height: S.dimens.tinyPadding),
+          SizedBox(height: S.dimens.smallPadding),
           InkWellRowButton(
-            onTap: () {},
+            onTap: () => showDialog(
+              context: context,
+              builder: (BuildContext context) => const AddingNoteDialog(),
+            ),
             iconData: Icons.notes,
             hintText: 'Thêm ghi chú',
           ),
-          SizedBox(height: S.dimens.tinyPadding),
+          SizedBox(height: S.dimens.smallPadding),
           InkWellRowButton(
             onTap: () {},
             iconData: Icons.event,

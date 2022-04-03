@@ -10,7 +10,7 @@ class HomeHeader extends StatelessWidget {
     if (currentHour >= 0 && currentHour <= 10) {
       return 'Buổi sáng tốt lành,';
     } else if (currentHour > 10 && currentHour <= 17) {
-      return 'Chào buổi chiều,';
+      return 'Chào buổi trưa,';
     } else {
       return 'Buổi tối vui vẻ,';
     }

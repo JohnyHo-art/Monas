@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
+
+import '../../../constants/format_style.dart';
 
 class HomeTotalBalance extends StatelessWidget {
   const HomeTotalBalance({Key? key}) : super(key: key);
@@ -21,12 +24,14 @@ class HomeTotalBalance extends StatelessWidget {
                   children: [
                     TextSpan(
                         //TODO: Add total balance
-                        text: '200000',
+                        text: F.currencyFormat.numberMoneyFormat(2000000),
                         style: S.headerTextStyles
                             .header1(S.colors.textOnPrimaryColor)),
                     TextSpan(
                         //TODO: Add currency unit
-                        text: ' VNĐ',
+                        text: NumberFormat.currency(locale: 'vi_VN')
+                            .currencySymbol
+                            .toString(),
                         style: S.bodyTextStyles
                             .body1(S.colors.textOnPrimaryColor)),
                   ],
@@ -84,12 +89,14 @@ class HomeTotalBalance extends StatelessWidget {
                   children: [
                     TextSpan(
                         //TODO: Add income money
-                        text: '3.000.000',
+                        text: F.currencyFormat.numberMoneyFormat(3000000),
                         style: S.headerTextStyles
                             .header3(S.colors.textOnPrimaryColor)),
                     TextSpan(
                       //TODO: Add currency unit
-                      text: 'VNĐ',
+                      text: NumberFormat.currency(locale: 'vi_VN')
+                          .currencySymbol
+                          .toString(),
                       style:
                           S.bodyTextStyles.caption(S.colors.textOnPrimaryColor),
                     ),
@@ -129,12 +136,14 @@ class HomeTotalBalance extends StatelessWidget {
                   children: [
                     TextSpan(
                         //TODO: Add expenses
-                        text: '1.000.000',
+                        text: F.currencyFormat.numberMoneyFormat(1000000),
                         style: S.headerTextStyles
                             .header3(S.colors.textOnPrimaryColor)),
                     TextSpan(
                       //TODO: Add currency unit
-                      text: 'VNĐ',
+                      text: NumberFormat.currency(locale: 'vi_VN')
+                          .currencySymbol
+                          .toString(),
                       style:
                           S.bodyTextStyles.caption(S.colors.textOnPrimaryColor),
                     ),

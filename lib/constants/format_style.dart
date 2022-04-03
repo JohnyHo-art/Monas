@@ -14,4 +14,9 @@ class _CurrencyFormat {
     var currencyF = NumberFormat.currency(locale: locale);
     return currencyF.format(amount);
   }
+
+  String numberMoneyFormat(double amount) {
+    var numberFormat = NumberFormat("###,###,###,###.##");
+    return numberFormat.format(amount);
+  }
 }

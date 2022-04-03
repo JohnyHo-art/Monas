@@ -30,19 +30,19 @@ class DetailInfo extends StatelessWidget {
             iconData: Icons.group,
             hintText: 'Với',
           ),
-          SizedBox(height: S.dimens.tinyPadding),
+          SizedBox(height: S.dimens.smallPadding),
           InkWellRowButton(
             onTap: () {},
             iconData: Icons.calendar_today,
             hintText: 'Chọn sự kiện',
           ),
-          SizedBox(height: S.dimens.tinyPadding),
+          SizedBox(height: S.dimens.smallPadding),
           InkWellRowButton(
             onTap: () {},
             iconData: Icons.add_alert,
             hintText: 'Đặt lời nhắc',
           ),
-          SizedBox(height: S.dimens.tinyPadding),
+          SizedBox(height: S.dimens.smallPadding),
           IntrinsicHeight(
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
