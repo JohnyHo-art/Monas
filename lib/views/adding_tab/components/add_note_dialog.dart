@@ -65,7 +65,7 @@ class AddingNoteDialog extends StatelessWidget {
                             (states) => S.colors.subTextColor)),
                     onPressed: () => Navigator.of(context).pop(),
                     child: Text(
-                      'ĐÓNG',
+                      'HUỶ',
                       style: S.bodyTextStyles.buttonText(S.colors.iconColor),
                     ),
                   ),
