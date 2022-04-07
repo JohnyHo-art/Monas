@@ -132,6 +132,7 @@ class _Dimens {
   final cardCornerRadiusBig = 30.0;
   final spaceBetweenWidgets = 16.0;
   final iconSize = 24.0;
+  final largePadding = 32.0;
   final padding = 20.0;
   final smallPadding = 16.0;
   final buttonHeight = 40.0;

@@ -2,39 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
+import 'package:monas/viewmodels/adding_transaction_vm.dart';
 import 'package:monas/views/adding_tab/components/add_note_dialog.dart';
 import 'package:monas/widgets/inkwell_row_button.dart';
+import 'package:provider/provider.dart';
 
 class BasicInfo extends StatelessWidget {
   const BasicInfo({Key? key}) : super(key: key);
 
-  Widget _enterMoneyTextField(String? locale) => Row(
-        children: [
-          const SizedBox(width: 60),
-          Flexible(
-            flex: 9,
-            child: TextFormField(
-              initialValue: '0',
-              cursorColor: S.colors.primaryColor,
-              keyboardType: TextInputType.number,
-              style: S.headerTextStyles.header2(S.colors.primaryColor),
-              decoration: InputDecoration(
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: S.colors.primaryColor)),
-                focusColor: S.colors.primaryColor,
+  Widget _moneyAmountSection(String? locale, VoidCallback onTap, double amount) => Material(
+        child: InkWell(
+          splashColor: S.colors.subTextColor,
+          onTap: onTap,
+          child: Row(
+            children: [
+              const SizedBox(width: 60),
+              Flexible(
+                flex: 9,
+                child: Text(
+                  F.currencyFormat.numberMoneyFormat(amount),
+                  overflow: TextOverflow.ellipsis,
+                  style: S.headerTextStyles.header1(S.colors.primaryColor),
+                  maxLines: 1,
+                ),
               ),
-            ),
+              Flexible(
+                flex: 2,
+                child: Text(
+                  NumberFormat.simpleCurrency(locale: locale ?? 'vi_VN')
+                      .currencySymbol,
+                  style: S.headerTextStyles.header2(S.colors.primaryColor),
+                ),
+              ),
+            ],
           ),
-          Flexible(
-            flex: 2,
-            child: Text(
-              NumberFormat.simpleCurrency(locale: locale ?? 'vi_VN')
-                  .currencySymbol,
-              style: S.headerTextStyles.header2(S.colors.primaryColor),
-            ),
-          ),
-        ],
+        ),
       );
 
   Widget _chooseWalletSection(VoidCallback onTap) => Material(
@@ -72,25 +76,8 @@ class BasicInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _showAddingOptions() {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(24),
-        topRight: Radius.circular(24),
-      )),
-      builder: (BuildContext context) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            
-          ],
-        );
-      },
-    );
-  }
+    final AddingTransactionViewModel addingTransactionViewModel =
+        Provider.of<AddingTransactionViewModel>(context);
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: S.dimens.padding),
@@ -109,8 +96,12 @@ class BasicInfo extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SizedBox(height: S.dimens.tinyPadding),
-          _enterMoneyTextField(null),
+          SizedBox(height: S.dimens.smallPadding),
+          _moneyAmountSection(
+            null,
+            () => addingTransactionViewModel.showAmountMoneyTextField(context),
+            context.watch<AddingTransactionViewModel>().amountOfMoney,
+          ),
           SizedBox(height: S.dimens.smallPadding),
           _chooseWalletSection(() {}),
           SizedBox(height: S.dimens.smallPadding),
