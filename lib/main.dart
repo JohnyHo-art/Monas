@@ -24,8 +24,10 @@ class Monas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => AddingTransactionViewModel(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AddingTransactionViewModel()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: getInitialRoute(),
