@@ -45,8 +45,8 @@ class HomeHeader extends StatelessWidget {
             height: 45,
             width: 45,
             decoration: BoxDecoration(
-              color: S.colors.primaryColorShadeThirty,
-              borderRadius: BorderRadius.circular(10),
+              color: S.colors.subTextColor,
+              borderRadius: BorderRadius.circular(S.dimens.cardCornerRadiusSmall),
             ),
             child: IconButton(
               onPressed: () {},

@@ -9,26 +9,26 @@ import 'package:provider/provider.dart';
 class EnterMoneyBottomSheet extends StatelessWidget {
   const EnterMoneyBottomSheet({
     Key? key,
-    required this.controller,
     this.locale,
   }) : super(key: key);
-  final TextEditingController controller;
   final String? locale;
 
   @override
   Widget build(BuildContext context) {
-    final AddingTransactionViewModel addingTransactionViewModel =
-        Provider.of<AddingTransactionViewModel>(context);
+    // final AddingTransactionViewModel addingTransactionViewModel =
+    //     Provider.of<AddingTransactionViewModel>(context);
+    var transaction = context.watch<AddingTransactionViewModel>();
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Padding(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -44,13 +44,17 @@ class EnterMoneyBottomSheet extends StatelessWidget {
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     cursorColor: S.colors.primaryColor,
                     keyboardType: TextInputType.number,
-                    style: S.headerTextStyles.header2(S.colors.primaryColor),
+                    style: S.headerTextStyles.header2(S.colors.primaryColor), controller:
+                        transaction.amountTextFieldController,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: S.colors.primaryColor, width: 2)),
+                        borderRadius: const BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(
+                              color: S.colors.primaryColor, width: 2)),
                       border: OutlineInputBorder(
-                          borderSide: BorderSide(color: S.colors.subTextColor2)),
+                          borderRadius: const BorderRadius.all(Radius.circular(12)),
+                          borderSide:
+                              BorderSide(color: S.colors.subTextColor2)),
                       focusColor: S.colors.primaryColor,
                     ),
                   ),
@@ -128,7 +132,10 @@ class EnterMoneyBottomSheet extends StatelessWidget {
                   style: ButtonStyle(
                       overlayColor: MaterialStateColor.resolveWith(
                           (states) => S.colors.subTextColor)),
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () {
+                    transaction.amountTextFieldController.clear();
+                    Navigator.of(context).pop();
+                  },
                   child: Text(
                     'HUỶ',
                     style: S.bodyTextStyles.buttonText(S.colors.iconColor),
@@ -139,7 +146,8 @@ class EnterMoneyBottomSheet extends StatelessWidget {
                       overlayColor: MaterialStateColor.resolveWith(
                           (states) => S.colors.primaryColorShadeThirty)),
                   onPressed: () {
-                    addingTransactionViewModel.saveAmountOfMoney();
+                    transaction.saveAmountOfMoney();
+                    //Navigator.pop(context);
                   },
                   child: Text(
                     'LƯU',

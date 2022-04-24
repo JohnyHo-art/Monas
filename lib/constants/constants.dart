@@ -127,9 +127,10 @@ class _BodyText {
 }
 
 class _Dimens {
+  final cardCornerRadiusSmall = 12.0;
   final cardCornerRadiusMedium = 20.0;
-  final buttonCornerRadius = 25.0;
   final cardCornerRadiusBig = 30.0;
+  final buttonCornerRadius = 25.0;
   final spaceBetweenWidgets = 16.0;
   final iconSize = 24.0;
   final largePadding = 32.0;

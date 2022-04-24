@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';

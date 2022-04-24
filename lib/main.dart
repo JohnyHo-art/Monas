@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:monas/views/home_tab/add_wallet_screen.dart';
+import 'package:monas/views/adding_tab/add_wallet_screen.dart';
 import 'package:monas/views/log_in/login_screen.dart';
 import 'package:monas/views/log_in/signup_screen.dart';
 import 'package:monas/views/onboarding/onboarding_screen.dart';
@@ -24,8 +24,10 @@ class Monas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => AddingTransactionViewModel(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AddingTransactionViewModel()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: getInitialRoute(),
@@ -35,7 +37,7 @@ class Monas extends StatelessWidget {
   }
 
   String getInitialRoute() {
-    return Routes.onboardingScreen;
+    return Routes.addExpenseScreen;
   }
 
   MaterialPageRoute? getRoute(RouteSettings settings) {
@@ -54,13 +56,13 @@ class Monas extends StatelessWidget {
         return buildRoute(const LoginScreen(), settings: settings);
       case Routes.signupScreen:
         return buildRoute(const SignUpScreen(), settings: settings);
-      case Routes.addWalletScreen:
-        return buildRoute(const AddWalletScreen(), settings: settings);
       // Adding tab
       case Routes.addExpenseScreen:
         return buildRoute(const AddingExpenseScreen(), settings: settings);
       case Routes.addIncomeScreen:
         return buildRoute(const AddingIncomeScreen(), settings: settings);
+      case Routes.addWalletScreen:
+        return buildRoute(const AddWalletScreen(), settings: settings);
       default:
         return buildRoute(const MainScreen(), settings: settings);
     }

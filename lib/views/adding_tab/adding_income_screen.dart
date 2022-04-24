@@ -52,7 +52,7 @@ class AddingIncomeScreen extends StatelessWidget {
             ),
             title: Text(
               'Thêm thu nhập',
-              style: S.headerTextStyles.header3(S.colors.textOnSecondaryColor),
+              style: S.headerTextStyles.header2(S.colors.textOnSecondaryColor),
             ),
             actions: [
               TextButton(
