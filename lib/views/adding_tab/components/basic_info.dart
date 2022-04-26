@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
+import 'package:monas/constants/routes.dart';
 import 'package:monas/viewmodels/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction_vm.dart';
 import 'package:monas/widgets/inkwell_row_button.dart';
@@ -100,7 +101,7 @@ class BasicInfo extends StatelessWidget {
           SizedBox(height: S.dimens.smallPadding),
           _chooseWalletSection(() {}),
           SizedBox(height: S.dimens.smallPadding),
-          _chooseCategorySection(() {}),
+          _chooseCategorySection(() => Navigator.pushNamed(context, Routes.categoryListScreen)),
           SizedBox(height: S.dimens.smallPadding),
           InkWellRowButton(
             onTap: () => transaction.showNoteAddingDialog(context),

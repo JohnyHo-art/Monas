@@ -18,13 +18,13 @@ class CategoryListScreen extends StatelessWidget {
             Icons.arrow_back_ios_new,
             color: S.colors.textOnSecondaryColor,
           ),
-          onPressed: () {},
+          onPressed: () => Navigator.pop(context),
         ),
         title: Container(
           width: double.infinity,
           height: 45,
           decoration: BoxDecoration(
-            color: S.colors.primaryColor,
+            color: S.colors.subTextColor,
             borderRadius: BorderRadius.circular(5),
           ),
           child: TextField(
