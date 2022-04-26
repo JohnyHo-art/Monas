@@ -4,16 +4,20 @@ import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
+import 'package:monas/viewmodels/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction_vm.dart';
-import 'package:monas/views/adding_tab/components/add_note_dialog.dart';
 import 'package:monas/widgets/inkwell_row_button.dart';
 import 'package:provider/provider.dart';
 
 class BasicInfo extends StatelessWidget {
   const BasicInfo({Key? key}) : super(key: key);
 
-  Widget _moneyAmountSection(String? locale, VoidCallback onTap, double amount) => Material(
-        child: InkWell(
+  @override
+  Widget build(BuildContext context) {
+    var transaction = context.watch<AddingTransactionViewModel>();
+    var amount = context.watch<AddingAmountViewModel>();
+
+    Widget _moneyAmountSection(String? locale, VoidCallback onTap) => InkWell(
           splashColor: S.colors.subTextColor,
           onTap: onTap,
           child: Row(
@@ -22,9 +26,10 @@ class BasicInfo extends StatelessWidget {
               Flexible(
                 flex: 9,
                 child: Text(
-                  F.currencyFormat.numberMoneyFormat(amount),
+                  F.currencyFormat.numberMoneyFormat(amount.amountOfMoney),
                   overflow: TextOverflow.ellipsis,
                   style: S.headerTextStyles.header1(S.colors.primaryColor),
+                  textAlign: TextAlign.left,
                   maxLines: 1,
                 ),
               ),
@@ -38,46 +43,40 @@ class BasicInfo extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      );
+        );
 
-  Widget _chooseWalletSection(VoidCallback onTap) => Material(
-        color: Colors.transparent,
-        child: InkWell(
-          splashColor: S.colors.subTextColor,
-          onTap: onTap,
-          child: Row(
-            children: [
-              Image.asset(R.walletIcon.walletIc0),
-              SizedBox(width: S.dimens.padding),
-              Text('Ví tổng',
-                  style: S.headerTextStyles
-                      .header3(S.colors.textOnSecondaryColor)),
-            ],
+    Widget _chooseWalletSection(VoidCallback onTap) => Material(
+          color: Colors.transparent,
+          child: InkWell(
+            splashColor: S.colors.subTextColor,
+            onTap: onTap,
+            child: Row(
+              children: [
+                Image.asset(R.walletIcon.walletIc0),
+                SizedBox(width: S.dimens.padding),
+                Text('Ví tổng',
+                    style: S.headerTextStyles
+                        .header3(S.colors.textOnSecondaryColor)),
+              ],
+            ),
           ),
-        ),
-      );
+        );
 
-  Widget _chooseCategorySection(VoidCallback onTap) => Material(
-        color: Colors.transparent,
-        child: InkWell(
-          splashColor: S.colors.subTextColor,
-          onTap: onTap,
-          child: Row(
-            children: [
-              SvgPicture.asset(R.categoryIcon.unknownIc),
-              SizedBox(width: S.dimens.padding),
-              Text('Chọn nhóm',
-                  style: S.headerTextStyles.header3(S.colors.subTextColor2)),
-            ],
+    Widget _chooseCategorySection(VoidCallback onTap) => Material(
+          color: Colors.transparent,
+          child: InkWell(
+            splashColor: S.colors.subTextColor,
+            onTap: onTap,
+            child: Row(
+              children: [
+                SvgPicture.asset(R.categoryIcon.unknownIc),
+                SizedBox(width: S.dimens.padding),
+                Text('Chọn nhóm',
+                    style: S.headerTextStyles.header3(S.colors.subTextColor2)),
+              ],
+            ),
           ),
-        ),
-      );
-
-  @override
-  Widget build(BuildContext context) {
-    final AddingTransactionViewModel addingTransactionViewModel =
-        Provider.of<AddingTransactionViewModel>(context);
+        );
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: S.dimens.padding),
@@ -98,28 +97,23 @@ class BasicInfo extends StatelessWidget {
         children: [
           SizedBox(height: S.dimens.smallPadding),
           _moneyAmountSection(
-            null,
-            () => addingTransactionViewModel.showAmountMoneyTextField(context),
-            context.watch<AddingTransactionViewModel>().amountOfMoney,
-          ),
+              null, () => transaction.showAmountMoneyBottomSheet(context)),
           SizedBox(height: S.dimens.smallPadding),
           _chooseWalletSection(() {}),
           SizedBox(height: S.dimens.smallPadding),
           _chooseCategorySection(() {}),
           SizedBox(height: S.dimens.smallPadding),
           InkWellRowButton(
-            onTap: () => showDialog(
-              context: context,
-              builder: (BuildContext context) => const AddingNoteDialog(),
-            ),
+            onTap: () => transaction.showNoteAddingDialog(context),
             iconData: Icons.notes,
-            hintText: 'Thêm ghi chú',
+            hintText:
+                transaction.note.isEmpty ? 'Thêm ghi chú' : transaction.note,
           ),
           SizedBox(height: S.dimens.smallPadding),
           InkWellRowButton(
-            onTap: () {},
+            onTap: () => transaction.pickDate(context),
             iconData: Icons.event,
-            hintText: 'Hôm nay',
+            hintText: transaction.getDateText(),
           ),
           SizedBox(height: S.dimens.padding),
         ],

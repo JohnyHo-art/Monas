@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:monas/viewmodels/adding_amount_vm.dart';
+import 'package:monas/viewmodels/adding_wallet_vm.dart';
 
-import 'package:monas/views/home_tab/add_wallet_screen.dart';
+import 'package:monas/views/adding_tab/add_wallet_screen.dart';
+import 'package:monas/views/home_tab/wallet_list_screen.dart';
 import 'package:monas/views/log_in/login_screen.dart';
 import 'package:monas/views/log_in/signup_screen.dart';
 import 'package:monas/views/onboarding/onboarding_screen.dart';
@@ -27,6 +30,8 @@ class Monas extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AddingTransactionViewModel()),
+        ChangeNotifierProvider(create: (_) => AddingWalletViewModel()),
+        ChangeNotifierProvider(create: (_) => AddingAmountViewModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -37,7 +42,7 @@ class Monas extends StatelessWidget {
   }
 
   String getInitialRoute() {
-    return Routes.onboardingScreen;
+    return Routes.mainScreen;
   }
 
   MaterialPageRoute? getRoute(RouteSettings settings) {
@@ -56,13 +61,16 @@ class Monas extends StatelessWidget {
         return buildRoute(const LoginScreen(), settings: settings);
       case Routes.signupScreen:
         return buildRoute(const SignUpScreen(), settings: settings);
-      case Routes.addWalletScreen:
-        return buildRoute(const AddWalletScreen(), settings: settings);
-      // Adding tab
+    // Adding tab
       case Routes.addExpenseScreen:
         return buildRoute(const AddingExpenseScreen(), settings: settings);
       case Routes.addIncomeScreen:
         return buildRoute(const AddingIncomeScreen(), settings: settings);
+      case Routes.addWalletScreen:
+        return buildRoute(const AddWalletScreen(), settings: settings);
+    // Home tab
+      case Routes.walletListScreen:
+        return buildRoute(const WalletListScreen(), settings: settings);
       default:
         return buildRoute(const MainScreen(), settings: settings);
     }

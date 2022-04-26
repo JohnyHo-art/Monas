@@ -83,6 +83,15 @@ class _HeaderText {
       fontFamily: 'Roboto',
       fontSize: 20,
       color: color ?? S.colors.textOnSecondaryColor,
+      fontWeight: FontWeight.w500,
+    );
+  }
+
+  TextStyle appbarTitle(Color? color) {
+    return TextStyle(
+      fontFamily: 'Roboto',
+      fontSize: 20,
+      color: color ?? S.colors.textOnSecondaryColor,
       fontWeight: FontWeight.w600,
     );
   }
@@ -103,7 +112,7 @@ class _BodyText {
       fontFamily: 'Roboto',
       fontSize: 14,
       color: color ?? S.colors.textOnSecondaryColor,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
     );
   }
 
@@ -127,9 +136,10 @@ class _BodyText {
 }
 
 class _Dimens {
+  final cardCornerRadiusSmall = 12.0;
   final cardCornerRadiusMedium = 20.0;
-  final buttonCornerRadius = 25.0;
   final cardCornerRadiusBig = 30.0;
+  final buttonCornerRadius = 25.0;
   final spaceBetweenWidgets = 16.0;
   final iconSize = 24.0;
   final largePadding = 32.0;
