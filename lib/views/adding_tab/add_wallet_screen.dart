@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:monas/constants/constants.dart';
-import 'package:monas/constants/resources.dart';
-import 'package:monas/viewmodels/adding_transaction_vm.dart';
+import 'package:monas/viewmodels/adding_wallet_vm.dart';
 import 'package:provider/provider.dart';
 
 class AddWalletScreen extends StatelessWidget {
   const AddWalletScreen({Key? key}) : super(key: key);
 
-  Widget _walletName(VoidCallback onPressed, String? iconUrl) => Row(
+  // Wallet name and icon choosing section
+  Widget _walletName(String iconUrl, VoidCallback onPressed) => Row(
         children: [
           SizedBox(width: S.dimens.padding),
           Flexible(
             flex: 2,
             child: IconButton(
               iconSize: S.dimens.largeIconSize,
-              icon: Image.asset(
-                iconUrl ?? R.walletIcon.walletIc1,
-              ),
+              icon: Image.asset(iconUrl),
               onPressed: onPressed,
             ),
           ),
@@ -46,6 +44,7 @@ class AddWalletScreen extends StatelessWidget {
         ],
       );
 
+  // Enter initial balance section
   Widget _initialBalance() {
     return Row(
       children: [
@@ -87,45 +86,35 @@ class AddWalletScreen extends StatelessWidget {
     );
   }
 
-  Widget _includeTotal() {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return S.colors.subTextColor2;
-      }
-      return S.colors.primaryColor;
-    }
-
-    return Row(
-      children: [
-        const Flexible(flex: 2, child: SizedBox(width: 80)),
-        Flexible(
-          flex: 1,
-          child: Checkbox(
-            checkColor: S.colors.whiteColor,
-            fillColor: MaterialStateProperty.resolveWith(getColor),
-            onChanged: (bool? value) {},
-            value: true,
-          ),
-        ),
-        Flexible(
-          flex: 4,
-          child: Text(
-            'Tính vào ví tổng',
-            style: S.bodyTextStyles.body1(S.colors.subTextColor2),
-          ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    var transaction = context.watch<AddingTransactionViewModel>();
+    var wallet = context.watch<AddingWalletViewModel>();
+
+    // Choose to include or exclude from total wallet section
+    Widget _includeTotal() {
+      return Row(
+        children: [
+          const Flexible(flex: 2, child: SizedBox(width: 80)),
+          Flexible(
+            flex: 1,
+            child: Checkbox(
+              activeColor: S.colors.primaryColor,
+              onChanged: (bool? value) {
+                wallet.includeToTotal = value ?? true;
+              },
+              value: wallet.includeToTotal,
+            ),
+          ),
+          Flexible(
+            flex: 4,
+            child: Text(
+              'Tính vào ví tổng',
+              style: S.bodyTextStyles.body1(S.colors.subTextColor2),
+            ),
+          ),
+        ],
+      );
+    }
 
     return SafeArea(
       child: GestureDetector(
@@ -141,13 +130,15 @@ class AddWalletScreen extends StatelessWidget {
             elevation: 0.0,
             backgroundColor: S.colors.whiteColor,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new,
-                  color: S.colors.textOnSecondaryColor),
-              onPressed: () => Navigator.pop(context),
+              icon: Icon(Icons.close, color: S.colors.textOnSecondaryColor),
+              onPressed: () {
+                wallet.resetInformation();
+                Navigator.pop(context);
+              },
             ),
             title: Text(
               "Thêm ví",
-              style: S.headerTextStyles.header2(S.colors.textOnSecondaryColor),
+              style: S.headerTextStyles.appbarTitle(null),
             ),
             actions: [
               IconButton(
@@ -162,6 +153,7 @@ class AddWalletScreen extends StatelessWidget {
                         toastLength: Toast.LENGTH_SHORT,
                         backgroundColor: S.colors.subTextColor,
                         textColor: S.colors.primaryColor);
+                    wallet.resetInformation();
                     Navigator.pop(context);
                   }),
             ],
@@ -169,8 +161,8 @@ class AddWalletScreen extends StatelessWidget {
           body: Column(
             children: [
               SizedBox(height: S.dimens.smallPadding),
-              _walletName(
-                  () => transaction.showWalletIconBottomSheet(context), null),
+              _walletName(wallet.iconUrl,
+                  () => wallet.showWalletIconBottomSheet(context)),
               SizedBox(height: S.dimens.padding),
               _initialBalance(),
               SizedBox(height: S.dimens.padding),

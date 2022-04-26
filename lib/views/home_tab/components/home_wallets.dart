@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
+import 'package:monas/constants/routes.dart';
 import 'package:monas/constants/string_constants.dart';
 
 class HomeWallets extends StatelessWidget {
@@ -93,7 +94,7 @@ class HomeWallets extends StatelessWidget {
                   style: ButtonStyle(
                       overlayColor: MaterialStateColor.resolveWith(
                           (states) => S.colors.primaryColorShadeThirty)),
-                  onPressed: () {},
+                  onPressed: () => Navigator.pushNamed(context, Routes.walletListScreen),
                   child: Text(
                     'Xem tất cả',
                     style: S.bodyTextStyles.buttonText(S.colors.primaryColor),

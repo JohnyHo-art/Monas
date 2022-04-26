@@ -20,7 +20,8 @@ class AddingNoteDialog extends StatelessWidget {
       },
       child: Dialog(
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(S.dimens.cardCornerRadiusMedium)),
+            borderRadius:
+                BorderRadius.circular(S.dimens.cardCornerRadiusMedium)),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         child: GestureDetector(
@@ -37,7 +38,8 @@ class AddingNoteDialog extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: Colors.white,
-              borderRadius: BorderRadius.circular(S.dimens.cardCornerRadiusMedium),
+              borderRadius:
+                  BorderRadius.circular(S.dimens.cardCornerRadiusMedium),
             ),
             child: Column(
               children: [
@@ -48,7 +50,8 @@ class AddingNoteDialog extends StatelessWidget {
                 SizedBox(
                   height: 150,
                   child: TextFormField(
-                    controller: addingTransactionViewModel.noteTextFieldController,
+                    controller:
+                        addingTransactionViewModel.noteTextFieldController,
                     autofocus: true,
                     maxLength: 200,
                     cursorColor: S.colors.primaryColor,
@@ -78,21 +81,26 @@ class AddingNoteDialog extends StatelessWidget {
                       TextButton(
                         style: ButtonStyle(
                             overlayColor: MaterialStateColor.resolveWith(
-                                    (states) => S.colors.subTextColor)),
+                                (states) => S.colors.subTextColor)),
                         onPressed: () => Navigator.of(context).pop(),
                         child: Text(
                           'HUỶ',
-                          style: S.bodyTextStyles.buttonText(S.colors.iconColor),
+                          style:
+                              S.bodyTextStyles.buttonText(S.colors.iconColor),
                         ),
                       ),
                       TextButton(
                         style: ButtonStyle(
                             overlayColor: MaterialStateColor.resolveWith(
-                                    (states) => S.colors.primaryColorShadeThirty)),
-                        onPressed: () => addingTransactionViewModel.saveTransactionNote(context),
+                                (states) => S.colors.primaryColorShadeThirty)),
+                        onPressed: () {
+                          addingTransactionViewModel.saveTransactionNote();
+                          Navigator.pop(context);
+                        },
                         child: Text(
                           'LƯU',
-                          style: S.bodyTextStyles.buttonText(S.colors.primaryColor),
+                          style: S.bodyTextStyles
+                              .buttonText(S.colors.primaryColor),
                         ),
                       ),
                     ],

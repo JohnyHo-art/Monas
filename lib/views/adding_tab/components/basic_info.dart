@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
+import 'package:monas/viewmodels/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction_vm.dart';
-import 'package:monas/views/adding_tab/components/add_note_dialog.dart';
 import 'package:monas/widgets/inkwell_row_button.dart';
 import 'package:provider/provider.dart';
 
@@ -15,34 +15,33 @@ class BasicInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var transaction = context.watch<AddingTransactionViewModel>();
+    var amount = context.watch<AddingAmountViewModel>();
 
-    Widget _moneyAmountSection(String? locale, VoidCallback onTap) => Material(
-          child: InkWell(
-            splashColor: S.colors.subTextColor,
-            onTap: onTap,
-            child: Row(
-              children: [
-                const SizedBox(width: 60),
-                Flexible(
-                  flex: 9,
-                  child: Text(
-                    F.currencyFormat.numberMoneyFormat(transaction.amountOfMoney),
-                    overflow: TextOverflow.ellipsis,
-                    style: S.headerTextStyles.header1(S.colors.primaryColor),
-                    textAlign: TextAlign.left,
-                    maxLines: 1,
-                  ),
+    Widget _moneyAmountSection(String? locale, VoidCallback onTap) => InkWell(
+          splashColor: S.colors.subTextColor,
+          onTap: onTap,
+          child: Row(
+            children: [
+              const SizedBox(width: 60),
+              Flexible(
+                flex: 9,
+                child: Text(
+                  F.currencyFormat.numberMoneyFormat(amount.amountOfMoney),
+                  overflow: TextOverflow.ellipsis,
+                  style: S.headerTextStyles.header1(S.colors.primaryColor),
+                  textAlign: TextAlign.left,
+                  maxLines: 1,
                 ),
-                Flexible(
-                  flex: 2,
-                  child: Text(
-                    NumberFormat.simpleCurrency(locale: locale ?? 'vi_VN')
-                        .currencySymbol,
-                    style: S.headerTextStyles.header2(S.colors.primaryColor),
-                  ),
+              ),
+              Flexible(
+                flex: 2,
+                child: Text(
+                  NumberFormat.simpleCurrency(locale: locale ?? 'vi_VN')
+                      .currencySymbol,
+                  style: S.headerTextStyles.header2(S.colors.primaryColor),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
 
@@ -97,49 +96,24 @@ class BasicInfo extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: S.dimens.smallPadding),
-          Material(
-            child: InkWell(
-              splashColor: S.colors.subTextColor,
-              onTap: () => transaction.showAmountMoneyTextField(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Flexible(
-                    flex: 9,
-                    child: _moneyAmountSection(null,
-                        () => transaction.showAmountMoneyTextField(context)),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Text(
-                      NumberFormat.simpleCurrency(locale: 'vi_VN')
-                          .currencySymbol,
-                      style: S.headerTextStyles.header2(S.colors.primaryColor),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          _moneyAmountSection(
+              null, () => transaction.showAmountMoneyBottomSheet(context)),
           SizedBox(height: S.dimens.smallPadding),
           _chooseWalletSection(() {}),
           SizedBox(height: S.dimens.smallPadding),
           _chooseCategorySection(() {}),
           SizedBox(height: S.dimens.smallPadding),
           InkWellRowButton(
-            onTap: () => showDialog(
-              context: context,
-              builder: (BuildContext context) => const AddingNoteDialog(),
-            ),
+            onTap: () => transaction.showNoteAddingDialog(context),
             iconData: Icons.notes,
             hintText:
-                transaction.note == '' ? 'Thêm ghi chú' : transaction.note,
+                transaction.note.isEmpty ? 'Thêm ghi chú' : transaction.note,
           ),
           SizedBox(height: S.dimens.smallPadding),
           InkWellRowButton(
-            onTap: () {},
+            onTap: () => transaction.pickDate(context),
             iconData: Icons.event,
-            hintText: 'Hôm nay',
+            hintText: transaction.getDateText(),
           ),
           SizedBox(height: S.dimens.padding),
         ],

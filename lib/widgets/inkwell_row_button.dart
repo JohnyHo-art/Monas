@@ -29,18 +29,22 @@ class InkWellRowButton extends StatelessWidget {
                 horizontal: S.dimens.tinyPadding, vertical: S.dimens.tinyPadding),
             child: Row(
               children: [
-                Icon(
-                  iconData,
-                  color: S.colors.iconColor,
-                  size: S.dimens.iconSize,
+                Flexible(
+                  flex: 2,
+                  child: Icon(
+                    iconData,
+                    color: S.colors.iconColor,
+                    size: S.dimens.iconSize,
+                  ),
                 ),
-                SizedBox(width: S.dimens.padding),
-                SizedBox(width: S.dimens.tinyPadding),
-                Text(
-                  hintText,
-                  style: hintText == 'Thêm ghi chú'
-                      ? S.bodyTextStyles.body1(S.colors.subTextColor2)
-                      : S.bodyTextStyles.body1(S.colors.textOnSecondaryColor),
+                SizedBox(width: S.dimens.padding + S.dimens.tinyPadding),
+                Flexible(
+                  flex: 8,
+                  child: Text(
+                    hintText,
+                    overflow: TextOverflow.ellipsis,
+                    style: S.bodyTextStyles.body1(S.colors.subTextColor2)
+                  ),
                 ),
               ],
             ),

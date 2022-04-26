@@ -83,6 +83,15 @@ class _HeaderText {
       fontFamily: 'Roboto',
       fontSize: 20,
       color: color ?? S.colors.textOnSecondaryColor,
+      fontWeight: FontWeight.w500,
+    );
+  }
+
+  TextStyle appbarTitle(Color? color) {
+    return TextStyle(
+      fontFamily: 'Roboto',
+      fontSize: 20,
+      color: color ?? S.colors.textOnSecondaryColor,
       fontWeight: FontWeight.w600,
     );
   }
@@ -103,7 +112,7 @@ class _BodyText {
       fontFamily: 'Roboto',
       fontSize: 14,
       color: color ?? S.colors.textOnSecondaryColor,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
     );
   }
 
