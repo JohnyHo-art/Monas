@@ -13,11 +13,12 @@ class Routes {
   static const planningScreen = '/planning_screen';
   static const personalScreen = '/personal_screen';
   static const addIncomeScreen = '/adding_income_screen';
+  static const addWalletScreen = walletListScreen + '/wallet_adding_screen';
+
 
   //* Routes from home
   static const walletDetailExpenseScreen = homeScreen + '/wallet_detail_screen';
   static const walletListScreen = homeScreen + '/wallet_list_screen';
-  static const walletAddingScreen = walletListScreen + '/wallet_adding_screen';
   static const notificationScreen = homeScreen + '/notification_screen';
   static const addWalletScreen = homeScreen + '/add_wallet_screen';
   static const showExpenseScreen = homeScreen + '/show_expense_screen';

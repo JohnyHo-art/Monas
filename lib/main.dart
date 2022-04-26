@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:monas/viewmodels/adding_amount_vm.dart';
+import 'package:monas/viewmodels/adding_wallet_vm.dart';
 
 import 'package:monas/views/home_tab/add_wallet_screen.dart';
 import 'package:monas/views/home_tab/category_list_screen.dart';
 import 'package:monas/views/home_tab/show_expense_screen.dart';
+import 'package:monas/views/adding_tab/add_wallet_screen.dart';
+import 'package:monas/views/home_tab/wallet_list_screen.dart';
+
 import 'package:monas/views/log_in/login_screen.dart';
 import 'package:monas/views/log_in/signup_screen.dart';
 import 'package:monas/views/onboarding/onboarding_screen.dart';
-import 'package:monas/views/report_tab/components/tab_report_view.dart';
 import 'package:monas/views/adding_tab/adding_expense_screen.dart';
+import 'package:provider/provider.dart';
 
 import 'constants/routes.dart';
+import 'viewmodels/adding_transaction_vm.dart';
 import 'views/adding_tab/adding_income_screen.dart';
 import 'views/main_screen.dart';
 import 'views/personal_tab/personal_screen.dart';
@@ -25,15 +31,22 @@ class Monas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: getInitialRoute(),
-      onGenerateRoute: (route) => getRoute(route),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AddingTransactionViewModel()),
+        ChangeNotifierProvider(create: (_) => AddingWalletViewModel()),
+        ChangeNotifierProvider(create: (_) => AddingAmountViewModel()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: getInitialRoute(),
+        onGenerateRoute: (route) => getRoute(route),
+      ),
     );
   }
 
   String getInitialRoute() {
-    return Routes.reportScreen;
+    return Routes.mainScreen;
   }
 
   MaterialPageRoute? getRoute(RouteSettings settings) {
@@ -52,9 +65,7 @@ class Monas extends StatelessWidget {
         return buildRoute(const LoginScreen(), settings: settings);
       case Routes.signupScreen:
         return buildRoute(const SignUpScreen(), settings: settings);
-      case Routes.addWalletScreen:
-        return buildRoute(const AddWalletScreen(), settings: settings);
-      // Adding tab
+    // Adding tab
       case Routes.addExpenseScreen:
         return buildRoute(const AddingExpenseScreen(), settings: settings);
       case Routes.addIncomeScreen:
@@ -63,8 +74,13 @@ class Monas extends StatelessWidget {
         return buildRoute(const CategoryListScreen(), settings: settings);
       case Routes.showExpenseScreen:
         return buildRoute(const ShowExpenseScreen(), settings: settings);
+      case Routes.addWalletScreen:
+        return buildRoute(const AddWalletScreen(), settings: settings);
+    // Home tab
+      case Routes.walletListScreen:
+        return buildRoute(const WalletListScreen(), settings: settings);
       default:
-        null;
+        return buildRoute(const MainScreen(), settings: settings);
     }
   }
 

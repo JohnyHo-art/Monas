@@ -4,97 +4,80 @@ import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
+import 'package:monas/viewmodels/adding_amount_vm.dart';
+import 'package:monas/viewmodels/adding_transaction_vm.dart';
 import 'package:monas/widgets/inkwell_row_button.dart';
+import 'package:provider/provider.dart';
 
 class BasicInfo extends StatelessWidget {
   const BasicInfo({Key? key}) : super(key: key);
 
-  Widget _enterMoneyTextField(String? locale) => Row(children: [
-        const SizedBox(width: 60),
-        Flexible(
-            flex: 9,
-            child: TextField(
-                keyboardType: TextInputType.number,
-                style: S.headerTextStyles.header1(S.colors.primaryColor),
-                decoration: InputDecoration(
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: S.colors.primaryColor)),
-                  focusColor: S.colors.primaryColor,
-                )))
-      ]);
-  Widget _moneyAmountSection(
-          String? locale, VoidCallback onTap, double amount) =>
-      Material(
-          child: InkWell(
-              splashColor: S.colors.subTextColor,
-              onTap: onTap,
-              child: Row(
-                children: [
-                  const SizedBox(width: 60),
-                  Flexible(
-                    flex: 9,
-                    child: Text(
-                      //F.currencyFormat.numberMoneyFormat(amount),
-                      amount.toString(),
-                      overflow: TextOverflow.ellipsis,
-                      style: S.headerTextStyles.header1(S.colors.primaryColor),
-                      maxLines: 1,
-                    ),
-                  ),
-                  Flexible(
-                    flex: 2,
-                    child: Text(
-                      NumberFormat.simpleCurrency(locale: locale ?? 'vi_VN')
-                          .currencySymbol,
-                      style: S.headerTextStyles.header2(S.colors.primaryColor),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Text(
-                      NumberFormat.simpleCurrency(locale: locale ?? 'vi_VN')
-                          .currencySymbol,
-                      style: S.headerTextStyles.header2(S.colors.primaryColor),
-                    ),
-                  ),
-                ],
-              )));
-
-  Widget _chooseWalletSection(VoidCallback onTap) => Material(
-        color: Colors.transparent,
-        child: InkWell(
-          splashColor: S.colors.subTextColor,
-          onTap: onTap,
-          child: Row(
-            children: [
-              SvgPicture.asset(R.walletIcon.walletIc4),
-              SizedBox(width: S.dimens.padding),
-              Text('Ví tổng',
-                  style: S.headerTextStyles
-                      .header3(S.colors.textOnSecondaryColor)),
-            ],
-          ),
-        ),
-      );
-
-  Widget _chooseCategorySection(VoidCallback onTap) => Material(
-        color: Colors.transparent,
-        child: InkWell(
-          splashColor: S.colors.subTextColor,
-          onTap: onTap,
-          child: Row(
-            children: [
-              Image.asset(R.categoryIcon.unknownIc),
-              SizedBox(width: S.dimens.padding),
-              Text('Chọn nhóm',
-                  style: S.headerTextStyles.header3(S.colors.subTextColor2)),
-            ],
-          ),
-        ),
-      );
-
   @override
   Widget build(BuildContext context) {
+    var transaction = context.watch<AddingTransactionViewModel>();
+    var amount = context.watch<AddingAmountViewModel>();
+    
+    Widget _moneyAmountSection(String? locale, VoidCallback onTap) => InkWell(
+          splashColor: S.colors.subTextColor,
+          onTap: onTap,
+          child: Row(
+            children: [
+              const SizedBox(width: 60),
+              Flexible(
+                flex: 9,
+                child: Text(
+                  F.currencyFormat.numberMoneyFormat(amount.amountOfMoney),
+                  overflow: TextOverflow.ellipsis,
+                  style: S.headerTextStyles.header1(S.colors.primaryColor),
+                  textAlign: TextAlign.left,
+                  maxLines: 1,
+                ),
+              ),
+              Flexible(
+                flex: 2,
+                child: Text(
+                  NumberFormat.simpleCurrency(locale: locale ?? 'vi_VN')
+                      .currencySymbol,
+                  style: S.headerTextStyles.header2(S.colors.primaryColor),
+                ),
+              ),
+            ],
+          ),
+        );
+
+    Widget _chooseWalletSection(VoidCallback onTap) => Material(
+          color: Colors.transparent,
+          child: InkWell(
+            splashColor: S.colors.subTextColor,
+            onTap: onTap,
+            child: Row(
+              children: [
+                Image.asset(R.walletIcon.walletIc0),
+                SizedBox(width: S.dimens.padding),
+                Text('Ví tổng',
+                    style: S.headerTextStyles
+                        .header3(S.colors.textOnSecondaryColor)),
+              ],
+            ),
+          ),
+        );
+
+    Widget _chooseCategorySection(VoidCallback onTap) => Material(
+          color: Colors.transparent,
+          child: InkWell(
+            splashColor: S.colors.subTextColor,
+            onTap: onTap,
+            child: Row(
+              children: [
+                SvgPicture.asset(R.categoryIcon.unknownIc),
+                SizedBox(width: S.dimens.padding),
+                Text('Chọn nhóm',
+                    style: S.headerTextStyles.header3(S.colors.subTextColor2)),
+              ],
+            ),
+          ),
+        );
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: S.dimens.padding),
       padding: EdgeInsets.symmetric(horizontal: S.dimens.padding),
@@ -112,22 +95,25 @@ class BasicInfo extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _enterMoneyTextField(null),
-          SizedBox(height: S.dimens.tinyPadding),
+          SizedBox(height: S.dimens.smallPadding),
+          _moneyAmountSection(
+              null, () => transaction.showAmountMoneyBottomSheet(context)),
+          SizedBox(height: S.dimens.smallPadding),
           _chooseWalletSection(() {}),
-          SizedBox(height: S.dimens.tinyPadding),
+          SizedBox(height: S.dimens.smallPadding),
           _chooseCategorySection(() {}),
-          SizedBox(height: S.dimens.tinyPadding),
+          SizedBox(height: S.dimens.smallPadding),
           InkWellRowButton(
-            onTap: () {},
+            onTap: () => transaction.showNoteAddingDialog(context),
             iconData: Icons.notes,
-            hintText: 'Thêm ghi chú',
+            hintText:
+                transaction.note.isEmpty ? 'Thêm ghi chú' : transaction.note,
           ),
-          SizedBox(height: S.dimens.tinyPadding),
+          SizedBox(height: S.dimens.smallPadding),
           InkWellRowButton(
-            onTap: () {},
+            onTap: () => transaction.pickDate(context),
             iconData: Icons.event,
-            hintText: 'Hôm nay',
+            hintText: transaction.getDateText(),
           ),
           SizedBox(height: S.dimens.padding),
         ],

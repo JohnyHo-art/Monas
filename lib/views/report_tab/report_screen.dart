@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/resources.dart';
 
@@ -17,7 +16,7 @@ class ReportScreen extends StatelessWidget {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: S.colors.whiteColor,
-            leading: SvgPicture.asset(
+            leading: Image.asset(
               R.walletIcon.walletIc1,
               fit: BoxFit.scaleDown,
             ),

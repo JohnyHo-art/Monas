@@ -34,22 +34,22 @@ class _LogIn {
 
 class _WalletIcon {
   static const path = 'assets/icons/wallet_ic';
-  final walletIc0 = '$path/wallet_ic0.svg';
-  final walletIc1 = '$path/wallet_ic1.svg';
-  final walletIc2 = '$path/wallet_ic2.svg';
-  final walletIc3 = '$path/wallet_ic3.svg';
-  final walletIc4 = '$path/wallet_ic4.svg';
-  final walletIc5 = '$path/wallet_ic5.svg';
-  final walletIc6 = '$path/wallet_ic6.svg';
-  final walletIc7 = '$path/wallet_ic7.svg';
-  final walletIc8 = '$path/wallet_ic8.svg';
-  final walletIc9 = '$path/wallet_ic9.svg';
-  final walletIc10 = '$path/wallet_ic10.svg';
-  final walletIc11 = '$path/wallet_ic11.svg';
-  final walletIc12 = '$path/wallet_ic12.svg';
-  final walletIc13 = '$path/wallet_ic13.svg';
-  final walletIc14 = '$path/wallet_ic14.svg';
-  final walletIc15 = '$path/wallet_ic15.svg';
+  final walletIc0 = '$path/wallet_ic0.png';
+  final walletIc1 = '$path/wallet_ic1.png';
+  final walletIc2 = '$path/wallet_ic2.png';
+  final walletIc3 = '$path/wallet_ic3.png';
+  final walletIc4 = '$path/wallet_ic4.png';
+  final walletIc5 = '$path/wallet_ic5.png';
+  final walletIc6 = '$path/wallet_ic6.png';
+  final walletIc7 = '$path/wallet_ic7.png';
+  final walletIc8 = '$path/wallet_ic8.png';
+  final walletIc9 = '$path/wallet_ic9.png';
+  final walletIc10 = '$path/wallet_ic10.png';
+  final walletIc11 = '$path/wallet_ic11.png';
+  final walletIc12 = '$path/wallet_ic12.png';
+  final walletIc13 = '$path/wallet_ic13.png';
+  final walletIc14 = '$path/wallet_ic14.png';
+  final walletIc15 = '$path/wallet_ic15.png';
 }
 
 class _CategoryIcon {

@@ -88,8 +88,10 @@ class LoginScreen extends StatelessWidget {
                 height: S.dimens.padding,
               ),
               CustomButton(
-                onPressed: () {},
-                text: "SIGN IN",
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, Routes.mainScreen);
+                },
+                text: "LOG IN",
               ),
               Padding(
                 padding: EdgeInsets.all(S.dimens.smallPadding),

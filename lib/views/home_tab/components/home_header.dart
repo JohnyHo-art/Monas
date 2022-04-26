@@ -10,7 +10,7 @@ class HomeHeader extends StatelessWidget {
     if (currentHour >= 0 && currentHour <= 10) {
       return 'Buổi sáng tốt lành,';
     } else if (currentHour > 10 && currentHour <= 17) {
-      return 'Chào buổi chiều,';
+      return 'Chào buổi trưa,';
     } else {
       return 'Buổi tối vui vẻ,';
     }
@@ -45,8 +45,8 @@ class HomeHeader extends StatelessWidget {
             height: 45,
             width: 45,
             decoration: BoxDecoration(
-              color: S.colors.primaryColorShadeThirty,
-              borderRadius: BorderRadius.circular(10),
+              color: S.colors.subTextColor,
+              borderRadius: BorderRadius.circular(S.dimens.cardCornerRadiusSmall),
             ),
             child: IconButton(
               onPressed: () {},

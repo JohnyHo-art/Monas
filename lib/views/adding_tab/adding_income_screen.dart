@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/viewmodels/adding_amount_vm.dart';
+import 'package:monas/viewmodels/adding_transaction_vm.dart';
+import 'package:provider/provider.dart';
 
 import 'components/basic_info.dart';
 import 'components/detail_infor.dart';
@@ -7,29 +10,36 @@ import 'components/detail_infor.dart';
 class AddingIncomeScreen extends StatelessWidget {
   const AddingIncomeScreen({Key? key}) : super(key: key);
 
-  Widget _addMoreInfoButton() => TextButton(
-        onPressed: () {},
-        child: Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: 'THÊM CHI TIẾT',
-                style: S.bodyTextStyles.buttonText(S.colors.primaryColor),
-              ),
-              WidgetSpan(
-                child: Icon(
-                  Icons.arrow_drop_down,
-                  color: S.colors.primaryColor,
-                  size: S.dimens.smallIconSize,
+  Widget _addMoreInfoButton(VoidCallback onPressed, bool showDetail) =>
+      Visibility(
+        visible: !showDetail,
+        child: TextButton(
+          onPressed: onPressed,
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: 'THÊM CHI TIẾT',
+                  style: S.bodyTextStyles.buttonText(S.colors.primaryColor),
                 ),
-              ),
-            ],
+                WidgetSpan(
+                  child: Icon(
+                    Icons.arrow_drop_down,
+                    color: S.colors.primaryColor,
+                    size: S.dimens.smallIconSize,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
 
   @override
   Widget build(BuildContext context) {
+    var transaction = context.watch<AddingTransactionViewModel>();
+    var amount = context.watch<AddingAmountViewModel>();
+
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -45,14 +55,18 @@ class AddingIncomeScreen extends StatelessWidget {
             elevation: 0.0,
             leading: IconButton(
               icon: Icon(
-                Icons.arrow_back_ios_new,
+                Icons.close,
                 color: S.colors.textOnSecondaryColor,
               ),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                amount.resetBottomSheetInfo();
+                transaction.clearBasicInformation();
+                Navigator.pop(context);
+              },
             ),
             title: Text(
               'Thêm thu nhập',
-              style: S.headerTextStyles.header3(S.colors.textOnSecondaryColor),
+              style: S.headerTextStyles.appbarTitle(null),
             ),
             actions: [
               TextButton(
@@ -74,13 +88,15 @@ class AddingIncomeScreen extends StatelessWidget {
                 SizedBox(height: S.dimens.padding),
                 const BasicInfo(),
                 SizedBox(height: S.dimens.smallPadding),
-                _addMoreInfoButton(),
+                _addMoreInfoButton(() => transaction.showDetail = true,
+                    transaction.showDetail),
                 Visibility(
-                  visible: true,
+                  visible: transaction.showDetail,
                   child: Column(
                     children: [
                       SizedBox(height: S.dimens.smallPadding),
                       const DetailInfo(),
+                      SizedBox(height: S.dimens.padding),
                     ],
                   ),
                 ),
