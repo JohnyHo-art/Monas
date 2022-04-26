@@ -8,7 +8,8 @@ import 'package:monas/constants/string_constants.dart';
 class HomeWallets extends StatelessWidget {
   const HomeWallets({Key? key}) : super(key: key);
 
-  Padding _walletItem(String iconUrl, String name, double totalBalance, String locale, VoidCallback onPressed) {
+  Padding _walletItem(String iconUrl, String name, double totalBalance,
+      String locale, VoidCallback onPressed) {
     return Padding(
       padding: EdgeInsets.only(left: S.dimens.padding),
       child: InkWell(
@@ -46,7 +47,6 @@ class HomeWallets extends StatelessWidget {
                       ),
                       TextSpan(
                         text: '  ' + name,
-                        //TODO: text overflow
                         style: S.bodyTextStyles.body1(S.colors.primaryColor),
                       )
                     ],
@@ -59,7 +59,8 @@ class HomeWallets extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: F.currencyFormat.compactSimpleFormatCurrency(totalBalance, locale),
+                        text: F.currencyFormat
+                            .compactSimpleFormatCurrency(totalBalance, locale),
                         style:
                             S.headerTextStyles.header3(S.colors.primaryColor),
                       ),

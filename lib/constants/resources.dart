@@ -8,8 +8,8 @@ class R {
 
 class _Logo {
   static const path = 'assets/logo';
-  final horiLogo = '$path/h_logo.svg';
-  final vertiLogo = '$path/v_logo.svg';
+  final horiLogo = '$path/h_logo.png';
+  final vertiLogo = '$path/v_logo.png';
 }
 
 class _Onboarding {
@@ -24,12 +24,12 @@ class _LogIn {
   static const path = 'assets/log_in';
   final logIn = '$path/log_in.png';
   final signUp = '$path/sign_up.png';
-  final forgotPassword = '$path/forgot_password.svg';
-  final emailIc = '$path/email_ic.svg';
-  final passwordIc = '$path/password_ic.svg';
-  final googleIc = '$path/google_ic.svg';
-  final eyeIc = '$path/eye_ic.svg';
-  final usernameIc = '$path/username_ic.svg';
+  final forgotPassword = '$path/forgot_password.png';
+  final emailIc = '$path/email_ic.png';
+  final passwordIc = '$path/password_ic.png';
+  final googleIc = '$path/google_ic.png';
+  final eyeIc = '$path/eye_ic.png';
+  final usernameIc = '$path/username_ic.png';
 }
 
 class _WalletIcon {
@@ -57,53 +57,54 @@ class _CategoryIcon {
   static const pathIncomes = 'assets/icons/category_ic/incomes';
   static const pathInvestment = 'assets/icons/category_ic/investment';
   static const pathMonthly = 'assets/icons/category_ic/monthly';
-  static const pathNecessary = 'assets/icons/category_icnecessary';
-  static const pathOther =
-      'assets/icons/category_ic/others'; // path entertainment
-  final beautyIc = '$pathEntertainmnet/beauty_ic.svg';
-  final entertainmentIc = '$pathEntertainmnet/entertainment_ic.svg';
-  final giftIc = '$pathEntertainmnet/gift_ic.svg';
-  final onlineIc = '$pathEntertainmnet/online_ic.svg';
-  final sportsIC = '$pathEntertainmnet/sports_ic.svg';
+  static const pathNecessary = 'assets/icons/category_ic/necessary';
+  static const pathOther = 'assets/icons/category_ic/others';
+
+  // path entertainment
+  final beautyIc = '$pathEntertainmnet/beauty_ic.png';
+  final playingIc = '$pathEntertainmnet/playing_ic.png';
+  final giftIc = '$pathEntertainmnet/gift_ic.png';
+  final onlineIc = '$pathEntertainmnet/online_service_ic.png';
+  final sportsIC = '$pathEntertainmnet/sports_ic.png';
 
   // path incomes
-  final salaryIc = '$pathIncomes/salary_ic.svg';
-  final othersIncomeIc = '$pathIncomes/others_income_ic.svg';
+  final salaryIc = '$pathIncomes/salary_ic.png';
+  final othersIncomeIc = '$pathIncomes/others_ic.png';
 
   // path investment
-  final collectInterestIc = '$pathInvestment/collect_interest_ic.svg';
-  final debtIc = '$pathInvestment/debt_ic.svg';
-  final getALoanIc = '$pathInvestment/get_a_loan_ic.svg';
-  final investmentIc = '$pathInvestment/investment_ic.svg';
-  final payInterestIc = '$pathInvestment/pay_interest_ic.svg';
-  final paybackLoanIc = '$pathInvestment/payback_loan_ic.svg';
+  final collectInterestIc = '$pathInvestment/collect_interest_ic.png';
+  final debtIc = '$pathInvestment/debt_ic.png';
+  final getALoanIc = '$pathInvestment/loan_ic.png';
+  final investmentIc = '$pathInvestment/investment_ic.png';
+  final payInterestIc = '$pathInvestment/pay_interest_ic.png';
+  final paybackLoanIc = '$pathInvestment/pay_back_loan_ic.png';
 
   // path monthly
-  final electricityIc = '$pathMonthly/electricity_ic.svg';
-  final foodIc = '$pathMonthly/food_ic.svg';
-  final gasIc = '$pathMonthly/gas_ic.svg';
-  final houseIc = '$pathMonthly/house_ic.svg';
-  final internetIc = '$pathMonthly/internet_ic.svg';
-  final othersIc = '$pathMonthly/others_ic.svg';
-  final phoneIc = '$pathMonthly/phone_ic.svg';
-  final transportIc = '$pathMonthly/transport_ic.svg';
-  final tvIc = '$pathMonthly/tv_ic.svg';
-  final waterIc = '$pathMonthly/water_ic.svg';
+  final electricityIc = '$pathMonthly/electricity_ic.png';
+  final foodIc = '$pathMonthly/food_ic.png';
+  final gasIc = '$pathMonthly/gas_ic.png';
+  final houseIc = '$pathMonthly/house_ic.png';
+  final internetIc = '$pathMonthly/internet_ic.png';
+  final othersMonthlyIc = '$pathMonthly/others_ic.png';
+  final phoneIc = '$pathMonthly/phone_ic.png';
+  final transportIc = '$pathMonthly/transport_ic.png';
+  final tvIc = '$pathMonthly/tv_ic.png';
+  final waterIc = '$pathMonthly/water_ic.png';
 
   // path necessary
-  final educationIc = '$pathNecessary/education_ic.svg';
-  final familyIc = '$pathNecessary/family_ic.svg';
-  final furnituresIc = '$pathNecessary/furnitures_ic.svg';
-  final healthIc = '$pathNecessary/health_ic.svg';
-  final insuranceIc = '$pathNecessary/insurance_ic.svg';
-  final maintainanceIc = '$pathNecessary/maintainance_ic.svg';
-  final otherIc = '$pathNecessary/others_ic.svg';
-  final personalIc = '$pathNecessary/personal_ic.svg';
-  final petsIc = '$pathNecessary/pets_ic.svg';
-  final repairedHouseIc = '$pathNecessary/repaired_house_ic.svg';
+  final educationIc = '$pathNecessary/education_ic.png';
+  final familyIc = '$pathNecessary/family_ic.png';
+  final furnituresIc = '$pathNecessary/furnitures_ic.png';
+  final healthIc = '$pathNecessary/health_care_ic.png';
+  final insuranceIc = '$pathNecessary/insurance_ic.png';
+  final maintainanceIc = '$pathNecessary/maintainance_ic.png';
+  final othersNecessaryIc = '$pathNecessary/others_ic.png';
+  final personalIc = '$pathNecessary/personal_ic.png';
+  final petsIc = '$pathNecessary/pets_ic.png';
+  final repairedHouseIc = '$pathNecessary/repair_house_ic.png';
 
   // path others
-  final moneyInIc = '$pathOther/money_in_ic.svg';
-  final moneyOutIc = '$pathOther/money_out_ic.svg';
-  final unknownIc = '$pathOther/unknown_ic.svg';
+  final moneyInIc = '$pathOther/money_in_ic.png';
+  final moneyOutIc = '$pathOther/money_out_ic.png';
+  final unknownIc = '$pathOther/unknow_ic.png';
 }

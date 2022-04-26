@@ -16,7 +16,7 @@ class BasicInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     var transaction = context.watch<AddingTransactionViewModel>();
     var amount = context.watch<AddingAmountViewModel>();
-
+    
     Widget _moneyAmountSection(String? locale, VoidCallback onTap) => InkWell(
           splashColor: S.colors.subTextColor,
           onTap: onTap,
