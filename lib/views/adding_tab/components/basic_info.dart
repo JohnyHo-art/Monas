@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
@@ -69,7 +68,7 @@ class BasicInfo extends StatelessWidget {
             onTap: onTap,
             child: Row(
               children: [
-                SvgPicture.asset(R.categoryIcon.unknownIc),
+                Image.asset(R.categoryIcon.unknownIc),
                 SizedBox(width: S.dimens.padding),
                 Text('Chọn nhóm',
                     style: S.headerTextStyles.header3(S.colors.subTextColor2)),
