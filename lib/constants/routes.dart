@@ -2,8 +2,8 @@ class Routes {
   static const mainScreen = '/';
 
   //* Routes outside main screen
-  static const onboardingScreen ='onboarding_screen/';
-  static const loginScreen ='login_screen/';
+  static const onboardingScreen = 'onboarding_screen/';
+  static const loginScreen = 'login_screen/';
   static const signupScreen = 'signup_screen/';
 
   //* Routes in bottom nav
@@ -20,6 +20,8 @@ class Routes {
   static const walletAddingScreen = walletListScreen + '/wallet_adding_screen';
   static const notificationScreen = homeScreen + '/notification_screen';
   static const addWalletScreen = homeScreen + '/add_wallet_screen';
+  static const showExpenseScreen = homeScreen + '/show_expense_screen';
+  static const categoryListScreen = showExpenseScreen + '/category_list_screen';
 
   //* Routes from report
 
