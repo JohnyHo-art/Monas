@@ -22,13 +22,6 @@ class _MainScreenState extends State<MainScreen> {
     PersonalScreen(),
   ];
 
-  // @override
-  // void initState() {
-  //   Provider.of<AuthenticViewModel>(context, listen: false)
-  //       .getUserDataFromFirestore();
-  //   super.initState();
-  // }
-
   Widget _bottomNavItem(IconData iconData, String name, int index) {
     return SizedBox(
       width: 90,
