@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/resources.dart';
+import 'package:monas/constants/utils.dart';
 import 'package:monas/views/adding_tab/components/wallet_icon_bottom_sheet.dart';
 
 class AddingWalletViewModel extends ChangeNotifier {
@@ -47,8 +48,7 @@ class AddingWalletViewModel extends ChangeNotifier {
   // Save wallet name
   void saveWalletName() {
     if (nameTextFieldController.text.isEmpty) {
-      Fluttertoast.showToast(
-          msg: 'Tên bị trống!', toastLength: Toast.LENGTH_SHORT);
+      Utils.showToast('Tên bị trống!');
     } else {
       name = nameTextFieldController.text;
     }
@@ -57,8 +57,7 @@ class AddingWalletViewModel extends ChangeNotifier {
   // Save initial balance
   void saveBalance() {
     if (balanceTextFieldController.text.isEmpty) {
-      Fluttertoast.showToast(
-          msg: 'Vui lòng điền số dư!', toastLength: Toast.LENGTH_SHORT);
+      Utils.showToast('Vui lòng điền số dư!');
     } else {
       balance = double.parse(balanceTextFieldController.value.text);
     }

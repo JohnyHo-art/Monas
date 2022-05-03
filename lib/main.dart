@@ -1,6 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:monas/constants/constants.dart';
+import 'package:monas/constants/utils.dart';
 import 'package:monas/viewmodels/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
+import 'package:monas/viewmodels/authentication/authentic_vm.dart';
+import 'package:monas/viewmodels/authentication/login_vm.dart';
+import 'package:monas/viewmodels/authentication/register_vm.dart';
 
 import 'package:monas/views/home_tab/category_list_screen.dart';
 import 'package:monas/views/home_tab/show_expense_screen.dart';
@@ -21,7 +28,13 @@ import 'views/personal_tab/personal_screen.dart';
 import 'views/plan_tab/planning_screen.dart';
 import 'views/report_tab/report_screen.dart';
 
-void main() {
+bool? seenOnboard;
+
+void main() async {
+  // Initialize firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(const Monas());
 }
 
@@ -32,14 +45,41 @@ class Monas extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // Authentication viewmodel
+        ChangeNotifierProvider(create: (_) => AuthenticViewModel()),
+        ChangeNotifierProvider(create: (_) => RegisterViewModel()),
+        ChangeNotifierProvider(create: (_) => LoginViewModel()),
+
+        // adding transaction viewmodel
         ChangeNotifierProvider(create: (_) => AddingTransactionViewModel()),
         ChangeNotifierProvider(create: (_) => AddingWalletViewModel()),
         ChangeNotifierProvider(create: (_) => AddingAmountViewModel()),
       ],
       child: MaterialApp(
+        scaffoldMessengerKey: Utils.messengerKey,
         debugShowCheckedModeBanner: false,
         initialRoute: getInitialRoute(),
         onGenerateRoute: (route) => getRoute(route),
+        home: StreamBuilder<User?>(
+          // Use authStateChanges to subscribe to authentication state changes
+          // This is fired when: user has been registered, user signed in, user signed out
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: S.colors.primaryColor,
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return const Center(child: Text('Oops! Something went wrong!'));
+            } else if (snapshot.hasData) {
+              return const MainScreen();
+            } else {
+              return const LoginScreen();
+            }
+          },
+        ),
       ),
     );
   }

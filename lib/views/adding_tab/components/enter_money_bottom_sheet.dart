@@ -72,7 +72,6 @@ class EnterMoneyBottomSheet extends StatelessWidget {
               SizedBox(width: S.dimens.padding),
               Flexible(
                 child: TextFormField(
-                  //initialValue: '0',
                   autofocus: true,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   cursorColor: S.colors.primaryColor,
