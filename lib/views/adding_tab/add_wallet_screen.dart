@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/constants/utils.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
+import 'package:monas/viewmodels/authentication/authentic_vm.dart';
+import 'package:monas/views/main_screen.dart';
 import 'package:provider/provider.dart';
 
 class AddWalletScreen extends StatelessWidget {
@@ -89,6 +91,7 @@ class AddWalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var wallet = context.watch<AddingWalletViewModel>();
+    var authentic = context.watch<AuthenticViewModel>();
 
     // Choose to include or exclude from total wallet section
     Widget _includeTotal() {
@@ -129,12 +132,15 @@ class AddWalletScreen extends StatelessWidget {
           appBar: AppBar(
             elevation: 0.0,
             backgroundColor: S.colors.whiteColor,
-            leading: IconButton(
-              icon: Icon(Icons.close, color: S.colors.textOnSecondaryColor),
-              onPressed: () {
-                wallet.resetInformation();
-                Navigator.pop(context);
-              },
+            leading: Visibility(
+              visible: !authentic.isFirstTimeSignIn,
+              child: IconButton(
+                icon: Icon(Icons.close, color: S.colors.textOnSecondaryColor),
+                onPressed: () {
+                  wallet.resetInformation();
+                  Navigator.pop(context);
+                },
+              ),
             ),
             title: Text(
               "Thêm ví",
@@ -148,13 +154,15 @@ class AddWalletScreen extends StatelessWidget {
                     size: S.dimens.iconSize,
                   ),
                   onPressed: () {
-                    Fluttertoast.showToast(
-                        msg: 'Thêm ví thành công',
-                        toastLength: Toast.LENGTH_SHORT,
-                        backgroundColor: S.colors.subTextColor,
-                        textColor: S.colors.primaryColor);
+                    Utils.showToast('Tạo ví thành công');
                     wallet.resetInformation();
-                    Navigator.pop(context);
+                    authentic.isFirstTimeSignIn
+                        ? Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MainScreen()),
+                            (route) => false)
+                        : Navigator.pop(context);
                   }),
             ],
           ),
