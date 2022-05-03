@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
-import 'package:monas/constants/resources.dart';
+import 'package:monas/models/category_item_model.dart';
 
 import 'components/category_item.dart';
 
@@ -44,12 +44,7 @@ class CategoryListScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: const [
-              Monthly(),
-              Necessary(),
-              Entertainment(),
-              Investment(),
-              Incomes(),
-              Others(),
+              List(),
             ],
           ),
         ),
@@ -58,14 +53,15 @@ class CategoryListScreen extends StatelessWidget {
   }
 }
 
-class Monthly extends StatelessWidget {
-  const Monthly({Key? key}) : super(key: key);
+class List extends StatelessWidget {
+  const List({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -75,62 +71,21 @@ class Monthly extends StatelessWidget {
               style: S.bodyTextStyles.body1(S.colors.subTextColor2),
             ),
           ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.foodIc,
-            text: "Ăn uống",
+          Flexible(
+            fit: FlexFit.loose,
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: Category.monthlyCategory.length,
+              itemBuilder: (context, index) {
+                return CategoryItem(
+                  id: Category.monthlyCategory[index].id,
+                  categoryIcon: Category.monthlyCategory[index].iconUrl,
+                  text: Category.monthlyCategory[index].name,
+                );
+              },
+            ),
           ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.transportIc,
-            text: "Di chuyển",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.houseIc,
-            text: "Thuê nhà",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.waterIc,
-            text: "Hóa đơn nước",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.phoneIc,
-            text: "Hóa đơn điện thoại",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.electricityIc,
-            text: "Hóa đơn điện",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.gasIc,
-            text: "Hóa đơn gas",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.tvIc,
-            text: "Hóa đơn TV",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.internetIc,
-            text: "Hóa đơn mạng",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.othersMonthlyIc,
-            text: "Khác",
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Necessary extends StatelessWidget {
-  const Necessary({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -138,58 +93,21 @@ class Necessary extends StatelessWidget {
               style: S.bodyTextStyles.body1(S.colors.subTextColor2),
             ),
           ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.repairedHouseIc,
-            text: "Sửa & trang trí nhà",
+          Flexible(
+            fit: FlexFit.loose,
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: Category.necessaryCategory.length,
+              itemBuilder: (context, index) {
+                return CategoryItem(
+                  id: Category.necessaryCategory[index].id,
+                  categoryIcon: Category.necessaryCategory[index].iconUrl,
+                  text: Category.necessaryCategory[index].name,
+                );
+              },
+            ),
           ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.maintainanceIc,
-            text: "Bảo dưỡng xe",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.insuranceIc,
-            text: "Bảo hiểm",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.healthIc,
-            text: "Khám sức khỏe",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.furnituresIc,
-            text: "Đồ gia dụng",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.personalIc,
-            text: "Đồ dùng cá nhân",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.petsIc,
-            text: "Vật nuôi",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.familyIc,
-            text: "Dịch vụ gia đình",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.othersNecessaryIc,
-            text: "Khác",
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Entertainment extends StatelessWidget {
-  const Entertainment({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -197,42 +115,21 @@ class Entertainment extends StatelessWidget {
               style: S.bodyTextStyles.body1(S.colors.subTextColor2),
             ),
           ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.sportsIC,
-            text: "Thể thao",
+          Flexible(
+            fit: FlexFit.loose,
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: Category.entertainmentCategory.length,
+              itemBuilder: (context, index) {
+                return CategoryItem(
+                  id: Category.entertainmentCategory[index].id,
+                  categoryIcon: Category.entertainmentCategory[index].iconUrl,
+                  text: Category.entertainmentCategory[index].name,
+                );
+              },
+            ),
           ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.beautyIc,
-            text: "Làm đẹp",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.giftIc,
-            text: "Quà tặng & Quyên góp",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.onlineIc,
-            text: "Dịch vụ trực tuyến",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.playingIc,
-            text: "Vui - Chơi",
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Investment extends StatelessWidget {
-  const Investment({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -240,46 +137,21 @@ class Investment extends StatelessWidget {
               style: S.bodyTextStyles.body1(S.colors.subTextColor2),
             ),
           ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.investmentIc,
-            text: "Đầu tư",
+          Flexible(
+            fit: FlexFit.loose,
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: Category.investmentCategory.length,
+              itemBuilder: (context, index) {
+                return CategoryItem(
+                  id: Category.investmentCategory[index].id,
+                  categoryIcon: Category.investmentCategory[index].iconUrl,
+                  text: Category.investmentCategory[index].name,
+                );
+              },
+            ),
           ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.debtIc,
-            text: "Thu nợ",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.getALoanIc,
-            text: "Đi vay",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.paybackLoanIc,
-            text: "Trả nợ",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.payInterestIc,
-            text: "Trả lãi",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.collectInterestIc,
-            text: "Thu lãi",
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Incomes extends StatelessWidget {
-  const Incomes({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -287,30 +159,21 @@ class Incomes extends StatelessWidget {
               style: S.bodyTextStyles.body1(S.colors.subTextColor2),
             ),
           ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.salaryIc,
-            text: "Lương",
+          Flexible(
+            fit: FlexFit.loose,
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: Category.incomesCategory.length,
+              itemBuilder: (context, index) {
+                return CategoryItem(
+                  id: Category.incomesCategory[index].id,
+                  categoryIcon: Category.incomesCategory[index].iconUrl,
+                  text: Category.incomesCategory[index].name,
+                );
+              },
+            ),
           ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.othersIncomeIc,
-            text: "Thu nhập khác",
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Others extends StatelessWidget {
-  const Others({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -318,13 +181,20 @@ class Others extends StatelessWidget {
               style: S.bodyTextStyles.body1(S.colors.subTextColor2),
             ),
           ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.moneyInIc,
-            text: "Tiền chuyển đi",
-          ),
-          CategoryItem(
-            categoryIcon: R.categoryIcon.moneyOutIc,
-            text: "Tiền chuyển đến",
+          Flexible(
+            fit: FlexFit.loose,
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: Category.othersCategory.length,
+              itemBuilder: (context, index) {
+                return CategoryItem(
+                  id: Category.othersCategory[index].id,
+                  categoryIcon: Category.othersCategory[index].iconUrl,
+                  text: Category.othersCategory[index].name,
+                );
+              },
+            ),
           ),
         ],
       ),
