@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
+import 'package:monas/constants/utils.dart';
 import 'package:monas/views/adding_tab/components/add_note_dialog.dart';
 import 'package:monas/views/adding_tab/components/enter_money_bottom_sheet.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class AddingTransactionViewModel extends ChangeNotifier {
   TextEditingController noteTextFieldController = TextEditingController();
@@ -38,11 +38,7 @@ class AddingTransactionViewModel extends ChangeNotifier {
   // This updates note from the dialog to the note section
   void saveTransactionNote() {
     if (noteTextFieldController.text.trim().isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'Ghi chú trống!',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: S.colors.subTextColor2,
-      );
+      Utils.showToast('Ghi chú trống!');
     } else {
       note = noteTextFieldController.text;
     }

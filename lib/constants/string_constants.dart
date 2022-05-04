@@ -1,5 +1,6 @@
 class StringConstants {
   static final localeString = _LocaleString();
+  static final firebaseString = _FirebaseString();
 }
 
 class _LocaleString {
@@ -15,4 +16,9 @@ class _LocaleString {
   final spanish = 'es_ES';
   final china = 'zh_CN';
   final singapore = 'en_SG';
+}
+
+class _FirebaseString {
+  final userPath = 'users';
+
 }

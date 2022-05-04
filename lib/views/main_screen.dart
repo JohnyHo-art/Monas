@@ -69,17 +69,20 @@ class _MainScreenState extends State<MainScreen> {
             ListTile(
               leading: const Icon(Icons.arrow_upward),
               title: const Text('Thêm chi tiêu mới'),
-              onTap: () => Navigator.pushReplacementNamed(context, Routes.addExpenseScreen),
+              onTap: () => Navigator.pushReplacementNamed(
+                  context, Routes.addExpenseScreen),
             ),
             ListTile(
               leading: const Icon(Icons.arrow_downward),
               title: const Text('Thêm thu nhập mới'),
-              onTap: () => Navigator.pushReplacementNamed(context, Routes.addIncomeScreen),
+              onTap: () => Navigator.pushReplacementNamed(
+                  context, Routes.addIncomeScreen),
             ),
             ListTile(
               leading: const Icon(Icons.account_balance_wallet),
               title: const Text('Thêm ví mới'),
-              onTap: () => Navigator.pushReplacementNamed(context, Routes.addWalletScreen),
+              onTap: () => Navigator.pushReplacementNamed(
+                  context, Routes.addWalletScreen),
             ),
           ],
         );

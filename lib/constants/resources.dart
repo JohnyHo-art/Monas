@@ -4,12 +4,14 @@ class R {
   static final walletIcon = _WalletIcon();
   static final categoryIcon = _CategoryIcon();
   static final logIn = _LogIn();
+  static final othersIcon = _OthersIcon();
 }
 
 class _Logo {
   static const path = 'assets/logo';
-  final horiLogo = '$path/h_logo.png';
-  final vertiLogo = '$path/v_logo.png';
+  final horiLogo = '$path/h_logo.svg';
+  final vertiLogo = '$path/v_logo.svg';
+  final logo = '$path/logo.png';
 }
 
 class _Onboarding {
@@ -25,11 +27,11 @@ class _LogIn {
   final logIn = '$path/log_in.png';
   final signUp = '$path/sign_up.png';
   final forgotPassword = '$path/forgot_password.png';
-  final emailIc = '$path/email_ic.png';
-  final passwordIc = '$path/password_ic.png';
-  final googleIc = '$path/google_ic.png';
+  final emailIc = '$path/email_ic.svg';
+  final passwordIc = '$path/password_ic.svg';
+  final googleIc = '$path/google_ic.svg';
   final eyeIc = '$path/eye_ic.png';
-  final usernameIc = '$path/username_ic.png';
+  final usernameIc = '$path/username_ic.svg';
 }
 
 class _WalletIcon {
@@ -107,4 +109,10 @@ class _CategoryIcon {
   final moneyInIc = '$pathOther/money_in_ic.png';
   final moneyOutIc = '$pathOther/money_out_ic.png';
   final unknownIc = '$pathOther/unknow_ic.png';
+}
+
+class _OthersIcon {
+  static const otherIcon = 'assets/icons/others';
+
+  final notificationLoudSpeaker = '$otherIcon/notification_speaker.png';
 }

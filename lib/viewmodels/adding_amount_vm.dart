@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/constants/utils.dart';
 
 class AddingAmountViewModel extends ChangeNotifier {
   TextEditingController amountTextFieldController = TextEditingController();
@@ -84,17 +85,9 @@ class AddingAmountViewModel extends ChangeNotifier {
   // bottom sheet to the amount section
   void saveAmountOfMoney() {
     if (amountTextFieldController.text == '') {
-      Fluttertoast.showToast(
-        msg: 'Vui lòng điền số tiền',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: S.colors.subTextColor2,
-      );
+      Utils.showToast('Vui lòng điền số tiền');
     } else if (amountTextFieldController.text == '0') {
-      Fluttertoast.showToast(
-        msg: 'Số tiền không được phép bằng 0!',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: S.colors.subTextColor2,
-      );
+      Utils.showToast('Số tiền không được phép bằng 0!');
     } else {
       amountOfMoney = double.parse(amountTextFieldController.text);
     }
