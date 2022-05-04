@@ -7,7 +7,6 @@ import 'package:monas/constants/string_constants.dart';
 import 'package:monas/constants/utils.dart';
 import 'package:monas/main.dart';
 import 'package:monas/models/monas_user.dart';
-import 'package:monas/views/adding_tab/add_wallet_screen.dart';
 
 class AuthenticViewModel extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -57,7 +56,6 @@ class AuthenticViewModel extends ChangeNotifier {
       });
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
-      //Navigator.pop(context);
     } catch (e) {
       Utils.showErrorDialog(context);
     }
