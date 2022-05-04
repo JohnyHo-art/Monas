@@ -5,6 +5,9 @@ import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/utils.dart';
 import 'package:monas/viewmodels/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
+import 'package:monas/viewmodels/choose_category_vm.dart';
+import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
+import 'package:monas/viewmodels/time_chosen_vm.dart';
 import 'package:monas/viewmodels/authentication/authentic_vm.dart';
 import 'package:monas/viewmodels/authentication/login_vm.dart';
 import 'package:monas/viewmodels/authentication/register_vm.dart';
@@ -55,6 +58,9 @@ class Monas extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AddingTransactionViewModel()),
         ChangeNotifierProvider(create: (_) => AddingWalletViewModel()),
         ChangeNotifierProvider(create: (_) => AddingAmountViewModel()),
+        ChangeNotifierProvider(create: (_) => ChooseCategoryViewModel()),
+        ChangeNotifierProvider(create: (_) => DropdownWalletViewModel()),
+        ChangeNotifierProvider(create: (_) => TimeChosenViewModel()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
