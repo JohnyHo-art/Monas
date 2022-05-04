@@ -151,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     CustomButton(
-                      onPressed: () {},
+                      onPressed: () => authentication.signInWithGoogle(context),
                       text: "",
                       widgetText: RichText(
                         text: TextSpan(

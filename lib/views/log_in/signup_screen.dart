@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/resources.dart';
-import 'package:monas/constants/routes.dart';
 import 'package:monas/viewmodels/authentication/authentic_vm.dart';
 import 'package:monas/viewmodels/authentication/register_vm.dart';
 import 'package:monas/views/log_in/components/input_text_field.dart';
@@ -123,7 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               height: S.dimens.buttonHeight + 20,
                               child: CustomInputTextField(
                                 controller: _userNameController,
-                                hintText: "Tên đăng nhập",
+                                hintText: "Tên tài khoản",
                                 validator: (value) => register
                                     .userNameValidator(value.toString()),
                               ),
@@ -190,8 +189,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushReplacementNamed(
-                                    context, Routes.loginScreen);
+                                Navigator.pop(context);
                               },
                               child: Text(
                                 "Đăng nhập",
