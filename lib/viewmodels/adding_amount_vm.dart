@@ -42,35 +42,42 @@ class AddingAmountViewModel extends ChangeNotifier {
 
   // Update text field when option is selected
   void onOptionSelected(int index) {
-    switch(index) {
-      case 0: {
-        setMoneyAmountTextField(amountList[index].toString());
-         break;
-      }
-      case 1: {
-        setMoneyAmountTextField(amountList[index].toString());
-        break;
-      }
-      case 2: {
-        setMoneyAmountTextField(amountList[index].toString());
-        break;
-      }
-      case 3: {
-        setMoneyAmountTextField(amountList[index].toString());
-        break;
-      }
-      case 4: {
-        setMoneyAmountTextField(amountList[index].toString());
-        break;
-      }
-      case 5: {
-        setMoneyAmountTextField(amountList[index].toString());
-        break;
-      }
-      case 6: {
-        setMoneyAmountTextField(amountList[index].toString());
-        break;
-      }
+    switch (index) {
+      case 0:
+        {
+          setMoneyAmountTextField(amountList[index].toString());
+          break;
+        }
+      case 1:
+        {
+          setMoneyAmountTextField(amountList[index].toString());
+          break;
+        }
+      case 2:
+        {
+          setMoneyAmountTextField(amountList[index].toString());
+          break;
+        }
+      case 3:
+        {
+          setMoneyAmountTextField(amountList[index].toString());
+          break;
+        }
+      case 4:
+        {
+          setMoneyAmountTextField(amountList[index].toString());
+          break;
+        }
+      case 5:
+        {
+          setMoneyAmountTextField(amountList[index].toString());
+          break;
+        }
+      case 6:
+        {
+          setMoneyAmountTextField(amountList[index].toString());
+          break;
+        }
     }
   }
 

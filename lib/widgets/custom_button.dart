@@ -45,10 +45,13 @@ class CustomButton extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: onPressed,
-        child: widgetText ??
-            Text(textUppercase == true ? text.toUpperCase() : text,
-                style: S.bodyTextStyles
-                    .buttonText(textColor ?? S.colors.textOnPrimaryColor)),
+        child: Center(
+          child: widgetText ??
+              Text(text,
+                  style: textStyle ??
+                      S.bodyTextStyles.buttonText(
+                          textColor ?? S.colors.textOnPrimaryColor)),
+        ),
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(

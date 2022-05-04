@@ -4,8 +4,10 @@ import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
 import 'package:monas/constants/routes.dart';
+import 'package:monas/models/category_item_model.dart';
 import 'package:monas/viewmodels/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction_vm.dart';
+import 'package:monas/viewmodels/choose_category_vm.dart';
 import 'package:monas/widgets/inkwell_row_button.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +18,8 @@ class BasicInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     var transaction = context.watch<AddingTransactionViewModel>();
     var amount = context.watch<AddingAmountViewModel>();
-    
+    var chooseCategory = context.watch<ChooseCategoryViewModel>();
+
     Widget _moneyAmountSection(String? locale, VoidCallback onTap) => InkWell(
           splashColor: S.colors.subTextColor,
           onTap: onTap,
@@ -69,9 +72,16 @@ class BasicInfo extends StatelessWidget {
             onTap: onTap,
             child: Row(
               children: [
-                Image.asset(R.categoryIcon.unknownIc),
+                Image.asset(
+                  Category
+                      .categoryList[chooseCategory.getSelectedCategoryIndex()]
+                      .iconUrl,
+                ),
                 SizedBox(width: S.dimens.padding),
-                Text('Chọn nhóm',
+                Text(
+                    Category
+                        .categoryList[chooseCategory.getSelectedCategoryIndex()]
+                        .name,
                     style: S.headerTextStyles.header3(S.colors.subTextColor2)),
               ],
             ),
@@ -101,7 +111,8 @@ class BasicInfo extends StatelessWidget {
           SizedBox(height: S.dimens.smallPadding),
           _chooseWalletSection(() {}),
           SizedBox(height: S.dimens.smallPadding),
-          _chooseCategorySection(() => Navigator.pushNamed(context, Routes.categoryListScreen)),
+          _chooseCategorySection(
+              () => Navigator.pushNamed(context, Routes.categoryListScreen)),
           SizedBox(height: S.dimens.smallPadding),
           InkWellRowButton(
             onTap: () => transaction.showNoteAddingDialog(context),
