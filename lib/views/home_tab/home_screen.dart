@@ -38,12 +38,9 @@ class HomeScreen extends StatelessWidget {
             ),
           );
         } else {
-          return Scaffold(
-            backgroundColor: S.colors.whiteColor,
-            body: Center(
-              child: CircularProgressIndicator(
-                color: S.colors.primaryColor,
-              ),
+          return Center(
+            child: CircularProgressIndicator(
+              color: S.colors.secondaryColor,
             ),
           );
         }

@@ -34,6 +34,8 @@ class Utils {
     showDialog(
       context: context,
       builder: (context) => Container(
+        height: 300,
+        width: 300,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(S.dimens.cardCornerRadiusMedium),
           color: S.colors.whiteColor,
@@ -46,15 +48,21 @@ class Utils {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(R.othersIcon.notificationLoudSpeaker),
+              Image.asset(
+                R.othersIcon.notificationLoudSpeaker,
+                height: 150,
+                width: 150,
+              ),
+              SizedBox(height: S.dimens.smallPadding),
               Text(
                 'Lỗi là của chúng tôi, không phải của bạn, \nVui lòng thử lại sau',
-                style: S.bodyTextStyles.body2(S.colors.subTextColor2),
+                style: S.bodyTextStyles.body1(S.colors.subTextColor2),
+                textAlign: TextAlign.center,
               ),
               SizedBox(height: S.dimens.smallPadding),
               CustomButton(
                 onPressed: () => Navigator.pop(context),
-                text: 'TÔI SẼ THỬ LẠI SAU',
+                text: 'TÔI ĐÃ HIỂU',
               ),
             ],
           ),

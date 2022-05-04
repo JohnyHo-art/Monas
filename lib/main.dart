@@ -31,7 +31,8 @@ import 'views/personal_tab/personal_screen.dart';
 import 'views/plan_tab/planning_screen.dart';
 import 'views/report_tab/report_screen.dart';
 
-bool? seenOnboard;
+bool seenOnboard = true;
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   // Initialize firebase
@@ -62,36 +63,13 @@ class Monas extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => TimeChosenViewModel()),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         scaffoldMessengerKey: Utils.messengerKey,
         debugShowCheckedModeBanner: false,
-        initialRoute: getInitialRoute(),
         onGenerateRoute: (route) => getRoute(route),
-        home: StreamBuilder<User?>(
-          // Use authStateChanges to subscribe to authentication state changes
-          // This is fired when: user has been registered, user signed in, user signed out
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: S.colors.primaryColor,
-                ),
-              );
-            } else if (snapshot.hasError) {
-              return const Center(child: Text('Oops! Something went wrong!'));
-            } else if (snapshot.hasData) {
-              return const MainScreen();
-            } else {
-              return const LoginScreen();
-            }
-          },
-        ),
+        home: const HomePage(),
       ),
     );
-  }
-
-  String getInitialRoute() {
-    return Routes.showExpenseScreen;
   }
 
   MaterialPageRoute? getRoute(RouteSettings settings) {
@@ -133,5 +111,33 @@ class Monas extends StatelessWidget {
       {required RouteSettings settings}) {
     return MaterialPageRoute(
         settings: settings, builder: (BuildContext context) => child);
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      // Use authStateChanges to subscribe to authentication state changes
+      // This is fired when: user has been registered, user signed in, user signed out
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: S.colors.primaryColor,
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('Oops! Something went wrong!'));
+        } else if (snapshot.hasData) {
+          return const MainScreen();
+        } else {
+          return const LoginScreen();
+        }
+      },
+    );
   }
 }

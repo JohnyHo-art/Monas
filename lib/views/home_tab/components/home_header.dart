@@ -20,7 +20,6 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final authentication = context.watch<AuthenticViewModel>();
 
     return Row(
