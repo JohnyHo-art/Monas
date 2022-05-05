@@ -7,7 +7,6 @@ import 'package:monas/constants/string_constants.dart';
 import 'package:monas/constants/utils.dart';
 import 'package:monas/main.dart';
 import 'package:monas/models/monas_user.dart';
-import 'package:monas/views/adding_tab/add_wallet_screen.dart';
 
 class AuthenticViewModel extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -57,7 +56,6 @@ class AuthenticViewModel extends ChangeNotifier {
       });
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
-      //Navigator.pop(context);
     } catch (e) {
       Utils.showErrorDialog(context);
     }
@@ -159,6 +157,35 @@ class AuthenticViewModel extends ChangeNotifier {
     try {
       await FirebaseAuth.instance.signInWithCredential(credential);
       pushUserToFirestore(null);
+    } on FirebaseException catch (e) {
+      Utils.showSnackBar(e.message);
+    } catch (e) {
+      Utils.showErrorDialog(context);
+    }
+
+    // Navigator.of(context) doesn't work so use a navigator key instead
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+
+  // Send email to reset password
+  Future<void> resetPassword(BuildContext context, String email) async {
+    // Show a dialog to show loading
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => Center(
+        child: CircularProgressIndicator(
+          color: S.colors.secondaryColor,
+        ),
+      ),
+    );
+
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: email)
+          .then(
+            (value) => Utils.showToast('Vui lòng kiểm tra email!'),
+          );
     } on FirebaseException catch (e) {
       Utils.showSnackBar(e.message);
     } catch (e) {

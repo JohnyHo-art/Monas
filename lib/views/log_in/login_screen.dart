@@ -113,9 +113,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
-                        onTap: () {
-                          //TODO: handle forget password event
-                        },
+                        onTap: () => Navigator.pushNamed(
+                            context, Routes.forgotPasswordScreen),
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(
                               0, S.dimens.smallPadding, 50, 0),
