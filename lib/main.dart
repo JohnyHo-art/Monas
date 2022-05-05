@@ -16,6 +16,7 @@ import 'package:monas/views/home_tab/category_list_screen.dart';
 import 'package:monas/views/home_tab/show_expense_screen.dart';
 import 'package:monas/views/adding_tab/add_wallet_screen.dart';
 import 'package:monas/views/home_tab/wallet_list_screen.dart';
+import 'package:monas/views/log_in/forgot_password_screen.dart';
 
 import 'package:monas/views/log_in/login_screen.dart';
 import 'package:monas/views/log_in/signup_screen.dart';
@@ -88,6 +89,8 @@ class Monas extends StatelessWidget {
         return buildRoute(const LoginScreen(), settings: settings);
       case Routes.signupScreen:
         return buildRoute(const SignUpScreen(), settings: settings);
+      case Routes.forgotPasswordScreen:
+        return buildRoute(const ForgotPasswordScreen(), settings: settings);
       // Adding tab
       case Routes.addExpenseScreen:
         return buildRoute(const AddingExpenseScreen(), settings: settings);

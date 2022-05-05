@@ -167,6 +167,35 @@ class AuthenticViewModel extends ChangeNotifier {
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
+  // Send email to reset password
+  Future<void> resetPassword(BuildContext context, String email) async {
+    // Show a dialog to show loading
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => Center(
+        child: CircularProgressIndicator(
+          color: S.colors.secondaryColor,
+        ),
+      ),
+    );
+
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: email)
+          .then(
+            (value) => Utils.showToast('Vui lòng kiểm tra email!'),
+          );
+    } on FirebaseException catch (e) {
+      Utils.showSnackBar(e.message);
+    } catch (e) {
+      Utils.showErrorDialog(context);
+    }
+
+    // Navigator.of(context) doesn't work so use a navigator key instead
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+
   //* Sign out current user
   Future<void> signOut(BuildContext context) async {
     try {
