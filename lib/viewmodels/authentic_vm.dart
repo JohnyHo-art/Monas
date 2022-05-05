@@ -21,6 +21,26 @@ class AuthenticViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //* Variable to check visibility of password in login
+  bool _isObscuredPass = true;
+
+  get isObscurePass => _isObscuredPass;
+
+  set isObscurePass(value) {
+    _isObscuredPass = value;
+    notifyListeners();
+  }
+
+  //* Variable to check visibility of password in sign up
+  bool _isObscuredPass2 = true;
+
+  get isObscurePass2 => _isObscuredPass2;
+
+  set isObscurePass2(value) {
+    _isObscuredPass2 = value;
+    notifyListeners();
+  }
+
   // Initialize the monas User to avoid crash from being uninitialized
   AuthenticViewModel() {
     _monasUser = MonasUser(
@@ -30,19 +50,39 @@ class AuthenticViewModel extends ChangeNotifier {
     );
   }
 
+  //* Check valid email format
+  String? emailValidator(String email) {
+    if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(email) ||
+        email == "") {
+      return 'Email không hợp lệ';
+    } else {
+      return null;
+    }
+  }
+
+  //* Check valid user name
+  String? userNameValidator(String userName) {
+    if (userName.isEmpty || userName.length > 40) {
+      return 'Invalid username';
+    } else {
+      return null;
+    }
+  }
+
+  //* Check valid password
+  String? passwordValidator(String password) {
+    if (password.isEmpty || password.length < 6) {
+      return 'Mật khẩu cần tối thiểu 6 ký tự';
+    } else {
+      return null;
+    }
+  }
+
   //* Used to create new account with email and password
   void createUserWithEmailAndPassword(BuildContext context, String email,
       String password, String username) async {
-    // Show a dialog to show loading
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) => Center(
-        child: CircularProgressIndicator(
-          color: S.colors.primaryColor,
-        ),
-      ),
-    );
+    Utils.showLoadingCircle(context);
     try {
       await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -71,7 +111,6 @@ class AuthenticViewModel extends ChangeNotifier {
         email: user.email!);
     monasUser.avatarUrl =
         'https://firebasestorage.googleapis.com/v0/b/wecare-da049.appspot.com/o/default_avatar.png?alt=media&token=2c3cb547-e2d2-4e14-a6da-ee15b04ccb6e';
-
     // Set user data to firestore
     await FirebaseFirestore.instance
         .collection(StringConstants.firebaseString.userPath)
@@ -101,16 +140,7 @@ class AuthenticViewModel extends ChangeNotifier {
   // sign in with email and password
   Future<void> signInWithEmailAndPassword(
       BuildContext context, String email, String password) async {
-    // Show a dialog to show loading
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) => Center(
-        child: CircularProgressIndicator(
-          color: S.colors.secondaryColor,
-        ),
-      ),
-    );
+    Utils.showLoadingCircle(context);
     try {
       await _firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password)
@@ -122,37 +152,23 @@ class AuthenticViewModel extends ChangeNotifier {
     } catch (e) {
       Utils.showErrorDialog(context);
     }
-
     // Navigator.of(context) doesn't work so use a navigator key instead
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   // Sign in with Google
   Future<void> signInWithGoogle(BuildContext context) async {
-    // Show a dialog to show loading
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) => Center(
-        child: CircularProgressIndicator(
-          color: S.colors.secondaryColor,
-        ),
-      ),
-    );
-
+    Utils.showLoadingCircle(context);
     final GoogleSignInAccount? googleSignInAccount =
         await GoogleSignIn().signIn();
-
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
         await googleSignInAccount?.authentication;
-
     // Crate a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-
     // Once signed in return the user credential
     try {
       await FirebaseAuth.instance.signInWithCredential(credential);
@@ -162,28 +178,15 @@ class AuthenticViewModel extends ChangeNotifier {
     } catch (e) {
       Utils.showErrorDialog(context);
     }
-
     // Navigator.of(context) doesn't work so use a navigator key instead
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   // Send email to reset password
   Future<void> resetPassword(BuildContext context, String email) async {
-    // Show a dialog to show loading
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) => Center(
-        child: CircularProgressIndicator(
-          color: S.colors.secondaryColor,
-        ),
-      ),
-    );
-
+    Utils.showLoadingCircle(context);
     try {
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: email)
-          .then(
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email).then(
             (value) => Utils.showToast('Vui lòng kiểm tra email!'),
           );
     } on FirebaseException catch (e) {
@@ -191,13 +194,13 @@ class AuthenticViewModel extends ChangeNotifier {
     } catch (e) {
       Utils.showErrorDialog(context);
     }
-
     // Navigator.of(context) doesn't work so use a navigator key instead
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   //* Sign out current user
   Future<void> signOut(BuildContext context) async {
+    Utils.showLoadingCircle(context);
     try {
       await FirebaseAuth.instance.signOut();
       Utils.showToast('Bạn đã đăng xuất khỏi Monas!');
@@ -206,5 +209,7 @@ class AuthenticViewModel extends ChangeNotifier {
     } catch (e) {
       Utils.showErrorDialog(context);
     }
+    // Navigator.of(context) doesn't work so use a navigator key instead
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }

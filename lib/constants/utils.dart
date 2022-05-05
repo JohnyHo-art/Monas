@@ -70,4 +70,16 @@ class Utils {
       ),
     );
   }
+
+  static showLoadingCircle(BuildContext context) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => Center(
+        child: CircularProgressIndicator(
+          color: S.colors.secondaryColor,
+        ),
+      ),
+    );
+  }
 }

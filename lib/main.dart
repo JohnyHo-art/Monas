@@ -8,9 +8,7 @@ import 'package:monas/viewmodels/adding_wallet_vm.dart';
 import 'package:monas/viewmodels/choose_category_vm.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
 import 'package:monas/viewmodels/time_chosen_vm.dart';
-import 'package:monas/viewmodels/authentication/authentic_vm.dart';
-import 'package:monas/viewmodels/authentication/login_vm.dart';
-import 'package:monas/viewmodels/authentication/register_vm.dart';
+import 'package:monas/viewmodels/authentic_vm.dart';
 
 import 'package:monas/views/home_tab/category_list_screen.dart';
 import 'package:monas/views/home_tab/show_expense_screen.dart';
@@ -52,8 +50,8 @@ class Monas extends StatelessWidget {
       providers: [
         // Authentication viewmodel
         ChangeNotifierProvider(create: (_) => AuthenticViewModel()),
-        ChangeNotifierProvider(create: (_) => RegisterViewModel()),
-        ChangeNotifierProvider(create: (_) => LoginViewModel()),
+        // ChangeNotifierProvider(create: (_) => RegisterViewModel()),
+        // ChangeNotifierProvider(create: (_) => LoginViewModel()),
 
         // adding transaction viewmodel
         ChangeNotifierProvider(create: (_) => AddingTransactionViewModel()),

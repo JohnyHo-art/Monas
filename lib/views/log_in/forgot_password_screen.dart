@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/resources.dart';
-import 'package:monas/viewmodels/authentication/authentic_vm.dart';
-import 'package:monas/viewmodels/authentication/login_vm.dart';
+import 'package:monas/viewmodels/authentic_vm.dart';
 import 'package:monas/views/log_in/components/input_text_field.dart';
 import 'package:monas/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +26,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
+    final authentication =
+        Provider.of<AuthenticViewModel>(context, listen: false);
 
     return SafeArea(
       child: GestureDetector(
@@ -76,19 +77,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           child: CustomInputTextField(
                             hintText: "Email",
                             controller: _emailController,
-                            validator: (val) => Provider.of<LoginViewModel>(
-                                    context,
-                                    listen: false)
-                                .emailValidator(val.toString()),
+                            validator: (val) =>
+                                authentication.emailValidator(val.toString()),
                           ),
                         ),
                       ],
                     ),
                     SizedBox(height: S.dimens.padding),
                     CustomButton(
-                      onPressed: () => Provider.of<AuthenticViewModel>(context,
-                              listen: false)
-                          .resetPassword(context, _emailController.text.trim()),
+                      onPressed: () => authentication.resetPassword(
+                          context, _emailController.text.trim()),
                       text: 'TÔI MUỐN ĐẶT LẠI MẬT KHẨU',
                     ),
                   ],
