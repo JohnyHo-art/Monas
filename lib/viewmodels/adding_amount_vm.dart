@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/utils.dart';
 
 class AddingAmountViewModel extends ChangeNotifier {
