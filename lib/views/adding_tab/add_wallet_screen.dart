@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/utils.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
-import 'package:monas/viewmodels/authentication/authentic_vm.dart';
-import 'package:monas/views/main_screen.dart';
 import 'package:provider/provider.dart';
 
 class AddWalletScreen extends StatelessWidget {
@@ -134,15 +132,12 @@ class AddWalletScreen extends StatelessWidget {
           appBar: AppBar(
             elevation: 0.0,
             backgroundColor: S.colors.whiteColor,
-            leading: Visibility(
-              visible: !authentic.isFirstTimeSignIn,
-              child: IconButton(
-                icon: Icon(Icons.close, color: S.colors.textOnSecondaryColor),
-                onPressed: () {
-                  addWallet.resetInformation();
-                  Navigator.pop(context);
-                },
-              ),
+            leading: IconButton(
+              icon: Icon(Icons.close, color: S.colors.textOnSecondaryColor),
+              onPressed: () {
+                wallet.resetInformation();
+                Navigator.pop(context);
+              },
             ),
             title: Text(
               "Thêm ví",
@@ -164,7 +159,6 @@ class AddWalletScreen extends StatelessWidget {
                                 builder: (context) => const MainScreen()),
                             (route) => false)
                         : Navigator.pop(context);
-                    //addWallet.resetInformation();
                   }),
             ],
           ),

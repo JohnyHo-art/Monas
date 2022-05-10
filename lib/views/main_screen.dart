@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/routes.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
+import 'package:monas/viewmodels/authentic_vm.dart';
 import 'package:monas/views/home_tab/home_screen.dart';
 import 'package:monas/views/personal_tab/personal_screen.dart';
 import 'package:monas/views/plan_tab/planning_screen.dart';
@@ -96,7 +97,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     Provider.of<LoadWalletViewModel>(context, listen: false)
         .loadListWalletFromFirestore();
-
+    Provider.of<AuthenticViewModel>(context, listen: false).getUserDataFromFirestore();
     super.initState();
   }
 

@@ -9,14 +9,13 @@ import 'package:monas/viewmodels/choose_category_vm.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/viewmodels/time_chosen_vm.dart';
-import 'package:monas/viewmodels/authentication/authentic_vm.dart';
-import 'package:monas/viewmodels/authentication/login_vm.dart';
-import 'package:monas/viewmodels/authentication/register_vm.dart';
+import 'package:monas/viewmodels/authentic_vm.dart';
 
 import 'package:monas/views/home_tab/category_list_screen.dart';
 import 'package:monas/views/home_tab/show_expense_screen.dart';
 import 'package:monas/views/adding_tab/add_wallet_screen.dart';
 import 'package:monas/views/home_tab/wallet_list_screen.dart';
+import 'package:monas/views/log_in/forgot_password_screen.dart';
 
 import 'package:monas/views/log_in/login_screen.dart';
 import 'package:monas/views/log_in/signup_screen.dart';
@@ -32,7 +31,8 @@ import 'views/personal_tab/personal_screen.dart';
 import 'views/plan_tab/planning_screen.dart';
 import 'views/report_tab/report_screen.dart';
 
-bool? seenOnboard;
+bool seenOnboard = true;
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   // Initialize firebase
@@ -51,8 +51,8 @@ class Monas extends StatelessWidget {
       providers: [
         // Authentication viewmodel
         ChangeNotifierProvider(create: (_) => AuthenticViewModel()),
-        ChangeNotifierProvider(create: (_) => RegisterViewModel()),
-        ChangeNotifierProvider(create: (_) => LoginViewModel()),
+        // ChangeNotifierProvider(create: (_) => RegisterViewModel()),
+        // ChangeNotifierProvider(create: (_) => LoginViewModel()),
 
         // adding transaction viewmodel
         ChangeNotifierProvider(create: (_) => AddingTransactionViewModel()),
@@ -64,30 +64,11 @@ class Monas extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoadWalletViewModel()),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         scaffoldMessengerKey: Utils.messengerKey,
         debugShowCheckedModeBanner: false,
-        initialRoute: getInitialRoute(),
         onGenerateRoute: (route) => getRoute(route),
-        home: StreamBuilder<User?>(
-          // Use authStateChanges to subscribe to authentication state changes
-          // This is fired when: user has been registered, user signed in, user signed out
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: S.colors.primaryColor,
-                ),
-              );
-            } else if (snapshot.hasError) {
-              return const Center(child: Text('Oops! Something went wrong!'));
-            } else if (snapshot.hasData) {
-              return const MainScreen();
-            } else {
-              return const LoginScreen();
-            }
-          },
-        ),
+        home: const HomePage(),
       ),
     );
   }
@@ -95,7 +76,7 @@ class Monas extends StatelessWidget {
   String getInitialRoute() {
     return Routes.loginScreen;
   }
-
+  
   MaterialPageRoute? getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.mainScreen:
@@ -112,6 +93,8 @@ class Monas extends StatelessWidget {
         return buildRoute(const LoginScreen(), settings: settings);
       case Routes.signupScreen:
         return buildRoute(const SignUpScreen(), settings: settings);
+      case Routes.forgotPasswordScreen:
+        return buildRoute(const ForgotPasswordScreen(), settings: settings);
       // Adding tab
       case Routes.addExpenseScreen:
         return buildRoute(const AddingExpenseScreen(), settings: settings);
@@ -135,5 +118,33 @@ class Monas extends StatelessWidget {
       {required RouteSettings settings}) {
     return MaterialPageRoute(
         settings: settings, builder: (BuildContext context) => child);
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      // Use authStateChanges to subscribe to authentication state changes
+      // This is fired when: user has been registered, user signed in, user signed out
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: S.colors.primaryColor,
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('Oops! Something went wrong!'));
+        } else if (snapshot.hasData) {
+          return const MainScreen();
+        } else {
+          return const LoginScreen();
+        }
+      },
+    );
   }
 }
