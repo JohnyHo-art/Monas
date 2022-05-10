@@ -95,7 +95,9 @@ class HomeWallets extends StatelessWidget {
                   style: ButtonStyle(
                       overlayColor: MaterialStateColor.resolveWith(
                           (states) => S.colors.primaryColorShadeThirty)),
-                  onPressed: () => Navigator.pushNamed(context, Routes.walletListScreen),
+                  onPressed: () => {
+                        Navigator.pushNamed(context, Routes.walletListScreen),
+                      },
                   child: Text(
                     'Xem tất cả',
                     style: S.bodyTextStyles.buttonText(S.colors.primaryColor),

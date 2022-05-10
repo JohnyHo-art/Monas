@@ -5,7 +5,7 @@ import 'package:monas/constants/resources.dart';
 import 'package:monas/models/category_item_model.dart';
 import 'package:monas/models/show_expense_item_model.dart';
 import 'package:monas/models/show_expense_title_model.dart';
-import 'package:monas/models/wallet.dart';
+import 'package:monas/models/wallet_model.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
 import 'package:monas/views/home_tab/components/time_chosen_item.dart';
 import 'package:monas/widgets/custom_button.dart';

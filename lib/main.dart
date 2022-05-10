@@ -7,6 +7,7 @@ import 'package:monas/viewmodels/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
 import 'package:monas/viewmodels/choose_category_vm.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
+import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/viewmodels/time_chosen_vm.dart';
 import 'package:monas/viewmodels/authentic_vm.dart';
 
@@ -60,6 +61,7 @@ class Monas extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ChooseCategoryViewModel()),
         ChangeNotifierProvider(create: (_) => DropdownWalletViewModel()),
         ChangeNotifierProvider(create: (_) => TimeChosenViewModel()),
+        ChangeNotifierProvider(create: (_) => LoadWalletViewModel()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
@@ -71,6 +73,10 @@ class Monas extends StatelessWidget {
     );
   }
 
+  String getInitialRoute() {
+    return Routes.loginScreen;
+  }
+  
   MaterialPageRoute? getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.mainScreen:
