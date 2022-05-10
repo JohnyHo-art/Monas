@@ -5,20 +5,18 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:monas/constants/string_constants.dart';
 import 'package:monas/constants/utils.dart';
 import 'package:monas/main.dart';
-import 'package:monas/models/monas_user.dart';
+import 'package:monas/models/account.dart';
 
 class AuthenticViewModel extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  // Initialize Monas user
-  late MonasUser _monasUser;
-
-  get monasUser => _monasUser;
-
-  set monasUser(newVal) {
-    _monasUser = newVal;
-    notifyListeners();
-  }
+  // Initialize an empty account
+  Account account = Account(
+    userName: 'Unknown',
+    dateFormat: 'dd/MM/yyyy',
+    notificationTime: DateTime(2022, 3, 15, 20, 0, 0),
+    soundNotificationOn: true,
+  );
 
   //* Variable to check visibility of password in login
   bool _isObscuredPass = true;
@@ -38,15 +36,6 @@ class AuthenticViewModel extends ChangeNotifier {
   set isObscurePass2(value) {
     _isObscuredPass2 = value;
     notifyListeners();
-  }
-
-  // Initialize the monas User to avoid crash from being uninitialized
-  AuthenticViewModel() {
-    _monasUser = MonasUser(
-      uid: 'emptyID',
-      userName: 'Unknown user',
-      email: 'unknown email',
-    );
   }
 
   //* Check valid email format
@@ -87,11 +76,10 @@ class AuthenticViewModel extends ChangeNotifier {
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
         //! Use then instead of whenComplete because when complete
-        // will fire the function no matter whether the future return error of not
+        //! will fire the function no matter whether the future return error of not
         Utils.showToast('Đăng ký thành công');
         // push user data to firebase
         pushUserToFirestore(username);
-        sendEmailVerification();
       });
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
@@ -104,35 +92,35 @@ class AuthenticViewModel extends ChangeNotifier {
   //* Sign up user and send data to fire store
   Future<void> pushUserToFirestore(String? username) async {
     User? user = FirebaseAuth.instance.currentUser;
-    MonasUser monasUser = MonasUser(
-        uid: user!.uid,
-        userName: user.displayName ?? username ?? 'Unknown user',
-        email: user.email!);
-    monasUser.avatarUrl =
-        'https://firebasestorage.googleapis.com/v0/b/wecare-da049.appspot.com/o/default_avatar.png?alt=media&token=2c3cb547-e2d2-4e14-a6da-ee15b04ccb6e';
+
+    account.userName = user?.displayName ?? username ?? 'Unknown';
+
     // Set user data to firestore
     await FirebaseFirestore.instance
-        .collection(StringConstants.firebaseString.userPath)
-        .doc(user.uid)
-        .set(monasUser.toJSON());
+        .collection(StringConstants.firebaseString.accountPath)
+        .doc(user!.uid)
+        .set(account.toJSON());
   }
 
   // Email verification
   Future<void> sendEmailVerification() async {
     if (_firebaseAuth.currentUser != null &&
         !_firebaseAuth.currentUser!.emailVerified) {
-      await _firebaseAuth.currentUser!.sendEmailVerification();
+      await _firebaseAuth.currentUser!.sendEmailVerification().then((value) {
+        Utils.showToast(
+            'Gửi email xác thực thành công, vui lòng kiểm tra email của bạn');
+      });
     }
   }
 
   // Get user data from firestore
   Future<void> getUserDataFromFirestore() async {
     await FirebaseFirestore.instance
-        .collection(StringConstants.firebaseString.userPath)
+        .collection(StringConstants.firebaseString.accountPath)
         .doc(_firebaseAuth.currentUser!.uid)
         .get()
         .then((value) {
-      _monasUser = MonasUser.fromJSON(value.data());
+      account = Account.fromJSON(value.data());
     });
   }
 

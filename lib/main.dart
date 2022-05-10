@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/utils.dart';
+import 'package:monas/models/account.dart';
+import 'package:monas/viewmodels/account_setting_vm.dart';
 import 'package:monas/viewmodels/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
 import 'package:monas/viewmodels/choose_category_vm.dart';
@@ -50,8 +52,6 @@ class Monas extends StatelessWidget {
       providers: [
         // Authentication viewmodel
         ChangeNotifierProvider(create: (_) => AuthenticViewModel()),
-        // ChangeNotifierProvider(create: (_) => RegisterViewModel()),
-        // ChangeNotifierProvider(create: (_) => LoginViewModel()),
 
         // adding transaction viewmodel
         ChangeNotifierProvider(create: (_) => AddingTransactionViewModel()),
@@ -60,11 +60,42 @@ class Monas extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ChooseCategoryViewModel()),
         ChangeNotifierProvider(create: (_) => DropdownWalletViewModel()),
         ChangeNotifierProvider(create: (_) => TimeChosenViewModel()),
+
+        // Accout tab viewmodel
+        // Used ChangeNotifier
+        ChangeNotifierProxyProvider<AuthenticViewModel,
+            AccountSettingViewModel>(
+          create: (_) => AccountSettingViewModel(),
+          update: (_, authentication, accountSetting) =>
+              accountSetting!..updateAccountInfo(authentication),
+        ),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: Utils.messengerKey,
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          timePickerTheme: TimePickerThemeData(
+            dialHandColor: S.colors.primaryColor,
+            dialTextColor: MaterialStateColor.resolveWith(
+              (states) => states.contains(MaterialState.selected)
+                  ? S.colors.whiteColor
+                  : S.colors.primaryColor,
+            ),
+            dialBackgroundColor: S.colors.subTextColor,
+            backgroundColor: S.colors.whiteColor,
+            hourMinuteColor: S.colors.whiteColor,
+            hourMinuteTextColor: S.colors.primaryColor,
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateColor.resolveWith(
+                  (states) => S.colors.primaryColor),
+              overlayColor: MaterialStateColor.resolveWith(
+                  (states) => S.colors.subTextColor),
+            ),
+          ),
+        ),
         onGenerateRoute: (route) => getRoute(route),
         home: const HomePage(),
       ),

@@ -38,23 +38,11 @@ class HomeHeader extends StatelessWidget {
                   style: S.bodyTextStyles.body1(S.colors.subTextColor2),
                 ),
                 Text(
-                  authentication.monasUser.name,
+                  authentication.account.userName,
                   overflow: TextOverflow.ellipsis,
                   style: S.headerTextStyles.header2(S.colors.primaryColor),
                 ),
               ],
-            ),
-          ),
-        ),
-        Flexible(
-          flex: 1,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () =>
-                  Provider.of<AuthenticViewModel>(context, listen: false)
-                      .signOut(context),
             ),
           ),
         ),

@@ -19,6 +19,6 @@ class _LocaleString {
 }
 
 class _FirebaseString {
-  final userPath = 'users';
+  final accountPath = 'account';
 
 }

@@ -1,5 +1,3 @@
-import 'package:monas/constants/resources.dart';
-
 class Wallet {
   final String name;
   final double balance;
