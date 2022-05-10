@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/utils.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
+import 'package:monas/viewmodels/authentic_vm.dart';
+import 'package:monas/views/main_screen.dart';
 import 'package:provider/provider.dart';
 
 class AddWalletScreen extends StatelessWidget {
@@ -135,7 +137,6 @@ class AddWalletScreen extends StatelessWidget {
             leading: IconButton(
               icon: Icon(Icons.close, color: S.colors.textOnSecondaryColor),
               onPressed: () {
-                wallet.resetInformation();
                 Navigator.pop(context);
               },
             ),
@@ -145,21 +146,16 @@ class AddWalletScreen extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                  icon: Icon(
-                    Icons.done,
-                    color: S.colors.primaryColor,
-                    size: S.dimens.iconSize,
-                  ),
-                  onPressed: () {
-                    addWallet.addNewWallet(context);
-                    authentic.isFirstTimeSignIn
-                        ? Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MainScreen()),
-                            (route) => false)
-                        : Navigator.pop(context);
-                  }),
+                icon: Icon(
+                  Icons.done,
+                  color: S.colors.primaryColor,
+                  size: S.dimens.iconSize,
+                ),
+                onPressed: () {
+                  addWallet.addNewWallet(context);
+                  Navigator.pop(context);
+                },
+              ),
             ],
           ),
           body: Column(
