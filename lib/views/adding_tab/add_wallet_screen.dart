@@ -10,7 +10,9 @@ class AddWalletScreen extends StatelessWidget {
   const AddWalletScreen({Key? key}) : super(key: key);
 
   // Wallet name and icon choosing section
-  Widget _walletName(String iconUrl, VoidCallback onPressed) => Row(
+  Widget _walletName(String iconUrl, VoidCallback onPressed,
+          TextEditingController nameTextFieldController) =>
+      Row(
         children: [
           SizedBox(width: S.dimens.padding),
           Flexible(
@@ -27,7 +29,7 @@ class AddWalletScreen extends StatelessWidget {
             child: TextFormField(
               cursorColor: S.colors.primaryColor,
               style: S.headerTextStyles.header2(S.colors.primaryColor),
-              //controller: controller,
+              controller: nameTextFieldController,
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
                 hintText: 'Tên ví',
@@ -47,7 +49,7 @@ class AddWalletScreen extends StatelessWidget {
       );
 
   // Enter initial balance section
-  Widget _initialBalance() {
+  Widget _initialBalance(TextEditingController balanceTextFieldController) {
     return Row(
       children: [
         const Flexible(flex: 2, child: SizedBox(width: 80)),
@@ -56,7 +58,7 @@ class AddWalletScreen extends StatelessWidget {
           child: TextFormField(
             cursorColor: S.colors.primaryColor,
             style: S.headerTextStyles.header2(S.colors.primaryColor),
-            //controller: controller,
+            controller: balanceTextFieldController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               hintText: 'Số dư',
@@ -90,7 +92,7 @@ class AddWalletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var wallet = context.watch<AddingWalletViewModel>();
+    var addWallet = Provider.of<AddingWalletViewModel>(context, listen: false);
     var authentic = context.watch<AuthenticViewModel>();
 
     // Choose to include or exclude from total wallet section
@@ -103,9 +105,9 @@ class AddWalletScreen extends StatelessWidget {
             child: Checkbox(
               activeColor: S.colors.primaryColor,
               onChanged: (bool? value) {
-                wallet.includeToTotal = value ?? true;
+                addWallet.includeToTotal = value ?? true;
               },
-              value: wallet.includeToTotal,
+              value: addWallet.includeToTotal,
             ),
           ),
           Flexible(
@@ -137,7 +139,7 @@ class AddWalletScreen extends StatelessWidget {
               child: IconButton(
                 icon: Icon(Icons.close, color: S.colors.textOnSecondaryColor),
                 onPressed: () {
-                  wallet.resetInformation();
+                  addWallet.resetInformation();
                   Navigator.pop(context);
                 },
               ),
@@ -154,8 +156,7 @@ class AddWalletScreen extends StatelessWidget {
                     size: S.dimens.iconSize,
                   ),
                   onPressed: () {
-                    Utils.showToast('Tạo ví thành công');
-                    wallet.resetInformation();
+                    addWallet.addNewWallet(context);
                     authentic.isFirstTimeSignIn
                         ? Navigator.pushAndRemoveUntil(
                             context,
@@ -163,16 +164,19 @@ class AddWalletScreen extends StatelessWidget {
                                 builder: (context) => const MainScreen()),
                             (route) => false)
                         : Navigator.pop(context);
+                    //addWallet.resetInformation();
                   }),
             ],
           ),
           body: Column(
             children: [
               SizedBox(height: S.dimens.smallPadding),
-              _walletName(wallet.iconUrl,
-                  () => wallet.showWalletIconBottomSheet(context)),
+              _walletName(
+                  addWallet.iconUrl,
+                  () => addWallet.showWalletIconBottomSheet(context),
+                  addWallet.nameTextFieldController),
               SizedBox(height: S.dimens.padding),
-              _initialBalance(),
+              _initialBalance(addWallet.balanceTextFieldController),
               SizedBox(height: S.dimens.padding),
               _includeTotal(),
             ],

@@ -1,14 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
 import 'package:monas/constants/routes.dart';
+import 'package:monas/models/wallet_model.dart';
+import 'package:monas/viewmodels/load_wallet_vm.dart';
+import 'package:provider/provider.dart';
 
 class WalletListScreen extends StatelessWidget {
   const WalletListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var loadWallet = Provider.of<LoadWalletViewModel>(context);
+    var loadWalletWithoutListen =
+        Provider.of<LoadWalletViewModel>(context, listen: false);
+
+    Widget _listWallet(List<Wallet> listWallet) => ListView.builder(
+          itemCount: listWallet.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
+              child: ListTile(
+                leading: Image.asset(listWallet[index].iconUrl),
+                trailing: IconButton(
+                    icon: const Icon(Icons.more_vert), onPressed: () {}),
+                title: Text(
+                  listWallet[index].name,
+                ),
+                subtitle: Text(
+                  listWallet[index].balance.toString(),
+                ),
+                onTap: () =>
+                    Navigator.pushNamed(context, Routes.showExpenseScreen),
+              ),
+            );
+          },
+        );
+
     return SafeArea(
       child: DefaultTabController(
         length: 2,
@@ -53,7 +83,8 @@ class WalletListScreen extends StatelessWidget {
                     style: S.headerTextStyles.header3(null),
                   ),
                   subtitle: Text(
-                    F.currencyFormat.formatCurrency(2000000, 'vi-VN'),
+                    F.currencyFormat
+                        .formatCurrency(loadWalletWithoutListen.total, 'vi-VN'),
                     style: S.bodyTextStyles.body2(S.colors.subTextColor2),
                   ),
                 ),
@@ -70,11 +101,11 @@ class WalletListScreen extends StatelessWidget {
                   Tab(text: 'KHÔNG TÍNH VÀO TỔNG'),
                 ],
               ),
-              const Expanded(
+              Expanded(
                 child: TabBarView(
                   children: [
-                    Icon(Icons.directions_car),
-                    Icon(Icons.directions_transit),
+                    _listWallet(loadWallet.includeToTotalListWallet),
+                    _listWallet(loadWallet.nonIncludeToTotalListWallet),
                   ],
                 ),
               ),

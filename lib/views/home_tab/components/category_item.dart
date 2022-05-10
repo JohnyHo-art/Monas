@@ -18,7 +18,6 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var amount = context.watch<AddingAmountViewModel>();
     var chooseCategory = context.watch<ChooseCategoryViewModel>();
 
     return ElevatedButton(

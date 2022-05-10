@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/routes.dart';
+import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/views/home_tab/home_screen.dart';
 import 'package:monas/views/personal_tab/personal_screen.dart';
 import 'package:monas/views/plan_tab/planning_screen.dart';
 import 'package:monas/views/report_tab/report_screen.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -88,6 +90,14 @@ class _MainScreenState extends State<MainScreen> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    Provider.of<LoadWalletViewModel>(context, listen: false)
+        .loadListWalletFromFirestore();
+
+    super.initState();
   }
 
   @override
