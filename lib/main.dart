@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/utils.dart';
-import 'package:monas/models/account.dart';
 import 'package:monas/viewmodels/account_setting_vm.dart';
 import 'package:monas/viewmodels/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
@@ -64,7 +63,9 @@ class Monas extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoadWalletViewModel()),
 
         // Accout tab viewmodel
-        // Used ChangeNotifier
+        //? Used ChangeNotifierProxyProvider to handle update the 
+        //? information with changable value with an update function 
+        //? and pass an argument that changes frequently (in this context is another provider: AuthenticViewModel)
         ChangeNotifierProxyProvider<AuthenticViewModel,
             AccountSettingViewModel>(
           create: (_) => AccountSettingViewModel(),
