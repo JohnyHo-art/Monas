@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/string_constants.dart';
 import 'package:monas/constants/utils.dart';
 import 'package:monas/models/account.dart';
 import 'package:monas/viewmodels/authentic_vm.dart';
+import 'package:monas/views/personal_tab/date_format_picker_dialog.dart';
 
 class AccountSettingViewModel extends ChangeNotifier {
   // Variable to update user name
@@ -101,58 +101,7 @@ class AccountSettingViewModel extends ChangeNotifier {
   // Show Dialog to set custom
   void showDateFormatPickerDialog(BuildContext context) {
     showDialog(
-      context: context,
-      builder: (BuildContext context) => Dialog(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: S.dimens.tinyPadding,
-            vertical: S.dimens.tinyPadding,
-          ),
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: Colors.white,
-            borderRadius:
-                BorderRadius.circular(S.dimens.cardCornerRadiusMedium),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                title: const Text('ngày/tháng/năm'),
-                subtitle: const Text('15/03/2022'),
-                leading: Radio<String>(
-                  activeColor: S.colors.primaryColor,
-                  value: 'dd/MM/yyyy',
-                  groupValue: dateFormat,
-                  onChanged: (String? value) => dateFormat = value,
-                ),
-              ),
-              ListTile(
-                title: const Text('tháng/ngày/năm'),
-                subtitle: const Text('03/15/2022'),
-                leading: Radio<String>(
-                  activeColor: S.colors.primaryColor,
-                  value: 'MM/dd/yyyy',
-                  groupValue: dateFormat,
-                  onChanged: (String? value) => dateFormat = value,
-                ),
-              ),
-              ListTile(
-                title: const Text('năm/tháng/ngày'),
-                subtitle: const Text('2022/03/15'),
-                leading: Radio<String>(
-                  activeColor: S.colors.primaryColor,
-                  value: 'yyyy/MM/dd',
-                  groupValue: dateFormat,
-                  onChanged: (String? value) => dateFormat = value,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-
-    updateDataToFirestore(context);
+        context: context,
+        builder: (BuildContext context) => const DateFormatPickerDialog());
   }
 }
