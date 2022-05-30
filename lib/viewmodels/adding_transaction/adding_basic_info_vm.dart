@@ -5,7 +5,7 @@ import 'package:monas/constants/utils.dart';
 import 'package:monas/views/adding_tab/components/add_note_dialog.dart';
 import 'package:monas/views/adding_tab/components/enter_money_bottom_sheet.dart';
 
-class AddingTransactionViewModel extends ChangeNotifier {
+class AddingBasicInfoViewModel extends ChangeNotifier {
   TextEditingController noteTextFieldController = TextEditingController();
 
   String _note = '';
@@ -32,6 +32,15 @@ class AddingTransactionViewModel extends ChangeNotifier {
 
   set showDetail(newVal) {
     _showDetail = newVal;
+    notifyListeners();
+  }
+
+  int _selectedCategoryId = 0;
+
+  int getSelectedCategoryId() => _selectedCategoryId;
+
+  void setSelectedCategoryIndex(int newVal) {
+    _selectedCategoryId = newVal;
     notifyListeners();
   }
 
@@ -78,21 +87,22 @@ class AddingTransactionViewModel extends ChangeNotifier {
       lastDate: DateTime(DateTime.now().year + 5),
       builder: (context, child) => Theme(
         data: ThemeData().copyWith(
-          colorScheme: ColorScheme.light(
-            primary: S.colors.primaryColor,
-          )
-        ),
+            colorScheme: ColorScheme.light(
+          primary: S.colors.primaryColor,
+        )),
         child: child ?? const SizedBox.shrink(),
       ),
     );
-    if(newDate == null) return;
+    if (newDate == null) return;
     date = newDate;
   }
 
   // Update date text field
   String getDateText() {
     var now = DateTime.now();
-    if(date.day == now.day && date.month == now.month && date.year == now.year) {
+    if (date.day == now.day &&
+        date.month == now.month &&
+        date.year == now.year) {
       return 'Hôm nay';
     }
     return F.dateTimeFormat.simpleFormat(date);

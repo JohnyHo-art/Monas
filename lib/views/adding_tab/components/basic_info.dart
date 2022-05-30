@@ -6,9 +6,7 @@ import 'package:monas/constants/resources.dart';
 import 'package:monas/constants/routes.dart';
 import 'package:monas/models/category_item_model.dart';
 import 'package:monas/viewmodels/adding_amount_vm.dart';
-import 'package:monas/viewmodels/adding_transaction_vm.dart';
-import 'package:monas/viewmodels/choose_category_vm.dart';
-import 'package:monas/widgets/inkwell_row_button.dart';
+import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import 'package:provider/provider.dart';
 
 class BasicInfo extends StatelessWidget {
@@ -16,9 +14,8 @@ class BasicInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var transaction = context.watch<AddingTransactionViewModel>();
+    var transaction = context.watch<AddingBasicInfoViewModel>();
     var amount = context.watch<AddingAmountViewModel>();
-    var chooseCategory = context.watch<ChooseCategoryViewModel>();
 
     Widget _moneyAmountSection(String? locale, VoidCallback onTap) => InkWell(
           splashColor: S.colors.subTextColor,
@@ -48,58 +45,18 @@ class BasicInfo extends StatelessWidget {
           ),
         );
 
-    Widget _chooseWalletSection(VoidCallback onTap) => Material(
-          color: Colors.transparent,
-          child: InkWell(
-            splashColor: S.colors.subTextColor,
-            onTap: onTap,
-            child: Row(
-              children: [
-                Image.asset(R.walletIcon.walletIc0),
-                SizedBox(width: S.dimens.padding),
-                Text('Ví tổng',
-                    style: S.headerTextStyles
-                        .header3(S.colors.textOnSecondaryColor)),
-              ],
-            ),
-          ),
-        );
-
-    Widget _chooseCategorySection(VoidCallback onTap) => Material(
-          color: Colors.transparent,
-          child: InkWell(
-            splashColor: S.colors.subTextColor,
-            onTap: onTap,
-            child: Row(
-              children: [
-                Image.asset(
-                  Category
-                      .categoryList[chooseCategory.getSelectedCategoryIndex()]
-                      .iconUrl,
-                ),
-                SizedBox(width: S.dimens.padding),
-                Text(
-                    Category
-                        .categoryList[chooseCategory.getSelectedCategoryIndex()]
-                        .name,
-                    style: S.headerTextStyles.header3(S.colors.subTextColor2)),
-              ],
-            ),
-          ),
-        );
-
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: S.dimens.padding),
-      padding: EdgeInsets.symmetric(horizontal: S.dimens.padding),
+      margin: EdgeInsets.symmetric(horizontal: S.dimens.smallPadding),
+      padding: EdgeInsets.symmetric(horizontal: S.dimens.tinyPadding),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: S.colors.textOnPrimaryColor,
+        color: S.colors.whiteColor,
         boxShadow: [
           BoxShadow(
             color: S.colors.shadowElevationColor,
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 6), // changes position of shadow
+            spreadRadius: 3,
+            blurRadius: 5,
+            offset: const Offset(0, 4), // changes position of shadow
           ),
         ],
       ),
@@ -108,23 +65,47 @@ class BasicInfo extends StatelessWidget {
           SizedBox(height: S.dimens.smallPadding),
           _moneyAmountSection(
               null, () => transaction.showAmountMoneyBottomSheet(context)),
-          SizedBox(height: S.dimens.smallPadding),
-          _chooseWalletSection(() {}),
-          SizedBox(height: S.dimens.smallPadding),
-          _chooseCategorySection(
-              () => Navigator.pushNamed(context, Routes.categoryListScreen)),
-          SizedBox(height: S.dimens.smallPadding),
-          InkWellRowButton(
-            onTap: () => transaction.showNoteAddingDialog(context),
-            iconData: Icons.notes,
-            hintText:
-                transaction.note.isEmpty ? 'Thêm ghi chú' : transaction.note,
+          SizedBox(height: S.dimens.tinyPadding),
+          ListTile(
+            leading: Image.asset(R.walletIcon.walletIc0),
+            title: Text(
+              'Ví tổng',
+              style: S.headerTextStyles.header3(S.colors.textOnSecondaryColor),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-          SizedBox(height: S.dimens.smallPadding),
-          InkWellRowButton(
+          ListTile(
+            leading: Image.asset(
+              Category
+                  .categoryList[transaction.getSelectedCategoryId()].iconUrl,
+            ),
+            title: Text(
+              Category.categoryList[transaction.getSelectedCategoryId()].name,
+              overflow: TextOverflow.ellipsis,
+              style: S.headerTextStyles.header3(
+                  transaction.getSelectedCategoryId() == 0
+                      ? S.colors.subTextColor2
+                      : S.colors.textOnSecondaryColor),
+            ),
+            onTap: () =>
+                Navigator.pushNamed(context, Routes.categoryListScreen),
+          ),
+          ListTile(
+            leading: const Icon(Icons.notes),
+            title: Text(
+              transaction.note.isEmpty ? 'Thêm ghi chú' : transaction.note,
+              style: S.bodyTextStyles.buttonText(S.colors.subTextColor2),
+              overflow: TextOverflow.ellipsis,
+            ),
+            onTap: () => transaction.showNoteAddingDialog(context),
+          ),
+          ListTile(
+            leading: const Icon(Icons.event),
+            title: Text(
+              transaction.getDateText(),
+              style: S.bodyTextStyles.buttonText(S.colors.subTextColor2),
+            ),
             onTap: () => transaction.pickDate(context),
-            iconData: Icons.event,
-            hintText: transaction.getDateText(),
           ),
           SizedBox(height: S.dimens.padding),
         ],

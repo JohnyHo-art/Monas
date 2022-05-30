@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 
-import '../../../widgets/inkwell_row_button.dart';
-
 class DetailInfo extends StatelessWidget {
   const DetailInfo({Key? key}) : super(key: key);
 
   Widget _personEventAndReminder() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: S.dimens.padding),
+      margin: EdgeInsets.symmetric(horizontal: S.dimens.largePadding),
       padding: EdgeInsets.symmetric(
           horizontal: S.dimens.padding, vertical: S.dimens.smallPadding),
       decoration: BoxDecoration(
@@ -25,51 +23,58 @@ class DetailInfo extends StatelessWidget {
       ),
       child: Column(
         children: [
-          InkWellRowButton(
-            onTap: () {},
-            iconData: Icons.group,
-            hintText: 'Với',
+          ListTile(
+            leading: const Icon(Icons.group),
+            title: Text(
+              'Với',
+              style: S.bodyTextStyles.buttonText(S.colors.subTextColor2),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-          SizedBox(height: S.dimens.smallPadding),
-          InkWellRowButton(
-            onTap: () {},
-            iconData: Icons.calendar_today,
-            hintText: 'Chọn sự kiện',
+          ListTile(
+            leading: const Icon(Icons.calendar_today),
+            title: Text(
+              'Chọn sự kiện',
+              style: S.bodyTextStyles.buttonText(S.colors.subTextColor2),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-          SizedBox(height: S.dimens.smallPadding),
-          InkWellRowButton(
-            onTap: () {},
-            iconData: Icons.add_alert,
-            hintText: 'Đặt lời nhắc',
+          ListTile(
+            leading: const Icon(Icons.add_alert),
+            title: Text(
+              'Đặt lời nhắc',
+              style: S.bodyTextStyles.buttonText(S.colors.subTextColor2),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           SizedBox(height: S.dimens.smallPadding),
           IntrinsicHeight(
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.image,
-                      color: S.colors.iconColor,
-                    ),
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.image,
+                    color: S.colors.iconColor,
                   ),
-                  VerticalDivider(
-                    width: S.dimens.padding,
-                    thickness: 1,
-                    indent: 0,
-                    endIndent: 0,
-                    color: S.colors.primaryColor,
+                ),
+                VerticalDivider(
+                  width: S.dimens.padding,
+                  thickness: 1,
+                  indent: 0,
+                  endIndent: 0,
+                  color: S.colors.primaryColor,
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.photo_camera,
+                    color: S.colors.iconColor,
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.photo_camera,
-                      color: S.colors.iconColor,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

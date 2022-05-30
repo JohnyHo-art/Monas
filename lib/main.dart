@@ -6,7 +6,6 @@ import 'package:monas/constants/utils.dart';
 import 'package:monas/viewmodels/account_setting_vm.dart';
 import 'package:monas/viewmodels/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
-import 'package:monas/viewmodels/choose_category_vm.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/viewmodels/time_chosen_vm.dart';
@@ -21,12 +20,11 @@ import 'package:monas/views/log_in/forgot_password_screen.dart';
 import 'package:monas/views/log_in/login_screen.dart';
 import 'package:monas/views/log_in/signup_screen.dart';
 import 'package:monas/views/onboarding/onboarding_screen.dart';
-import 'package:monas/views/adding_tab/adding_expense_screen.dart';
+import 'package:monas/views/adding_tab/adding_transaction_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/routes.dart';
-import 'viewmodels/adding_transaction_vm.dart';
-import 'views/adding_tab/adding_income_screen.dart';
+import 'viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import 'views/main_screen.dart';
 import 'views/personal_tab/personal_screen.dart';
 import 'views/plan_tab/planning_screen.dart';
@@ -54,10 +52,9 @@ class Monas extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthenticViewModel()),
 
         // adding transaction viewmodel
-        ChangeNotifierProvider(create: (_) => AddingTransactionViewModel()),
+        ChangeNotifierProvider(create: (_) => AddingBasicInfoViewModel()),
         ChangeNotifierProvider(create: (_) => AddingWalletViewModel()),
         ChangeNotifierProvider(create: (_) => AddingAmountViewModel()),
-        ChangeNotifierProvider(create: (_) => ChooseCategoryViewModel()),
         ChangeNotifierProvider(create: (_) => DropdownWalletViewModel()),
         ChangeNotifierProvider(create: (_) => TimeChosenViewModel()),
         ChangeNotifierProvider(create: (_) => LoadWalletViewModel()),
@@ -128,10 +125,8 @@ class Monas extends StatelessWidget {
       case Routes.forgotPasswordScreen:
         return buildRoute(const ForgotPasswordScreen(), settings: settings);
       // Adding tab
-      case Routes.addExpenseScreen:
-        return buildRoute(const AddingExpenseScreen(), settings: settings);
-      case Routes.addIncomeScreen:
-        return buildRoute(const AddingIncomeScreen(), settings: settings);
+      case Routes.addTransactionScreen:
+        return buildRoute(const AddingTransactionScreen(), settings: settings);
       case Routes.categoryListScreen:
         return buildRoute(const CategoryListScreen(), settings: settings);
       case Routes.showExpenseScreen:

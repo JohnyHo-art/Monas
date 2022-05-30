@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
-import 'package:monas/viewmodels/adding_transaction_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import 'package:provider/provider.dart';
 
 class AddingNoteDialog extends StatelessWidget {
@@ -8,8 +8,8 @@ class AddingNoteDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AddingTransactionViewModel addingTransactionViewModel =
-        Provider.of<AddingTransactionViewModel>(context);
+    final addingTransactionViewModel =
+        Provider.of<AddingBasicInfoViewModel>(context);
 
     return Dialog(
       child: GestureDetector(
