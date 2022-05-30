@@ -10,10 +10,9 @@ class Routes {
   //* Routes in bottom nav
   static const homeScreen = '$mainScreen/home_screen';
   static const reportScreen = '$mainScreen/report_screen';
-  static const addExpenseScreen = '$mainScreen/adding_expense_screen';
+  static const addTransactionScreen = '$mainScreen/adding_transaction_screen';
   static const planningScreen = '$mainScreen/planning_screen';
   static const personalScreen = '$mainScreen/personal_screen';
-  static const addIncomeScreen = '$mainScreen/adding_income_screen';
 
   //* Routes from home
   static const walletDetailExpenseScreen = homeScreen + '/wallet_detail_screen';

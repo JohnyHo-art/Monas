@@ -9,7 +9,7 @@ import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
 import 'package:monas/views/home_tab/components/time_chosen_item.dart';
 import 'package:provider/provider.dart';
 
-import '../../viewmodels/adding_transaction_vm.dart';
+import '../../viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import '../../viewmodels/time_chosen_vm.dart';
 
 class ShowExpenseScreen extends StatelessWidget {
@@ -104,7 +104,7 @@ class Classify extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var transaction = context.watch<AddingTransactionViewModel>();
+    var transaction = context.watch<AddingBasicInfoViewModel>();
     var timeChosen = context.watch<TimeChosenViewModel>();
 
     return Container(

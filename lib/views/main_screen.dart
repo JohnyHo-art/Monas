@@ -55,44 +55,6 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  void _showAddingOptions() {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(24),
-        topRight: Radius.circular(24),
-      )),
-      builder: (BuildContext context) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: S.dimens.tinyPadding),
-            ListTile(
-              leading: const Icon(Icons.arrow_upward),
-              title: const Text('Thêm chi tiêu mới'),
-              onTap: () => Navigator.pushReplacementNamed(
-                  context, Routes.addExpenseScreen),
-            ),
-            ListTile(
-              leading: const Icon(Icons.arrow_downward),
-              title: const Text('Thêm thu nhập mới'),
-              onTap: () => Navigator.pushReplacementNamed(
-                  context, Routes.addIncomeScreen),
-            ),
-            ListTile(
-              leading: const Icon(Icons.account_balance_wallet),
-              title: const Text('Thêm ví mới'),
-              onTap: () => Navigator.pushReplacementNamed(
-                  context, Routes.addWalletScreen),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     Provider.of<LoadWalletViewModel>(context, listen: false)
@@ -109,7 +71,8 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: S.colors.appBackground,
         floatingActionButton: FloatingActionButton(
           backgroundColor: S.colors.primaryColor,
-          onPressed: _showAddingOptions,
+          onPressed: () => Navigator.pushNamed(
+              context, Routes.addTransactionScreen),
           child: Icon(Icons.add, color: S.colors.textOnPrimaryColor),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -131,6 +94,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           shape: const CircularNotchedRectangle(),
+          elevation: 10,
           notchMargin: 5,
         ),
       ),

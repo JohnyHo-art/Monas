@@ -40,14 +40,8 @@ class CategoryListScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: const [
-              List(),
-            ],
-          ),
-        ),
+      body: const SingleChildScrollView(
+        child: List(),
       ),
     );
   }
@@ -59,13 +53,13 @@ class List extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(S.dimens.tinyPadding),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(S.dimens.tinyPadding),
             child: Text(
               "Chi tiêu hàng tháng",
               style: S.bodyTextStyles.body1(S.colors.subTextColor2),
@@ -73,6 +67,7 @@ class List extends StatelessWidget {
           ),
           Flexible(
             fit: FlexFit.loose,
+            //! Listview for monthly expense category 
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -86,6 +81,12 @@ class List extends StatelessWidget {
               },
             ),
           ),
+          Divider(
+            thickness: 1,
+            indent: S.dimens.smallPadding,
+            endIndent: S.dimens.smallPadding,
+            color: S.colors.subTextColor2,
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -95,6 +96,7 @@ class List extends StatelessWidget {
           ),
           Flexible(
             fit: FlexFit.loose,
+            //! ListView for necessary expense
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -108,6 +110,12 @@ class List extends StatelessWidget {
               },
             ),
           ),
+          Divider(
+            thickness: 1,
+            indent: S.dimens.smallPadding,
+            endIndent: S.dimens.smallPadding,
+            color: S.colors.subTextColor2,
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -117,6 +125,7 @@ class List extends StatelessWidget {
           ),
           Flexible(
             fit: FlexFit.loose,
+            //! ListView for gaming and entertainment
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -130,6 +139,12 @@ class List extends StatelessWidget {
               },
             ),
           ),
+          Divider(
+            thickness: 1,
+            indent: S.dimens.smallPadding,
+            endIndent: S.dimens.smallPadding,
+            color: S.colors.subTextColor2,
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -139,6 +154,7 @@ class List extends StatelessWidget {
           ),
           Flexible(
             fit: FlexFit.loose,
+            //! ListView for investment and loans
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -152,6 +168,12 @@ class List extends StatelessWidget {
               },
             ),
           ),
+          Divider(
+            thickness: 1,
+            indent: S.dimens.smallPadding,
+            endIndent: S.dimens.smallPadding,
+            color: S.colors.subTextColor2,
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -161,6 +183,7 @@ class List extends StatelessWidget {
           ),
           Flexible(
             fit: FlexFit.loose,
+            //! ListView for incomes
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -174,6 +197,12 @@ class List extends StatelessWidget {
               },
             ),
           ),
+          Divider(
+            thickness: 1,
+            indent: S.dimens.smallPadding,
+            endIndent: S.dimens.smallPadding,
+            color: S.colors.subTextColor2,
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -183,6 +212,7 @@ class List extends StatelessWidget {
           ),
           Flexible(
             fit: FlexFit.loose,
+            //! ListView for other types of transaction
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,

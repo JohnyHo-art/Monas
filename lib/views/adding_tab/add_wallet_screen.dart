@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
-import 'package:monas/constants/utils.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
-import 'package:monas/viewmodels/authentic_vm.dart';
-import 'package:monas/views/main_screen.dart';
 import 'package:provider/provider.dart';
 
 class AddWalletScreen extends StatelessWidget {
@@ -93,7 +90,6 @@ class AddWalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var addWallet = Provider.of<AddingWalletViewModel>(context, listen: false);
-    var authentic = context.watch<AuthenticViewModel>();
 
     // Choose to include or exclude from total wallet section
     Widget _includeTotal() {

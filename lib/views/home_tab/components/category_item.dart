@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
-import 'package:monas/viewmodels/adding_amount_vm.dart';
-import 'package:monas/viewmodels/choose_category_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import 'package:provider/provider.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -18,30 +17,15 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var chooseCategory = context.watch<ChooseCategoryViewModel>();
-
-    return ElevatedButton(
-      style: ButtonStyle(
-        elevation: MaterialStateProperty.all(0.0),
-        backgroundColor: MaterialStateProperty.all<Color>(S.colors.whiteColor),
+    return ListTile(
+      leading: Image.asset(categoryIcon),
+      title: Text(
+        text,
+        style: S.bodyTextStyles.body1(null),
       ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: S.dimens.smallPadding,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(categoryIcon),
-          ),
-          Text(
-            text,
-            style: S.bodyTextStyles.body2(null),
-          )
-        ],
-      ),
-      onPressed: () {
-        chooseCategory.setSelectedCategoryIndex(id);
+      onTap: () {
+        Provider.of<AddingBasicInfoViewModel>(context, listen: false)
+            .setSelectedCategoryIndex(id);
         Navigator.pop(context);
       },
     );
