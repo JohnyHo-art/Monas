@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:monas/constants/constants.dart';
 import 'package:monas/models/wallet_model.dart';
+import 'package:monas/viewmodels/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +13,7 @@ class ListWalletScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var loadWallet = Provider.of<LoadWalletViewModel>(context, listen: false);
     var addBasic = context.watch<AddingBasicInfoViewModel>();
+    var budget = context.watch<AddingBudgetViewModel>();
 
     Widget _listWallet(List<Wallet> listWallet) => ListView.builder(
           itemCount: listWallet.length,
@@ -27,6 +30,7 @@ class ListWalletScreen extends StatelessWidget {
                 ),
                 onTap: () {
                   addBasic.setSelectedWallet(index);
+                  budget.setSelectedWalletId(index);
                   Navigator.pop(context);
                 },
               ),
@@ -34,8 +38,50 @@ class ListWalletScreen extends StatelessWidget {
           },
         );
 
-    return Scaffold(
-      body: SafeArea(child: _listWallet(loadWallet.currentListWallet)),
+    return DefaultTabController(
+      length: 2,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: S.colors.whiteColor,
+            elevation: 2,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: S.colors.textOnSecondaryColor,
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+            title: Text(
+              'Chọn ví',
+              style: S.headerTextStyles.appbarTitle(null),
+            ),
+          ),
+          body: Column(
+            children: [
+              TabBar(
+                unselectedLabelColor: S.colors.subTextColor2,
+                indicatorColor: S.colors.primaryColor,
+                indicatorSize: TabBarIndicatorSize.tab,
+                labelStyle: S.bodyTextStyles.buttonText(null),
+                labelColor: S.colors.primaryColor,
+                tabs: const [
+                  Tab(text: 'TÍNH VÀO TỔNG'),
+                  Tab(text: 'KHÔNG TÍNH VÀO TỔNG'),
+                ],
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    _listWallet(loadWallet.includeToTotalListWallet),
+                    _listWallet(loadWallet.nonIncludeToTotalListWallet),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

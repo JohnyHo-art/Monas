@@ -1,11 +1,13 @@
 class Budget {
   double budget;
-  int category;
+  int categoryId;
+  int walletId;
   double spent;
 
   Budget({
     required this.budget,
-    required this.category,
+    required this.categoryId,
+    required this.walletId,
     required this.spent,
   });
 
@@ -13,7 +15,8 @@ class Budget {
   factory Budget.fromJSON(json) {
     return Budget(
       budget: json['budget'],
-      category: json['category'],
+      categoryId: json['categoryId'],
+      walletId: json['walletId'],
       spent: json['spent'],
     );
   }
@@ -22,8 +25,9 @@ class Budget {
   Map<String, dynamic> toJSON() {
     return {
       'budget': budget,
-      'category': category,
-      'spent': category,
+      'category': categoryId,
+      'walletId': walletId,
+      'spent': spent,
     };
   }
 }

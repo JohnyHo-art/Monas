@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AddingBudgetViewModel extends ChangeNotifier {
-  // Text controller for budget amount
-  TextEditingController budgetAmountController = TextEditingController();
+  // Budget amount
+  double _budgetAmount = 0;
+
+  double get budgetAmount => _budgetAmount;
 
   void setBudgetAmount(newVal) {
-    budgetAmountController.text = newVal;
+    _budgetAmount = newVal;
     notifyListeners();
   }
 

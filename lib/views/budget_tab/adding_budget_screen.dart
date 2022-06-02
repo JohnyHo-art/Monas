@@ -3,7 +3,6 @@ import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/string_constants.dart';
 import 'package:monas/viewmodels/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
-import 'package:monas/views/adding_tab/components/enter_money_bottom_sheet.dart';
 import 'package:monas/views/budget_tab/budget_detail.dart';
 import 'package:provider/provider.dart';
 
@@ -57,21 +56,9 @@ class AddingBudgetScreen extends StatelessWidget {
           backgroundColor: S.colors.primaryColor,
           child: Icon(Icons.check, color: S.colors.whiteColor),
           onPressed: () {
-            String amount = budget.budgetAmountController.text;
-            double money = double.parse(amount);
-            if (budget.selectedCategoryId != 0 && money != 0) {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(S.dimens.cardCornerRadiusMedium),
-                  topRight: Radius.circular(S.dimens.cardCornerRadiusMedium),
-                )),
-                builder: (BuildContext context) {
-                  return const EnterMoneyBottomSheet();
-                },
-              );
+            double amount = budget.budgetAmount;
+            if (budget.selectedCategoryId != 0 && amount != 0) {
+              //TODO: Handle save budget event
             }
           },
         ),

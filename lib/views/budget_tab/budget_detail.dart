@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
-import 'package:monas/constants/resources.dart';
 import 'package:monas/models/category_item_model.dart';
 import 'package:monas/viewmodels/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
+import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/views/adding_tab/components/enter_money_bottom_sheet.dart';
 import 'package:monas/views/budget_tab/budget_detail_item.dart';
 import 'package:monas/views/home_tab/category_list_screen.dart';
 import 'package:provider/provider.dart';
+
+import '../../constants/routes.dart';
 
 class BudgetDetail extends StatelessWidget {
   const BudgetDetail({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class BudgetDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     var budget = context.watch<AddingBudgetViewModel>();
     var amount = context.watch<AddingAmountViewModel>();
+    var loadWallet = context.watch<LoadWalletViewModel>();
 
     return Padding(
       padding: EdgeInsets.only(top: S.dimens.smallPadding),
@@ -47,12 +50,16 @@ class BudgetDetail extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: S.dimens.smallPadding),
               child: BudgetDetailItem(
-                  leading: Image.asset(R.walletIcon.walletIc1),
-                  hintText: 'Chọn ví',
-                  title: 'Ví',
-                  onPressed: () {
-                    //TODO: Handle event choose wallet
-                  }),
+                leading: Image.asset(loadWallet
+                    .currentListWallet[budget.selectedWalletId].iconUrl),
+                hintText:
+                    loadWallet.currentListWallet[budget.selectedWalletId].name,
+                title: 'Ví',
+                color: S.colors.textOnSecondaryColor,
+                onPressed: () =>
+                    // Handle event choose wallet
+                    Navigator.pushNamed(context, Routes.listWalletScreen),
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(top: S.dimens.padding),

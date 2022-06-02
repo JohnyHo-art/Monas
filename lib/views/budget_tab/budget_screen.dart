@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
-import 'package:monas/constants/resources.dart';
 import 'package:monas/constants/routes.dart';
+import 'package:monas/viewmodels/adding_budget_vm.dart';
+import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/views/budget_tab/budget_statistic.dart';
+import 'package:provider/provider.dart';
 
 class BudgetScreen extends StatelessWidget {
   const BudgetScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var budget = context.watch<AddingBudgetViewModel>();
+    var loadWallet = context.watch<LoadWalletViewModel>();
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: S.colors.appBackground,
@@ -19,9 +24,11 @@ class BudgetScreen extends StatelessWidget {
             padding: const EdgeInsets.all(4.0),
             child: IconButton(
               onPressed: () {
-                //TODO: Handle choose wallet event
+                // Handle choose wallet event
+                Navigator.pushNamed(context, Routes.listWalletScreen);
               },
-              icon: Image.asset(R.walletIcon.walletIc1),
+              icon: Image.asset(loadWallet
+                  .currentListWallet[budget.selectedWalletId].iconUrl),
               iconSize: S.dimens.smallIconSize,
             ),
           ),
@@ -50,15 +57,15 @@ class BudgetScreen extends StatelessWidget {
           centerTitle: true,
           actions: [
             IconButton(
-              onPressed: () => Navigator.pushNamed(
-                  context, Routes.addingBudgetScreen),
+              onPressed: () =>
+                  Navigator.pushNamed(context, Routes.addingBudgetScreen),
               icon: const Icon(Icons.add),
             )
           ],
         ),
         body: Column(
-          children: [
-            const BudgetStatistic(),
+          children: const [
+            BudgetStatistic(),
           ],
         ),
       ),

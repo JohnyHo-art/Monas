@@ -13,9 +13,8 @@ class Routes {
   static const addTransactionScreen = '$mainScreen/adding_transaction_screen';
   static const budgetScreen = '$mainScreen/budget_screen';
   static const personalScreen = '$mainScreen/personal_screen';
-  static const listWalletScreen = addTransactionScreen + '/list_wallet_screen';
-  static const listContactScreen =
-      addTransactionScreen + '/contact_list_screen';
+  static const listWalletScreen = '$addTransactionScreen/list_wallet_screen';
+  static const listContactScreen = '$addTransactionScreen/contact_list_screen';
 
   //* Routes from home
   static const walletListScreen = '$homeScreen/wallet_list_screen';

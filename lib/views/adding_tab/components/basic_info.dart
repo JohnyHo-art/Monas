@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
-import 'package:monas/constants/resources.dart';
 import 'package:monas/constants/routes.dart';
 import 'package:monas/models/category_item_model.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
