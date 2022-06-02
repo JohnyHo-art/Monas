@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
-import 'package:monas/viewmodels/adding_amount_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
 import 'package:monas/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
 

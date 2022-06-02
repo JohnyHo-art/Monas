@@ -19,7 +19,7 @@ class Category {
       id: 1,
       type: false,
       iconUrl: R.categoryIcon.foodIc,
-      name: "Ăn uống",
+      name: 'Ăn uống',
     ),
     Category(
       id: 2,

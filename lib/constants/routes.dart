@@ -11,17 +11,19 @@ class Routes {
   static const homeScreen = '$mainScreen/home_screen';
   static const reportScreen = '$mainScreen/report_screen';
   static const addTransactionScreen = '$mainScreen/adding_transaction_screen';
-  static const planningScreen = '$mainScreen/planning_screen';
+  static const budgetScreen = '$mainScreen/budget_screen';
   static const personalScreen = '$mainScreen/personal_screen';
 
   //* Routes from home
-  static const walletDetailExpenseScreen = homeScreen + '/wallet_detail_screen';
-  static const walletListScreen = homeScreen + '/wallet_list_screen';
-  static const notificationScreen = homeScreen + '/notification_screen';
-  static const addWalletScreen = homeScreen + '/add_wallet_screen';
-  static const showExpenseScreen = homeScreen + '/show_expense_screen';
-  static const categoryListScreen = showExpenseScreen + '/category_list_screen';
+  static const walletListScreen = '$homeScreen/wallet_list_screen';
+  static const notificationScreen = '$homeScreen/notification_screen';
+  static const addWalletScreen = '$homeScreen/add_wallet_screen';
+  static const showTransactionScreen = '$homeScreen/show_transaction_screen';
+  static const categoryListScreen = '$homeScreen/category_list_screen';
 
   //* Routes from report
+
+  //* routes from budget screen
+  static const addingBudgetScreen = '$budgetScreen/adding_budget_screen';
 
 }

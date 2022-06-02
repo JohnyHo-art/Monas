@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monas/viewmodels/authentic_vm.dart';
+import 'package:monas/viewmodels/authentication/authentic_vm.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/constants.dart';

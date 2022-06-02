@@ -3,31 +3,31 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/utils.dart';
-import 'package:monas/viewmodels/account_setting_vm.dart';
-import 'package:monas/viewmodels/adding_amount_vm.dart';
+import 'package:monas/viewmodels/adding_budget_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
+import 'package:monas/viewmodels/authentication/account_setting_vm.dart';
+import 'package:monas/viewmodels/authentication/authentic_vm.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/viewmodels/time_chosen_vm.dart';
-import 'package:monas/viewmodels/authentic_vm.dart';
-
-import 'package:monas/views/home_tab/category_list_screen.dart';
-import 'package:monas/views/home_tab/show_expense_screen.dart';
 import 'package:monas/views/adding_tab/add_wallet_screen.dart';
+import 'package:monas/views/adding_tab/adding_transaction_screen.dart';
+import 'package:monas/views/budget_tab/adding_budget_screen.dart';
+import 'package:monas/views/budget_tab/budget_screen.dart';
+import 'package:monas/views/home_tab/category_list_screen.dart';
+import 'package:monas/views/home_tab/show_transaction_screen.dart';
 import 'package:monas/views/home_tab/wallet_list_screen.dart';
 import 'package:monas/views/log_in/forgot_password_screen.dart';
-
 import 'package:monas/views/log_in/login_screen.dart';
 import 'package:monas/views/log_in/signup_screen.dart';
 import 'package:monas/views/onboarding/onboarding_screen.dart';
-import 'package:monas/views/adding_tab/adding_transaction_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/routes.dart';
 import 'viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import 'views/main_screen.dart';
 import 'views/personal_tab/personal_screen.dart';
-import 'views/plan_tab/planning_screen.dart';
 import 'views/report_tab/report_screen.dart';
 
 bool seenOnboard = true;
@@ -69,6 +69,9 @@ class Monas extends StatelessWidget {
           update: (_, authentication, accountSetting) =>
               accountSetting!..updateAccountInfo(authentication),
         ),
+
+        // Adding budget viewmodel
+        ChangeNotifierProvider(create: (_) => AddingBudgetViewModel()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
@@ -102,18 +105,14 @@ class Monas extends StatelessWidget {
     );
   }
 
-  String getInitialRoute() {
-    return Routes.loginScreen;
-  }
-
   MaterialPageRoute? getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.mainScreen:
         return buildRoute(const MainScreen(), settings: settings);
       case Routes.reportScreen:
         return buildRoute(const ReportScreen(), settings: settings);
-      case Routes.planningScreen:
-        return buildRoute(const PlanningScreen(), settings: settings);
+      case Routes.budgetScreen:
+        return buildRoute(const BudgetScreen(), settings: settings);
       case Routes.personalScreen:
         return buildRoute(const PersonalScreen(), settings: settings);
       case Routes.onboardingScreen:
@@ -128,14 +127,17 @@ class Monas extends StatelessWidget {
       case Routes.addTransactionScreen:
         return buildRoute(const AddingTransactionScreen(), settings: settings);
       case Routes.categoryListScreen:
-        return buildRoute(const CategoryListScreen(), settings: settings);
-      case Routes.showExpenseScreen:
-        return buildRoute(const ShowExpenseScreen(), settings: settings);
+        return buildRoute(CategoryListScreen(choice: 0), settings: settings);
+      case Routes.showTransactionScreen:
+        return buildRoute(const ShowTransactionScreen(), settings: settings);
       case Routes.addWalletScreen:
         return buildRoute(const AddWalletScreen(), settings: settings);
       // Home tab
       case Routes.walletListScreen:
         return buildRoute(const WalletListScreen(), settings: settings);
+      // Budget tab
+      case Routes.addingBudgetScreen:
+        return buildRoute(const AddingBudgetScreen(), settings: settings);
       default:
         return buildRoute(const MainScreen(), settings: settings);
     }

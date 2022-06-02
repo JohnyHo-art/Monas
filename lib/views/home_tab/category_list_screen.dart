@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/models/category_item_model.dart';
@@ -5,7 +7,8 @@ import 'package:monas/models/category_item_model.dart';
 import 'components/category_item.dart';
 
 class CategoryListScreen extends StatelessWidget {
-  const CategoryListScreen({Key? key}) : super(key: key);
+  CategoryListScreen({Key? key, this.choice}) : super(key: key);
+  int? choice;
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +43,16 @@ class CategoryListScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: const SingleChildScrollView(
-        child: List(),
+      body: SingleChildScrollView(
+        child: List(choice: choice),
       ),
     );
   }
 }
 
 class List extends StatelessWidget {
-  const List({Key? key}) : super(key: key);
+  List({Key? key, this.choice}) : super(key: key);
+  int? choice;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +71,7 @@ class List extends StatelessWidget {
           ),
           Flexible(
             fit: FlexFit.loose,
-            //! Listview for monthly expense category 
+            //! Listview for monthly expense category
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -77,6 +81,7 @@ class List extends StatelessWidget {
                   id: Category.monthlyCategory[index].id,
                   categoryIcon: Category.monthlyCategory[index].iconUrl,
                   text: Category.monthlyCategory[index].name,
+                  choice: choice,
                 );
               },
             ),
@@ -106,6 +111,7 @@ class List extends StatelessWidget {
                   id: Category.necessaryCategory[index].id,
                   categoryIcon: Category.necessaryCategory[index].iconUrl,
                   text: Category.necessaryCategory[index].name,
+                  choice: choice,
                 );
               },
             ),

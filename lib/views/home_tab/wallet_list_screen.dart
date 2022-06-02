@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
@@ -33,7 +32,7 @@ class WalletListScreen extends StatelessWidget {
                   listWallet[index].balance.toString(),
                 ),
                 onTap: () =>
-                    Navigator.pushNamed(context, Routes.showExpenseScreen),
+                    Navigator.pushNamed(context, Routes.showTransactionScreen),
               ),
             );
           },

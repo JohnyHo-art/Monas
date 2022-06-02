@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
-import 'package:monas/viewmodels/account_setting_vm.dart';
+import 'package:monas/viewmodels/authentication/account_setting_vm.dart';
 import 'package:provider/provider.dart';
 
 class DateFormatPickerDialog extends StatelessWidget {

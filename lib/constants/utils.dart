@@ -20,6 +20,18 @@ class Utils {
       ..showSnackBar(snackBar);
   }
 
+  // Show snack bar for success message
+  static showSuccessSnackBar(String? text) {
+    if (text == null) return;
+
+    final snackBar =
+    SnackBar(content: Text(text), backgroundColor: S.colors.greenColor);
+
+    messengerKey.currentState!
+      ..removeCurrentSnackBar()
+      ..showSnackBar(snackBar);
+  }
+
   // Show toast to notification
   static showToast(String text) {
     Fluttertoast.showToast(
