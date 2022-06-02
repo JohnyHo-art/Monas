@@ -30,6 +30,13 @@ dependencies:
   # dis play local notification
   flutter_local_notifications: ^9.5.2
 
+  # display contacts in phone
+  fast_contacts: ^1.1.1
+  permission_handler: ^9.2.0
+
+  #add image from phone
+  image_picker: ^0.8.5+3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

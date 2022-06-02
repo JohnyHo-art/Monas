@@ -5,11 +5,17 @@ import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/utils.dart';
 import 'package:monas/viewmodels/account_setting_vm.dart';
 import 'package:monas/viewmodels/adding_amount_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/detail_info_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/pick_image_vm.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/viewmodels/time_chosen_vm.dart';
 import 'package:monas/viewmodels/authentic_vm.dart';
+import 'package:monas/views/adding_tab/adding_transaction_screen.dart';
+import 'package:monas/views/adding_tab/components/contact_list_screen.dart';
+import 'package:monas/views/adding_tab/components/list_wallet_screen.dart';
 
 import 'package:monas/views/home_tab/category_list_screen.dart';
 import 'package:monas/views/home_tab/show_expense_screen.dart';
@@ -20,11 +26,9 @@ import 'package:monas/views/log_in/forgot_password_screen.dart';
 import 'package:monas/views/log_in/login_screen.dart';
 import 'package:monas/views/log_in/signup_screen.dart';
 import 'package:monas/views/onboarding/onboarding_screen.dart';
-import 'package:monas/views/adding_tab/adding_transaction_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/routes.dart';
-import 'viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import 'views/main_screen.dart';
 import 'views/personal_tab/personal_screen.dart';
 import 'views/plan_tab/planning_screen.dart';
@@ -58,11 +62,11 @@ class Monas extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DropdownWalletViewModel()),
         ChangeNotifierProvider(create: (_) => TimeChosenViewModel()),
         ChangeNotifierProvider(create: (_) => LoadWalletViewModel()),
+        ChangeNotifierProvider(create: (_) => DetailInfoViewmodel()),
+        ChangeNotifierProvider(create: (_) => PickImage()),
 
         // Accout tab viewmodel
-        //? Used ChangeNotifierProxyProvider to handle update the 
-        //? information with changable value with an update function 
-        //? and pass an argument that changes frequently (in this context is another provider: AuthenticViewModel)
+        // Used ChangeNotifier
         ChangeNotifierProxyProvider<AuthenticViewModel,
             AccountSettingViewModel>(
           create: (_) => AccountSettingViewModel(),
@@ -103,7 +107,7 @@ class Monas extends StatelessWidget {
   }
 
   String getInitialRoute() {
-    return Routes.loginScreen;
+    return Routes.listContactScreen;
   }
 
   MaterialPageRoute? getRoute(RouteSettings settings) {
@@ -133,6 +137,10 @@ class Monas extends StatelessWidget {
         return buildRoute(const ShowExpenseScreen(), settings: settings);
       case Routes.addWalletScreen:
         return buildRoute(const AddWalletScreen(), settings: settings);
+      case Routes.listWalletScreen:
+        return buildRoute(const ListWalletScreen(), settings: settings);
+      case Routes.listContactScreen:
+        return buildRoute(const ContactListScreen(), settings: settings);
       // Home tab
       case Routes.walletListScreen:
         return buildRoute(const WalletListScreen(), settings: settings);

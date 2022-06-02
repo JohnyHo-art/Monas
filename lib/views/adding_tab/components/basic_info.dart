@@ -7,6 +7,7 @@ import 'package:monas/constants/routes.dart';
 import 'package:monas/models/category_item_model.dart';
 import 'package:monas/viewmodels/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
+import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:provider/provider.dart';
 
 class BasicInfo extends StatelessWidget {
@@ -16,6 +17,7 @@ class BasicInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     var transaction = context.watch<AddingBasicInfoViewModel>();
     var amount = context.watch<AddingAmountViewModel>();
+    var loadWallet = context.watch<LoadWalletViewModel>();
 
     Widget _moneyAmountSection(String? locale, VoidCallback onTap) => InkWell(
           splashColor: S.colors.subTextColor,
@@ -67,12 +69,15 @@ class BasicInfo extends StatelessWidget {
               null, () => transaction.showAmountMoneyBottomSheet(context)),
           SizedBox(height: S.dimens.tinyPadding),
           ListTile(
-            leading: Image.asset(R.walletIcon.walletIc0),
+            leading: Image.asset(loadWallet
+                .currentListWallet[transaction.getSelectedWallet()].iconUrl),
             title: Text(
-              'Ví tổng',
+              loadWallet
+                  .currentListWallet[transaction.getSelectedWallet()].name,
               style: S.headerTextStyles.header3(S.colors.textOnSecondaryColor),
               overflow: TextOverflow.ellipsis,
             ),
+            onTap: () => Navigator.pushNamed(context, Routes.listWalletScreen),
           ),
           ListTile(
             leading: Image.asset(
