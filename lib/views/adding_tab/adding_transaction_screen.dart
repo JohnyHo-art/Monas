@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/detail_info_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/pick_image_vm.dart';
 import 'package:monas/views/adding_tab/components/basic_info.dart';
 import 'package:monas/views/adding_tab/components/detail_infor.dart';
 import 'package:provider/provider.dart';
@@ -13,10 +17,11 @@ class AddingTransactionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var transaction = context.watch<AddingBasicInfoViewModel>();
     var amount = context.watch<AddingAmountViewModel>();
+    var detaiInfo = context.watch<DetailInfoViewmodel>();
 
     Widget _addMoreInfoButton(VoidCallback onPressed) => Visibility(
-      visible: !transaction.showDetail,
-      child: TextButton(
+          visible: !transaction.showDetail,
+          child: TextButton(
             onPressed: onPressed,
             child: Text.rich(
               TextSpan(
@@ -36,7 +41,7 @@ class AddingTransactionScreen extends StatelessWidget {
               ),
             ),
           ),
-    );
+        );
 
     return GestureDetector(
       onTap: () {
@@ -59,6 +64,7 @@ class AddingTransactionScreen extends StatelessWidget {
               onPressed: () {
                 transaction.clearBasicInformation();
                 amount.resetBottomSheetInfo();
+                detaiInfo.resetDetailInfo(context);
                 Navigator.pop(context);
               },
             ),
@@ -94,6 +100,7 @@ class AddingTransactionScreen extends StatelessWidget {
                       SizedBox(height: S.dimens.smallPadding),
                       const DetailInfo(),
                       SizedBox(height: S.dimens.padding),
+                      const ImagesPicked(),
                     ],
                   ),
                 ),
@@ -101,6 +108,47 @@ class AddingTransactionScreen extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ImagesPicked extends StatelessWidget {
+  const ImagesPicked({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var pickImage = context.watch<PickImage>();
+
+    return SizedBox(
+      height: 200,
+      child: GridView.builder(
+        itemCount: pickImage.getImages().length,
+        gridDelegate:
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+        itemBuilder: (BuildContext context, int index) {
+          return Stack(
+            children: [
+              Image.file(
+                File(pickImage.getImages()[index].path),
+                fit: BoxFit.fill,
+              ),
+              Positioned(
+                right: 10,
+                top: -15,
+                child: IconButton(
+                  onPressed: () {
+                    pickImage.removeImageFromList(index);
+                  },
+                  icon: Icon(
+                    Icons.disabled_by_default_rounded,
+                    color: S.colors.shadowElevationColor,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

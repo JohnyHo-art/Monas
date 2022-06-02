@@ -16,11 +16,10 @@ class Account {
 // Extract JSON file to account object
   factory Account.fromJSON(json) {
     return Account(
-      userName: json['userName'],
-      dateFormat: json['dateFormat'],
-      notificationTime: (json['notificationTime'] as Timestamp).toDate(),
-      soundNotificationOn: json['soundNotificationOn']
-    );
+        userName: json['userName'],
+        dateFormat: json['dateFormat'],
+        notificationTime: (json['notificationTime'] as Timestamp).toDate(),
+        soundNotificationOn: json['soundNotificationOn']);
   }
 
   // Package user object to the JSON file

@@ -41,6 +41,13 @@ class AddingBasicInfoViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  int _selectedWallet = 0;
+  int getSelectedWallet() => _selectedWallet;
+  void setSelectedWallet(int newVal) {
+    _selectedWallet = newVal;
+    notifyListeners();
+  }
+
   // This updates note from the dialog to the note section
   void saveTransactionNote() {
     if (noteTextFieldController.text.trim().isEmpty) {
