@@ -12,7 +12,7 @@ class DetailInfoViewmodel extends ChangeNotifier {
   }
 
   void resetDetailInfo(BuildContext context) {
-    var pickImage = context.watch<PickImage>();
+    var pickImage = Provider.of<PickImage>(context, listen: false);
 
     setWithPerson("");
     pickImage.setImages([]);

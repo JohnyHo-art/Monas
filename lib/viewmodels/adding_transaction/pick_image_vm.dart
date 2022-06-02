@@ -8,7 +8,7 @@ class PickImage extends ChangeNotifier {
 
   late List<XFile> _images = [];
   List<XFile> getImages() => _images;
-  void setImages(newVal) {
+  void setImages(List<XFile> newVal) {
     _images = newVal;
     notifyListeners();
   }

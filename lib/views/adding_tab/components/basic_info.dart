@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
+import 'package:monas/constants/routes.dart';
 import 'package:monas/models/category_item_model.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
@@ -21,7 +22,7 @@ class BasicInfo extends StatelessWidget {
     var amount = context.watch<AddingAmountViewModel>();
     var loadWallet = context.watch<LoadWalletViewModel>();
 
-    // Show date picker dialog 
+    // Show date picker dialog
     Future pickDate() async {
       final initialDate = transaction.date;
       final newDate = await showDatePicker(
@@ -155,7 +156,7 @@ class BasicInfo extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.event),
-            title: Text(  
+            title: Text(
               transaction.getDateText(),
               style: TextStyle(color: S.colors.textOnSecondaryColor),
             ),
