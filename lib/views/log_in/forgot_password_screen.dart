@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/resources.dart';
-import 'package:monas/viewmodels/authentic_vm.dart';
+import 'package:monas/viewmodels/authentication/authentic_vm.dart';
 import 'package:monas/views/log_in/components/input_text_field.dart';
 import 'package:monas/widgets/custom_button.dart';
 import 'package:provider/provider.dart';

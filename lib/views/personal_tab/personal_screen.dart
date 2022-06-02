@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/routes.dart';
-import 'package:monas/viewmodels/account_setting_vm.dart';
-import 'package:monas/viewmodels/authentic_vm.dart';
+import 'package:monas/viewmodels/authentication/account_setting_vm.dart';
+import 'package:monas/viewmodels/authentication/authentic_vm.dart';
 import 'package:monas/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class PersonalScreen extends StatelessWidget {
           backgroundColor: S.colors.whiteColor,
           title: Text(
             'Tài khoản',
-            style: S.headerTextStyles.header2(null),
+            style: S.headerTextStyles.appbarTitle(null),
           ),
           elevation: 0,
         ),

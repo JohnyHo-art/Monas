@@ -12,6 +12,7 @@ class _Colors {
   final primaryColor = const Color(0xFF4F62C0);
   final whiteColor = Colors.white;
   final redColor = Colors.red;
+  final greenColor = Colors.green;
   final primaryColorDark = const Color(0xFF0A398F);
   final primaryColorLight = const Color(0xFF838FF3);
   final primaryColorShadeThirty = const Color(0xFF4F62C0).withOpacity(0.3);
@@ -34,7 +35,7 @@ class _Colors {
   final appBackground = const Color(0xFFF4F4F4);
   final iconColor = const Color(0xFF979797);
   final backgroundIcon1 = const Color(0xFF427CCE);
-  final backgroundIcon2 = const Color(0xFF00D159);
+  final backgroundIcon2 = const Color(0xFF5FD068);
   final backgroundIcon3 = const Color(0xFFFFD468);
   final backgroundIcon4 = const Color(0xFFFF1C45);
   final backgroundIcon5 = const Color(0xFFE4AEC5);
@@ -112,7 +113,7 @@ class _BodyText {
       fontFamily: 'Roboto',
       fontSize: 14,
       color: color ?? S.colors.textOnSecondaryColor,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w400,
     );
   }
 

@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:monas/constants/string_constants.dart';
 import 'package:monas/constants/utils.dart';
-import 'package:monas/models/account.dart';
-import 'package:monas/viewmodels/authentic_vm.dart';
+import 'package:monas/models/account_model.dart';
+import 'package:monas/viewmodels/authentication/authentic_vm.dart';
 import 'package:monas/views/personal_tab/date_format_picker_dialog.dart';
 
 class AccountSettingViewModel extends ChangeNotifier {

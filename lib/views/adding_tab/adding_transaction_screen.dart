@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
-import 'package:monas/viewmodels/adding_amount_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import 'package:monas/views/adding_tab/components/basic_info.dart';
 import 'package:monas/views/adding_tab/components/detail_infor.dart';
@@ -83,7 +83,7 @@ class AddingTransactionScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: S.dimens.padding),
+                SizedBox(height: S.dimens.smallPadding),
                 const BasicInfo(),
                 SizedBox(height: S.dimens.smallPadding),
                 _addMoreInfoButton(() => transaction.showDetail = true),

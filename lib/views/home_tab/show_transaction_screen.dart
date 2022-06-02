@@ -12,8 +12,8 @@ import 'package:provider/provider.dart';
 import '../../viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import '../../viewmodels/time_chosen_vm.dart';
 
-class ShowExpenseScreen extends StatelessWidget {
-  const ShowExpenseScreen({Key? key}) : super(key: key);
+class ShowTransactionScreen extends StatelessWidget {
+  const ShowTransactionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +107,25 @@ class Classify extends StatelessWidget {
     var transaction = context.watch<AddingBasicInfoViewModel>();
     var timeChosen = context.watch<TimeChosenViewModel>();
 
+    Future pickDate() async {
+      final initialDate = transaction.date;
+      final newDate = await showDatePicker(
+        context: context,
+        initialDate: initialDate,
+        firstDate: DateTime(DateTime.now().year - 5),
+        lastDate: DateTime(DateTime.now().year + 5),
+        builder: (context, child) => Theme(
+          data: ThemeData().copyWith(
+              colorScheme: ColorScheme.light(
+            primary: S.colors.primaryColor,
+          )),
+          child: child ?? const SizedBox.shrink(),
+        ),
+      );
+      if (newDate == null) return;
+      transaction.date = newDate;
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: S.colors.whiteColor,
@@ -157,7 +176,7 @@ class Classify extends StatelessWidget {
             ),
             Material(
               child: IconButton(
-                onPressed: () => transaction.pickDate(context),
+                onPressed: () => pickDate(),
                 icon: Icon(
                   Icons.calendar_today,
                   color: S.colors.primaryColor,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/viewmodels/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import 'package:provider/provider.dart';
 
@@ -9,11 +10,13 @@ class CategoryItem extends StatelessWidget {
     required this.id,
     required this.categoryIcon,
     required this.text,
+    this.choice,
   }) : super(key: key);
 
   final int id;
   final String categoryIcon;
   final String text;
+  final int? choice;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +27,15 @@ class CategoryItem extends StatelessWidget {
         style: S.bodyTextStyles.body1(null),
       ),
       onTap: () {
-        Provider.of<AddingBasicInfoViewModel>(context, listen: false)
-            .setSelectedCategoryIndex(id);
+        if (choice == 0) {
+          Provider.of<AddingBasicInfoViewModel>(context, listen: false)
+              .setSelectedCategoryIndex(id);
+        }
+        if (choice == 1) {
+          Provider.of<AddingBudgetViewModel>(context, listen: false)
+              .setSelectedCategoryId(id);
+        }
+        //call here
         Navigator.pop(context);
       },
     );

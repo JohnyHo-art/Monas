@@ -3,10 +3,12 @@ import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
-import 'package:monas/constants/routes.dart';
 import 'package:monas/models/category_item_model.dart';
-import 'package:monas/viewmodels/adding_amount_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
+import 'package:monas/views/adding_tab/components/add_note_dialog.dart';
+import 'package:monas/views/adding_tab/components/enter_money_bottom_sheet.dart';
+import 'package:monas/views/home_tab/category_list_screen.dart';
 import 'package:provider/provider.dart';
 
 class BasicInfo extends StatelessWidget {
@@ -16,6 +18,26 @@ class BasicInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     var transaction = context.watch<AddingBasicInfoViewModel>();
     var amount = context.watch<AddingAmountViewModel>();
+
+    // Show date picker dialog 
+    Future pickDate() async {
+      final initialDate = transaction.date;
+      final newDate = await showDatePicker(
+        context: context,
+        initialDate: initialDate,
+        firstDate: DateTime(DateTime.now().year - 5),
+        lastDate: DateTime(DateTime.now().year + 5),
+        builder: (context, child) => Theme(
+          data: ThemeData().copyWith(
+              colorScheme: ColorScheme.light(
+            primary: S.colors.primaryColor,
+          )),
+          child: child ?? const SizedBox.shrink(),
+        ),
+      );
+      if (newDate == null) return;
+      transaction.date = newDate;
+    }
 
     Widget _moneyAmountSection(String? locale, VoidCallback onTap) => InkWell(
           splashColor: S.colors.subTextColor,
@@ -63,8 +85,20 @@ class BasicInfo extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: S.dimens.smallPadding),
-          _moneyAmountSection(
-              null, () => transaction.showAmountMoneyBottomSheet(context)),
+          _moneyAmountSection(null, () {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(S.dimens.cardCornerRadiusMedium),
+                topRight: Radius.circular(S.dimens.cardCornerRadiusMedium),
+              )),
+              builder: (BuildContext context) {
+                return const EnterMoneyBottomSheet();
+              },
+            );
+          }),
           SizedBox(height: S.dimens.tinyPadding),
           ListTile(
             leading: Image.asset(R.walletIcon.walletIc0),
@@ -82,30 +116,45 @@ class BasicInfo extends StatelessWidget {
             title: Text(
               Category.categoryList[transaction.getSelectedCategoryId()].name,
               overflow: TextOverflow.ellipsis,
-              style: S.headerTextStyles.header3(
-                  transaction.getSelectedCategoryId() == 0
-                      ? S.colors.subTextColor2
-                      : S.colors.textOnSecondaryColor),
+              style: TextStyle(
+                color: transaction.getSelectedCategoryId() == 0
+                    ? S.colors.subTextColor2
+                    : S.colors.textOnSecondaryColor,
+              ),
             ),
-            onTap: () =>
-                Navigator.pushNamed(context, Routes.categoryListScreen),
+            onTap: () {
+              //Navigator.pushNamed(context, Routes.categoryListScreen);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CategoryListScreen(choice: 0),
+                ),
+              );
+            },
           ),
           ListTile(
             leading: const Icon(Icons.notes),
             title: Text(
               transaction.note.isEmpty ? 'Thêm ghi chú' : transaction.note,
-              style: S.bodyTextStyles.buttonText(S.colors.subTextColor2),
+              style: TextStyle(
+                color: transaction.note.isEmpty
+                    ? S.colors.subTextColor2
+                    : S.colors.textOnSecondaryColor,
+              ),
               overflow: TextOverflow.ellipsis,
             ),
-            onTap: () => transaction.showNoteAddingDialog(context),
+            onTap: () => showDialog(
+              context: context,
+              builder: (BuildContext context) => const AddingNoteDialog(),
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.event),
-            title: Text(
+            title: Text(  
               transaction.getDateText(),
-              style: S.bodyTextStyles.buttonText(S.colors.subTextColor2),
+              style: TextStyle(color: S.colors.textOnSecondaryColor),
             ),
-            onTap: () => transaction.pickDate(context),
+            onTap: () => pickDate(),
           ),
           SizedBox(height: S.dimens.padding),
         ],

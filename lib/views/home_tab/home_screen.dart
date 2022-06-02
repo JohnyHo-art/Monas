@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
-import 'package:monas/viewmodels/authentic_vm.dart';
+import 'package:monas/viewmodels/authentication/authentic_vm.dart';
 import 'package:monas/views/home_tab/components/home_transactions.dart';
 import 'package:monas/views/home_tab/components/home_wallets.dart';
 import 'package:provider/provider.dart';
