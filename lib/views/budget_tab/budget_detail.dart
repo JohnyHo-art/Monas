@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
 import 'package:monas/models/category_item_model.dart';
-import 'package:monas/viewmodels/adding_budget_vm.dart';
+import 'package:monas/viewmodels/budget_tab/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/views/adding_tab/components/enter_money_bottom_sheet.dart';
@@ -86,7 +86,7 @@ class BudgetDetail extends StatelessWidget {
               padding: EdgeInsets.only(top: S.dimens.padding),
               child: BudgetDetailItem(
                 leading: Icon(
-                  Icons.money,
+                  Icons.payments,
                   color: S.colors.subTextColor2,
                 ),
                 hintText: F.currencyFormat

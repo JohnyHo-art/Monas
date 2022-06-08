@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/format_style.dart';
+import 'package:monas/viewmodels/budget_tab/load_budget_vm.dart';
+import 'package:provider/provider.dart';
 
 class BudgetStatistic extends StatelessWidget {
   const BudgetStatistic({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var loadBudget = context.watch<LoadBudgetViewModel>();
+
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: S.dimens.smallPadding, vertical: S.dimens.smallPadding),
@@ -40,7 +44,7 @@ class BudgetStatistic extends StatelessWidget {
                           style: S.bodyTextStyles.body1(S.colors.subTextColor2),
                         ),
                         Text(
-                          F.currencyFormat.numberMoneyFormat(1000000),
+                          F.currencyFormat.numberMoneyFormat(loadBudget.totalSpent),
                           style: S.headerTextStyles
                               .header3(S.colors.backgroundIcon2),
                         ),
@@ -57,7 +61,8 @@ class BudgetStatistic extends StatelessWidget {
                           style: S.bodyTextStyles.body1(S.colors.subTextColor2),
                         ),
                         Text(
-                          F.currencyFormat.numberMoneyFormat(2000000),
+                          F.currencyFormat
+                              .numberMoneyFormat(loadBudget.totalBudget),
                           style: S.headerTextStyles.header3(null),
                         ),
                       ],
@@ -78,8 +83,9 @@ class BudgetStatistic extends StatelessWidget {
                       borderRadius: BorderRadius.all(
                           Radius.circular(S.dimens.cardCornerRadiusMedium)),
                       child: LinearProgressIndicator(
-                        minHeight: 16,
-                        value: 0.5,
+                        minHeight: 12,
+                        //value: loadBudget.totalSpent / loadBudget.totalBudget,
+                        value: 0.1,
                         valueColor: AlwaysStoppedAnimation<Color>(
                             S.colors.primaryColor),
                         backgroundColor: S.colors.subTextColor,
@@ -91,7 +97,7 @@ class BudgetStatistic extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(left: S.dimens.smallPadding),
                       child: Text(
-                        '50%',
+                        '${(loadBudget.totalSpent / loadBudget.totalBudget) * 100}',
                         style:
                             S.headerTextStyles.header3(S.colors.primaryColor),
                       ),

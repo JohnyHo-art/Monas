@@ -71,8 +71,8 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: S.colors.appBackground,
         floatingActionButton: FloatingActionButton(
           backgroundColor: S.colors.primaryColor,
-          onPressed: () => Navigator.pushNamed(
-              context, Routes.addTransactionScreen),
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.addTransactionScreen),
           child: Icon(Icons.add, color: S.colors.textOnPrimaryColor),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

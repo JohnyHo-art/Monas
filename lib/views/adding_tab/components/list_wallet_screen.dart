@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/models/wallet_model.dart';
-import 'package:monas/viewmodels/adding_budget_vm.dart';
+import 'package:monas/viewmodels/budget_tab/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:provider/provider.dart';

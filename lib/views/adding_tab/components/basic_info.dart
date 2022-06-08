@@ -22,7 +22,7 @@ class BasicInfo extends StatelessWidget {
     var loadWallet = context.watch<LoadWalletViewModel>();
 
     // Show date picker dialog
-    Future pickDate() async {
+    Future<void> pickDate() async {
       final initialDate = transaction.date;
       final newDate = await showDatePicker(
         context: context,

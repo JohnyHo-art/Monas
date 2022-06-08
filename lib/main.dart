@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/utils.dart';
-import 'package:monas/viewmodels/adding_budget_vm.dart';
+import 'package:monas/viewmodels/budget_tab/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/detail_info_vm.dart';
@@ -11,6 +11,7 @@ import 'package:monas/viewmodels/adding_transaction/pick_image_vm.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
 import 'package:monas/viewmodels/authentication/account_setting_vm.dart';
 import 'package:monas/viewmodels/authentication/authentic_vm.dart';
+import 'package:monas/viewmodels/budget_tab/load_budget_vm.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/viewmodels/time_chosen_vm.dart';
@@ -75,8 +76,9 @@ class Monas extends StatelessWidget {
               accountSetting!..updateAccountInfo(authentication),
         ),
 
-        // Adding budget viewmodel
+        // Budget related viewmodel
         ChangeNotifierProvider(create: (_) => AddingBudgetViewModel()),
+        ChangeNotifierProvider(create: (_) => LoadBudgetViewModel()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
@@ -108,10 +110,6 @@ class Monas extends StatelessWidget {
         home: const HomePage(),
       ),
     );
-  }
-
-  String getInitialRoute() {
-    return Routes.listContactScreen;
   }
 
   MaterialPageRoute? getRoute(RouteSettings settings) {
@@ -176,7 +174,7 @@ class HomePage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
             child: CircularProgressIndicator(
-              color: S.colors.primaryColor,
+              color: S.colors.secondaryColor,
             ),
           );
         } else if (snapshot.hasError) {
