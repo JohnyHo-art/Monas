@@ -7,11 +7,11 @@ import 'package:monas/viewmodels/budget_tab/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/views/adding_tab/components/enter_money_bottom_sheet.dart';
-import 'package:monas/views/budget_tab/budget_detail_item.dart';
+import 'package:monas/views/budget_tab/components/budget_detail_item.dart';
 import 'package:monas/views/home_tab/category_list_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../../constants/routes.dart';
+import '../../../constants/routes.dart';
 
 class BudgetDetail extends StatelessWidget {
   const BudgetDetail({Key? key}) : super(key: key);

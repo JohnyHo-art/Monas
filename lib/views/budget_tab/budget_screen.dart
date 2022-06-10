@@ -4,8 +4,8 @@ import 'package:monas/constants/routes.dart';
 import 'package:monas/viewmodels/budget_tab/adding_budget_vm.dart';
 import 'package:monas/viewmodels/budget_tab/load_budget_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
-import 'package:monas/views/budget_tab/budget_list_data.dart';
-import 'package:monas/views/budget_tab/budget_statistic.dart';
+import 'package:monas/views/budget_tab/components/budget_list_data.dart';
+import 'package:monas/views/budget_tab/components/budget_statistic.dart';
 import 'package:provider/provider.dart';
 
 class BudgetScreen extends StatelessWidget {

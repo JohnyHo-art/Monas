@@ -3,7 +3,7 @@ import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/string_constants.dart';
 import 'package:monas/viewmodels/budget_tab/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
-import 'package:monas/views/budget_tab/budget_detail.dart';
+import 'package:monas/views/budget_tab/components/budget_detail.dart';
 import 'package:provider/provider.dart';
 
 class AddingBudgetScreen extends StatelessWidget {

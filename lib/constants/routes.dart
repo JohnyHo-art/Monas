@@ -27,5 +27,4 @@ class Routes {
 
   //* routes from budget screen
   static const addingBudgetScreen = '$budgetScreen/adding_budget_screen';
-
 }

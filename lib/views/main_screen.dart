@@ -61,6 +61,10 @@ class _MainScreenState extends State<MainScreen> {
         .loadListWalletFromFirestore();
     Provider.of<AuthenticViewModel>(context, listen: false)
         .getUserDataFromFirestore();
+    // Provider.of<LoadBudgetViewModel>(context, listen: false)
+    //     .fetchBudgetFromFirestore(
+    //         Provider.of<AddingBudgetViewModel>(context, listen: false)
+    //             .selectedWalletId);
     super.initState();
   }
 

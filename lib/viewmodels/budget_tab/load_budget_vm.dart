@@ -1,18 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:monas/models/budget_model.dart';
 
 class LoadBudgetViewModel extends ChangeNotifier {
-  // Create a new list of budgets
-  List<Budget> _budgets = [];
-
-  List<Budget> get budgets => _budgets;
-
-  void setBudgets(newVal) {
-    _budgets = newVal;
-    notifyListeners();
-  }
-
   // year to show budget
   int _chosenYear = DateTime.now().year;
 
@@ -40,14 +31,6 @@ class LoadBudgetViewModel extends ChangeNotifier {
 
   void setTotalBudget(newVal) {
     _totalBudget = newVal;
-    notifyListeners();
-  }
-
-  void updateTotalBudget() {
-    for (Budget budget in _budgets) {
-      _totalBudget += budget.budget;
-      notifyListeners();
-    }
   }
 
   // Get the total spent of each month
@@ -57,13 +40,30 @@ class LoadBudgetViewModel extends ChangeNotifier {
 
   void setTotalSpent(newVal) {
     _totalSpent = newVal;
-    notifyListeners();
   }
 
-  void updateTotalSpent() {
-    for (Budget budget in _budgets) {
-      _totalSpent += budget.spent;
-      notifyListeners();
-    }
+  // Create a new list of int to save the chosen categories
+  // This list will be used to check created category budget
+  List<int> _chosenCategories = [];
+
+  List<int> get chosenCategories => _chosenCategories;
+
+  void setChosenCategories(newVal) {
+    _chosenCategories = newVal;
+  }
+
+  void addNewCategoryID(int id) {
+    _chosenCategories.add(id);
+  }
+
+  // Stream of query snapshot used to pass to the stream builder
+  Stream<QuerySnapshot> getBudgetStream(int walletId) {
+    return FirebaseFirestore.instance
+        .collection('budgets')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('wallet$walletId')
+        .doc('$chosenMonth-$chosenYear')
+        .collection('budgetList')
+        .snapshots();
   }
 }

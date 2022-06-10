@@ -149,6 +149,7 @@ class _Dimens {
   final buttonHeight = 40.0;
   final buttonWidth = 280.0;
   final tinyPadding = 8.0;
+  final extraLargeIconSize = 60.0;
   final largeIconSize = 40.0;
   final smallIconSize = 12.0;
 }
