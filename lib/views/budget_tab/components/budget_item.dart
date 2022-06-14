@@ -37,7 +37,7 @@ class BudgetItem extends StatelessWidget {
                       text: F.currencyFormat.numberMoneyFormat(budget.spent) +
                           ' / ',
                       style: S.bodyTextStyles.body1(
-                          budget.spent / budget.budget > 0.8
+                          budget.spent / (budget.budget == 0.0 ? 1 : budget.budget) > 0.8
                               ? S.colors.redColor
                               : S.colors.primaryColor),
                     ),
@@ -53,8 +53,8 @@ class BudgetItem extends StatelessWidget {
                 borderRadius: BorderRadius.all(
                     Radius.circular(S.dimens.cardCornerRadiusMedium)),
                 child: LinearProgressIndicator(
-                  minHeight: 6,
-                  value: budget.spent / budget.budget,
+                  minHeight: 4,
+                  value: budget.spent / (budget.budget == 0.0 ? 1 : budget.budget),
                   valueColor:
                       AlwaysStoppedAnimation<Color>(S.colors.secondaryColor),
                   backgroundColor: S.colors.subTextColor,

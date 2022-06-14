@@ -34,7 +34,7 @@ class AddingBudgetViewModel extends ChangeNotifier {
     // Get the current time when the budget is created
     DateTime now = DateTime.now();
 
-    Budget budget = Budget(
+  Budget budget = Budget(
       budget: amount,
       categoryId: selectedCategoryId,
       walletId: selectedWalletId,

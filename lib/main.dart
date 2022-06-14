@@ -11,6 +11,7 @@ import 'package:monas/viewmodels/adding_transaction/pick_image_vm.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
 import 'package:monas/viewmodels/authentication/account_setting_vm.dart';
 import 'package:monas/viewmodels/authentication/authentic_vm.dart';
+import 'package:monas/viewmodels/budget_tab/edit_budget_vm.dart';
 import 'package:monas/viewmodels/budget_tab/load_budget_vm.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
@@ -79,6 +80,7 @@ class Monas extends StatelessWidget {
         // Budget related viewmodel
         ChangeNotifierProvider(create: (_) => AddingBudgetViewModel()),
         ChangeNotifierProvider(create: (_) => LoadBudgetViewModel()),
+        ChangeNotifierProvider(create: (_) => EditBudgetViewModel())
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,

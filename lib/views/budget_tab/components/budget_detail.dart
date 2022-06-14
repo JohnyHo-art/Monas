@@ -79,6 +79,7 @@ class BudgetDetail extends StatelessWidget {
                       builder: (context) => CategoryListScreen(choice: 1),
                     ),
                   );
+                  //Navigator.pushNamed(context, Routes.categoryListScreen, arguments: 1);
                 },
               ),
             ),

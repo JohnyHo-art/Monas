@@ -63,7 +63,7 @@ class BudgetDetailInformation extends StatelessWidget {
       }
       var daysInMonth = [31, -1, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
       return daysInMonth[month - 1];
-    };
+    }
 
     return Padding(
       padding: const EdgeInsets.only(top: 45),

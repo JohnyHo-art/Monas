@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/viewmodels/budget_tab/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
+import 'package:monas/viewmodels/budget_tab/edit_budget_vm.dart';
 import 'package:monas/viewmodels/budget_tab/load_budget_vm.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,7 @@ class CategoryItem extends StatelessWidget {
     var loadBudget = context.watch<LoadBudgetViewModel>();
 
     bool isCreated() {
-      if (choice == 1) {
+      if (choice == 1 || choice == 2) {
         for (int i in loadBudget.chosenCategories) {
           if (i == id) return true;
         }
@@ -51,6 +52,10 @@ class CategoryItem extends StatelessWidget {
         if (choice == 1) {
           Provider.of<AddingBudgetViewModel>(context, listen: false)
               .setSelectedCategoryId(id);
+        }
+        if (choice == 2) {
+          Provider.of<EditBudgetViewModel>(context, listen: false)
+              .setNewCategory(id);
         }
         //call here
         Navigator.pop(context);

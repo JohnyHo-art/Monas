@@ -3,6 +3,7 @@ import 'package:monas/constants/constants.dart';
 import 'package:monas/models/wallet_model.dart';
 import 'package:monas/viewmodels/budget_tab/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
+import 'package:monas/viewmodels/budget_tab/edit_budget_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,7 @@ class ListWalletScreen extends StatelessWidget {
     var loadWallet = Provider.of<LoadWalletViewModel>(context, listen: false);
     var addBasic = context.watch<AddingBasicInfoViewModel>();
     var budget = context.watch<AddingBudgetViewModel>();
+    var editBudget = context.watch<EditBudgetViewModel>();
 
     Widget _listWallet(List<Wallet> listWallet) => ListView.builder(
           itemCount: listWallet.length,
@@ -31,6 +33,7 @@ class ListWalletScreen extends StatelessWidget {
                 onTap: () {
                   addBasic.setSelectedWallet(index);
                   budget.setSelectedWalletId(index);
+                  editBudget.setNewWalletId(index);
                   Navigator.pop(context);
                 },
               ),

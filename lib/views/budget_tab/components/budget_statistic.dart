@@ -103,7 +103,7 @@ class BudgetStatistic extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(
                                 S.dimens.cardCornerRadiusMedium)),
                             child: LinearProgressIndicator(
-                              minHeight: 12,
+                              minHeight: 8,
                               value: loadBudget.totalSpent == 0 ? 0 : loadBudget.totalSpent /
                                   loadBudget.totalBudget,
                               valueColor: AlwaysStoppedAnimation<Color>(
@@ -115,7 +115,7 @@ class BudgetStatistic extends StatelessWidget {
                         Expanded(
                           flex: 2,
                           child: Padding(
-                            padding:  
+                            padding:
                                 EdgeInsets.only(left: S.dimens.smallPadding),
                             child: Text(
                               loadBudget.totalSpent == 0
