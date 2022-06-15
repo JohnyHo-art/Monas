@@ -3,10 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/utils.dart';
+import 'package:monas/models/transaction_model.dart';
 import 'package:monas/viewmodels/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/adding_transaction_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/detail_info_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/load_transaction_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/pick_image_vm.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
 import 'package:monas/viewmodels/authentication/account_setting_vm.dart';
@@ -22,6 +25,7 @@ import 'package:monas/views/home_tab/category_list_screen.dart';
 import 'package:monas/views/adding_tab/add_wallet_screen.dart';
 import 'package:monas/views/budget_tab/adding_budget_screen.dart';
 import 'package:monas/views/budget_tab/budget_screen.dart';
+import 'package:monas/views/home_tab/detail_transaction_screen.dart';
 import 'package:monas/views/home_tab/show_transaction_screen.dart';
 import 'package:monas/views/home_tab/wallet_list_screen.dart';
 import 'package:monas/views/log_in/forgot_password_screen.dart';
@@ -65,6 +69,8 @@ class Monas extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoadWalletViewModel()),
         ChangeNotifierProvider(create: (_) => DetailInfoViewmodel()),
         ChangeNotifierProvider(create: (_) => PickImage()),
+        ChangeNotifierProvider(create: (_) => AddingTransactionViewmodel()),
+        ChangeNotifierProvider(create: (_) => LoadTransactionViewmodel()),
 
         // Accout tab viewmodel
         // Used ChangeNotifier
@@ -104,6 +110,7 @@ class Monas extends StatelessWidget {
             ),
           ),
         ),
+        //initialRoute: getInitialRoute(),
         onGenerateRoute: (route) => getRoute(route),
         home: const HomePage(),
       ),
@@ -111,7 +118,7 @@ class Monas extends StatelessWidget {
   }
 
   String getInitialRoute() {
-    return Routes.listContactScreen;
+    return Routes.detailTransactionScreen;
   }
 
   MaterialPageRoute? getRoute(RouteSettings settings) {
@@ -148,6 +155,10 @@ class Monas extends StatelessWidget {
       // Home tab
       case Routes.walletListScreen:
         return buildRoute(const WalletListScreen(), settings: settings);
+      case Routes.detailTransactionScreen:
+        Transaction transaction = settings.arguments as Transaction;
+        return buildRoute(DetailTransactionScreen(transaction: transaction),
+            settings: settings);
       // Budget tab
       case Routes.addingBudgetScreen:
         return buildRoute(const AddingBudgetScreen(), settings: settings);

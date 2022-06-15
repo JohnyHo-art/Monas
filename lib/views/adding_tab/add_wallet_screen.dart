@@ -134,6 +134,7 @@ class AddWalletScreen extends StatelessWidget {
               icon: Icon(Icons.close, color: S.colors.textOnSecondaryColor),
               onPressed: () {
                 Navigator.pop(context);
+                addWallet.resetInformation();
               },
             ),
             title: Text(
@@ -150,6 +151,7 @@ class AddWalletScreen extends StatelessWidget {
                 onPressed: () {
                   addWallet.addNewWallet(context);
                   Navigator.pop(context);
+                  addWallet.resetInformation();
                 },
               ),
             ],

@@ -45,20 +45,12 @@ class LoadWalletViewModel extends ChangeNotifier {
         nonIncludeToTotalListWallet.add(i);
       }
     }
-    notifyListeners();
     totalMoney();
-  }
-
-  void addNewWalletToLocalList(Wallet newWallet) {
-    if (newWallet.includeToTotal) {
-      includeToTotalListWallet.add(newWallet);
-    } else {
-      nonIncludeToTotalListWallet.add(newWallet);
-    }
     notifyListeners();
   }
 
   void totalMoney() {
+    total = 0.0;
     for (var i in includeToTotalListWallet) {
       total += i.balance;
     }

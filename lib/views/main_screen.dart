@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/routes.dart';
+import 'package:monas/viewmodels/adding_transaction/load_transaction_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/viewmodels/authentication/authentic_vm.dart';
 import 'package:monas/views/budget_tab/budget_screen.dart';
@@ -61,6 +62,8 @@ class _MainScreenState extends State<MainScreen> {
         .loadListWalletFromFirestore();
     Provider.of<AuthenticViewModel>(context, listen: false)
         .getUserDataFromFirestore();
+    Provider.of<LoadTransactionViewmodel>(context, listen: false)
+        .loadTransactionDataFromFirestore();
     super.initState();
   }
 
@@ -71,8 +74,8 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: S.colors.appBackground,
         floatingActionButton: FloatingActionButton(
           backgroundColor: S.colors.primaryColor,
-          onPressed: () => Navigator.pushNamed(
-              context, Routes.addTransactionScreen),
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.addTransactionScreen),
           child: Icon(Icons.add, color: S.colors.textOnPrimaryColor),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

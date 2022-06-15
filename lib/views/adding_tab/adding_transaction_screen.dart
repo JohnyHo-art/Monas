@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/adding_transaction_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/detail_info_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/load_transaction_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/pick_image_vm.dart';
 import 'package:monas/views/adding_tab/components/basic_info.dart';
 import 'package:monas/views/adding_tab/components/detail_infor.dart';
@@ -18,6 +20,8 @@ class AddingTransactionScreen extends StatelessWidget {
     var transaction = context.watch<AddingBasicInfoViewModel>();
     var amount = context.watch<AddingAmountViewModel>();
     var detaiInfo = context.watch<DetailInfoViewmodel>();
+    var addingTransaction = context.watch<AddingTransactionViewmodel>();
+    var loadTransaction = context.watch<LoadTransactionViewmodel>();
 
     Widget _addMoreInfoButton(VoidCallback onPressed) => Visibility(
           visible: !transaction.showDetail,
@@ -77,7 +81,19 @@ class AddingTransactionScreen extends StatelessWidget {
                 style: ButtonStyle(
                     overlayColor: MaterialStateColor.resolveWith(
                         (states) => S.colors.primaryColorShadeThirty)),
-                onPressed: () {},
+                onPressed: () async {
+                  await addingTransaction
+                      .pushNewTransactionToFirestore(context);
+                  await addingTransaction
+                      .updateWalletBalanceAfterAddNewTransaction(context);
+
+                  loadTransaction.loadTransactionDataFromFirestore();
+                  transaction.clearBasicInformation();
+                  amount.resetBottomSheetInfo();
+                  detaiInfo.resetDetailInfo(context);
+
+                  Navigator.pop(context);
+                },
                 child: Text(
                   'LƯU',
                   style: S.bodyTextStyles.buttonText(S.colors.primaryColor),

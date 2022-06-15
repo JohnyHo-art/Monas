@@ -76,9 +76,9 @@ class AddingWalletViewModel extends ChangeNotifier {
     balanceTextFieldController.clear();
   }
 
-  Wallet newWallet() {
+  Wallet newWallet(BuildContext context, var loadWallet) {
     return Wallet(
-        id: "wallet1",
+        id: loadWallet.currentListWallet.length,
         name: saveWalletName(),
         balance: saveBalance(),
         expense: 0.0,
@@ -90,19 +90,20 @@ class AddingWalletViewModel extends ChangeNotifier {
   Future<void> addNewWallet(BuildContext context) async {
     var loadWallet = Provider.of<LoadWalletViewModel>(context, listen: false);
 
-    await firestore
+    Wallet newWallet1 = newWallet(context, loadWallet);
+
+    await FirebaseFirestore.instance
         .collection("wallets")
-        .doc(auth.currentUser!.uid)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("listWallets")
         .doc(loadWallet.currentListWallet.length.toString())
-        .set(newWallet().toMap())
+        .set(newWallet1.toMap())
         .onError((error, stackTrace) =>
             Fluttertoast.showToast(msg: "Thêm ví thất bại"))
         .then(
           (value) => {
             Fluttertoast.showToast(msg: "Thêm ví thành công"),
-            loadWallet.currentListWallet.add(newWallet()),
-            loadWallet.addNewWalletToLocalList(newWallet()),
+            loadWallet.loadListWalletFromFirestore(),
           },
         );
   }

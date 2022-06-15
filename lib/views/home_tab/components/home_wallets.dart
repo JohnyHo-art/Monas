@@ -4,6 +4,9 @@ import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
 import 'package:monas/constants/routes.dart';
 import 'package:monas/constants/string_constants.dart';
+import 'package:provider/provider.dart';
+
+import '../../../viewmodels/load_wallet_vm.dart';
 
 class HomeWallets extends StatelessWidget {
   const HomeWallets({Key? key}) : super(key: key);
@@ -79,6 +82,7 @@ class HomeWallets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var loadWallet = Provider.of<LoadWalletViewModel>(context);
     return Column(
       children: [
         Padding(
@@ -95,7 +99,8 @@ class HomeWallets extends StatelessWidget {
                   style: ButtonStyle(
                       overlayColor: MaterialStateColor.resolveWith(
                           (states) => S.colors.primaryColorShadeThirty)),
-                  onPressed: () => {
+                  onPressed: () async => {
+                        await loadWallet.loadListWalletFromFirestore(),
                         Navigator.pushNamed(context, Routes.walletListScreen),
                       },
                   child: Text(

@@ -141,6 +141,7 @@ class List extends StatelessWidget {
                   id: Category.entertainmentCategory[index].id,
                   categoryIcon: Category.entertainmentCategory[index].iconUrl,
                   text: Category.entertainmentCategory[index].name,
+                  choice: choice,
                 );
               },
             ),
@@ -170,6 +171,7 @@ class List extends StatelessWidget {
                   id: Category.investmentCategory[index].id,
                   categoryIcon: Category.investmentCategory[index].iconUrl,
                   text: Category.investmentCategory[index].name,
+                  choice: choice,
                 );
               },
             ),
@@ -199,6 +201,7 @@ class List extends StatelessWidget {
                   id: Category.incomesCategory[index].id,
                   categoryIcon: Category.incomesCategory[index].iconUrl,
                   text: Category.incomesCategory[index].name,
+                  choice: choice,
                 );
               },
             ),
@@ -228,6 +231,7 @@ class List extends StatelessWidget {
                   id: Category.othersCategory[index].id,
                   categoryIcon: Category.othersCategory[index].iconUrl,
                   text: Category.othersCategory[index].name,
+                  choice: choice,
                 );
               },
             ),
