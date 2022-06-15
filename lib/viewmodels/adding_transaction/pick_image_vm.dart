@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:monas/models/adding_transaction_repository.dart';
 
 class PickImage extends ChangeNotifier {
   // pick image for transaction
@@ -34,5 +35,9 @@ class PickImage extends ChangeNotifier {
     getImages().remove(getImages()[index]);
     notifyListeners();
     _images[0].readAsBytes();
+  }
+
+  Future<void> pushImage() async {
+    await AddingTransactionRepo().getListUrlFromStorage(getImages());
   }
 }

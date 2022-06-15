@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/routes.dart';
+import 'package:monas/viewmodels/adding_transaction/load_transaction_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/viewmodels/authentication/authentic_vm.dart';
 import 'package:monas/views/budget_tab/budget_screen.dart';
@@ -61,10 +62,8 @@ class _MainScreenState extends State<MainScreen> {
         .loadListWalletFromFirestore();
     Provider.of<AuthenticViewModel>(context, listen: false)
         .getUserDataFromFirestore();
-    // Provider.of<LoadBudgetViewModel>(context, listen: false)
-    //     .fetchBudgetFromFirestore(
-    //         Provider.of<AddingBudgetViewModel>(context, listen: false)
-    //             .selectedWalletId);
+    Provider.of<LoadTransactionViewmodel>(context, listen: false)
+        .loadTransactionDataFromFirestore();
     super.initState();
   }
 

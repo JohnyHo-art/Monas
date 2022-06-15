@@ -1,5 +1,5 @@
 class Wallet {
-  final String id;
+  final int id;
   final String name;
   final double balance;
   final double expense;

@@ -21,6 +21,8 @@ class Routes {
   static const notificationScreen = '$homeScreen/notification_screen';
   static const addWalletScreen = '$homeScreen/add_wallet_screen';
   static const showTransactionScreen = '$homeScreen/show_transaction_screen';
+  static const detailTransactionScreen =
+      '$showTransactionScreen/detail_transaction_screen';
   static const categoryListScreen = '$homeScreen/category_list_screen';
 
   //* Routes from report

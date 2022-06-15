@@ -88,6 +88,15 @@ class _HeaderText {
     );
   }
 
+  TextStyle header4(Color? color) {
+    return TextStyle(
+      fontFamily: 'Roboto',
+      fontSize: 34,
+      color: color ?? S.colors.textOnSecondaryColor,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
   TextStyle appbarTitle(Color? color) {
     return TextStyle(
       fontFamily: 'Roboto',
