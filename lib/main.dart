@@ -31,19 +31,24 @@ import 'package:monas/views/log_in/login_screen.dart';
 import 'package:monas/views/log_in/signup_screen.dart';
 import 'package:monas/views/onboarding/onboarding_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants/routes.dart';
 import 'views/main_screen.dart';
 import 'views/personal_tab/personal_screen.dart';
 import 'views/report_tab/report_screen.dart';
 
-bool seenOnboard = true;
+bool? seenOnboard;
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   // Initialize firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  // Create a shared preferences to store the value if onboarding is seen
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  seenOnboard = preferences.getBool('seenOnboard') ?? false;
 
   runApp(const Monas());
 }
@@ -109,7 +114,7 @@ class Monas extends StatelessWidget {
           ),
         ),
         onGenerateRoute: (route) => getRoute(route),
-        home: const HomePage(),
+        home: seenOnboard == true ? const HomePage() : const OnboardingScreen(),
       ),
     );
   }
@@ -187,6 +192,6 @@ class HomePage extends StatelessWidget {
           return const LoginScreen();
         }
       },
-    );
+    );  
   }
 }

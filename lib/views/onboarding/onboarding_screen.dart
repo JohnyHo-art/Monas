@@ -2,11 +2,82 @@ import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/resources.dart';
 import 'package:monas/constants/routes.dart';
+import 'package:monas/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../widgets/custom_button.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
+
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  int _currentIndex = 0;
+
+  // Create a new widget for indicator
+  Widget slidePoint() => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 2),
+            height: 10,
+            width: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: _currentIndex == 0
+                  ? S.colors.primaryColor
+                  : S.colors.subTextColor,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 2),
+            height: 10,
+            width: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: _currentIndex == 1
+                  ? S.colors.primaryColor
+                  : S.colors.subTextColor,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 2),
+            height: 10,
+            width: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: _currentIndex == 2
+                  ? S.colors.primaryColor
+                  : S.colors.subTextColor,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 2),
+            height: 10,
+            width: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: _currentIndex == 3
+                  ? S.colors.primaryColor
+                  : S.colors.subTextColor,
+            ),
+          ),
+        ],
+      );
+
+  Future setSeenOnboard() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    seenOnboard = await prefs.setBool('seenOnboard', true);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setSeenOnboard();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +99,13 @@ class OnboardingScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 200.0),
                 child: PageView(
+                  onPageChanged: (value) => {
+                    setState(() {
+                      _currentIndex = value;
+                    })
+                  },
                   children: [
+                    // First onboarding screen
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -39,18 +116,15 @@ class OnboardingScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 80),
                           child: Text(
-                            "Effective financial management",
+                            "Quản lý tài chính hiệu quả \nvới Monas",
                             style: S.headerTextStyles
                                 .header2(S.colors.primaryColor),
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                        Text(
-                          "with Monas",
-                          style:
-                              S.headerTextStyles.header2(S.colors.primaryColor),
-                        )
                       ],
                     ),
+                    // Second onboarding
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -61,18 +135,15 @@ class OnboardingScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 80),
                           child: Text(
-                            "Make the financial budgets",
+                            "Thêm ngân sách tài chính\nbạn mong muốn",
                             style: S.headerTextStyles
                                 .header2(S.colors.primaryColor),
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                        Text(
-                          "you want",
-                          style:
-                              S.headerTextStyles.header2(S.colors.primaryColor),
-                        )
                       ],
                     ),
+                    // Third onboarding
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -86,18 +157,15 @@ class OnboardingScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 80),
                           child: Text(
-                            "Customize your favorite",
+                            "Thoả sức tuỳ biến\nví của bạn",
                             style: S.headerTextStyles
                                 .header2(S.colors.primaryColor),
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                        Text(
-                          "e-wallet",
-                          style:
-                              S.headerTextStyles.header2(S.colors.primaryColor),
-                        )
                       ],
                     ),
+                    // final onboarding
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -111,16 +179,12 @@ class OnboardingScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 80),
                           child: Text(
-                            "Give you a maximum",
+                            "Bảo mật thông tin\nlà ưu tiên hàng đầu",
                             style: S.headerTextStyles
                                 .header2(S.colors.primaryColor),
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                        Text(
-                          "security for your account",
-                          style:
-                              S.headerTextStyles.header2(S.colors.primaryColor),
-                        )
                       ],
                     )
                   ],
@@ -130,11 +194,14 @@ class OnboardingScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomSheet: SizedBox(
-        height: 200,
+      bottomSheet: Container(
+        color: S.colors.whiteColor,
+        height: 250,
         child: Center(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
+              slidePoint(),
               Padding(
                 padding: EdgeInsets.all(S.dimens.padding),
                 child: CustomButton(
@@ -142,14 +209,14 @@ class OnboardingScreen extends StatelessWidget {
                     Navigator.pushReplacementNamed(
                         context, Routes.signupScreen);
                   },
-                  text: "SIGN UP FOR FREE",
+                  text: "ĐĂNG KÝ MIỄN PHÍ",
                 ),
               ),
               CustomButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, Routes.loginScreen);
                 },
-                text: "SIGN IN",
+                text: "ĐĂNG NHẬP",
                 color: S.colors.whiteColor,
                 textColor: S.colors.primaryColor,
                 borderColor: S.colors.whiteColor,
