@@ -6,7 +6,7 @@ import '../models/wallet_model.dart';
 class DropdownWalletViewModel extends ChangeNotifier {
   List<Wallet> dropdownWalletList = [
     Wallet(
-      id: "wallet1",
+      id: 1,
       name: "Ví tổng",
       balance: 500000,
       expense: 20000,
@@ -15,7 +15,7 @@ class DropdownWalletViewModel extends ChangeNotifier {
       includeToTotal: true,
     ),
     Wallet(
-      id: "wallet1",
+      id: 2,
       name: "Ví chi tiêu cần thiết",
       balance: 600000,
       expense: 30000,
@@ -24,7 +24,7 @@ class DropdownWalletViewModel extends ChangeNotifier {
       includeToTotal: true,
     ),
     Wallet(
-      id: "wallet1",
+      id: 2,
       name: "Ví ăn uống",
       balance: 400000,
       expense: 10000,

@@ -1,10 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/constants/routes.dart';
 import 'package:monas/models/category_item_model.dart';
 import 'package:monas/models/show_expense_item_model.dart';
 import 'package:monas/models/show_expense_title_model.dart';
+import 'package:monas/models/transaction_model.dart';
 import 'package:monas/models/wallet_model.dart';
+import 'package:monas/viewmodels/adding_transaction/load_transaction_vm.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
 import 'package:monas/views/home_tab/components/time_chosen_item.dart';
 import 'package:provider/provider.dart';
@@ -75,7 +80,9 @@ class ShowTransactionScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: _dropdownWallet(),
         actions: [
@@ -195,6 +202,8 @@ class ShowDetailExpense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var loadTransaction = context.watch<LoadTransactionViewmodel>();
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 0),
@@ -280,12 +289,11 @@ class ShowDetailExpense extends StatelessWidget {
               ),
               ListView.builder(
                   shrinkWrap: true,
-                  itemCount: ExpenseItem.testList.length,
+                  itemCount: loadTransaction.getListTransaction().length,
                   itemBuilder: (context, index) {
                     return ShowExpenseItem(
-                        categoryId: ExpenseItem.testList[index].categoryId,
-                        date: ExpenseItem.testList[index].date,
-                        money: ExpenseItem.testList[index].money);
+                        transaction:
+                            loadTransaction.getListTransaction()[index]);
                   })
             ],
           ),
@@ -296,49 +304,57 @@ class ShowDetailExpense extends StatelessWidget {
 }
 
 class ShowExpenseItem extends StatelessWidget {
-  const ShowExpenseItem(
-      {Key? key,
-      required this.categoryId,
-      required this.date,
-      required this.money})
-      : super(key: key);
+  const ShowExpenseItem({
+    Key? key,
+    required this.transaction,
+  }) : super(key: key);
 
-  final int categoryId;
-  final String date;
-  final double money;
+  final Transaction transaction;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20.0, 8, 0, 0),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Image.asset(Category.categoryList[categoryId].iconUrl),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                date,
-                style: S.bodyTextStyles.caption(null),
-              ),
-              Text(
-                Category.categoryList[categoryId].name,
-                style: S.bodyTextStyles.caption(S.colors.shadowElevationColor),
-              )
-            ],
-          ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(right: 32.0),
-            child: Text(
-              NumberFormat.decimalPattern().format(money),
-              style: S.bodyTextStyles.caption(null),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, Routes.detailTransactionScreen,
+            arguments: transaction);
+      },
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20.0, 8, 0, 0),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Image.asset(
+                  Category.categoryList[transaction.categoryId].iconUrl),
             ),
-          ),
-        ],
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  DateFormat('yMMMMd').format(transaction.date),
+                  style: S.bodyTextStyles.caption(null),
+                ),
+                Text(
+                  Category.categoryList[transaction.categoryId].name,
+                  style:
+                      S.bodyTextStyles.caption(S.colors.shadowElevationColor),
+                )
+              ],
+            ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(right: 32.0),
+              child: Text(
+                NumberFormat.decimalPattern().format(transaction.money),
+                style: S.bodyTextStyles.caption(
+                  transaction.money < 0
+                      ? S.colors.redColor
+                      : S.colors.greenColor,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

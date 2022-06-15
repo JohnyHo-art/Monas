@@ -103,7 +103,12 @@ class WalletListScreen extends StatelessWidget {
               Expanded(
                 child: TabBarView(
                   children: [
-                    _listWallet(loadWallet.includeToTotalListWallet),
+                    RefreshIndicator(
+                      onRefresh: () {
+                        return loadWallet.loadListWalletFromFirestore();
+                      },
+                      child: _listWallet(loadWallet.includeToTotalListWallet),
+                    ),
                     _listWallet(loadWallet.nonIncludeToTotalListWallet),
                   ],
                 ),
