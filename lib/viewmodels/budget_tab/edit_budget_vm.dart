@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:monas/constants/utils.dart';
 import 'package:monas/models/budget_model.dart';
 
 class EditBudgetViewModel extends ChangeNotifier {
@@ -26,7 +25,7 @@ class EditBudgetViewModel extends ChangeNotifier {
 
   void setNewCategory(newVal) {
     _newCategoryId = newVal;
-    //notifyListeners();
+    notifyListeners();
   }
 
   // A variable to check if update is success

@@ -63,7 +63,7 @@ class BudgetEditScreen extends StatelessWidget {
                   Utils.showSuccessSnackBar('Sửa ngân sách thành công');
                   // if new category is not different from the old id
                   //then delete the budget, else just update it
-                  if (editBudget.newCategoryId != budget.categoryId) {
+                  if (editBudget.newCategoryId != budget.categoryId || editBudget.newWalletId != budget.walletId) {
                     editBudget.deleteBudget(
                       loadBudget.chosenMonth,
                       loadBudget.chosenYear,
