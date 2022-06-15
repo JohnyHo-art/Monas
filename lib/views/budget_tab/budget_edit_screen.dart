@@ -59,11 +59,11 @@ class BudgetEditScreen extends StatelessWidget {
                 // If update success
                 if (editBudget.updateSuccess) {
                   // Navigate back to the budget screen
-                  Navigator.pushReplacementNamed(context, Routes.budgetScreen);
                   Utils.showSuccessSnackBar('Sửa ngân sách thành công');
                   // if new category is not different from the old id
                   //then delete the budget, else just update it
-                  if (editBudget.newCategoryId != budget.categoryId || editBudget.newWalletId != budget.walletId) {
+                  if (editBudget.newCategoryId != budget.categoryId ||
+                      editBudget.newWalletId != budget.walletId) {
                     editBudget.deleteBudget(
                       loadBudget.chosenMonth,
                       loadBudget.chosenYear,
@@ -71,6 +71,9 @@ class BudgetEditScreen extends StatelessWidget {
                       budget.categoryId,
                     );
                   }
+                  // Navigation back to the budget screen
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                   // Set the update success back to false
                   editBudget.setUpDateSuccess = false;
                 } else {
