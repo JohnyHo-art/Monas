@@ -3,8 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/utils.dart';
+
+import 'package:monas/viewmodels/budget_tab/adding_budget_vm.dart';
 import 'package:monas/models/transaction_model.dart';
-import 'package:monas/viewmodels/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_transaction_vm.dart';
@@ -14,6 +15,8 @@ import 'package:monas/viewmodels/adding_transaction/pick_image_vm.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
 import 'package:monas/viewmodels/authentication/account_setting_vm.dart';
 import 'package:monas/viewmodels/authentication/authentic_vm.dart';
+import 'package:monas/viewmodels/budget_tab/edit_budget_vm.dart';
+import 'package:monas/viewmodels/budget_tab/load_budget_vm.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/viewmodels/time_chosen_vm.dart';
@@ -33,19 +36,24 @@ import 'package:monas/views/log_in/login_screen.dart';
 import 'package:monas/views/log_in/signup_screen.dart';
 import 'package:monas/views/onboarding/onboarding_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants/routes.dart';
 import 'views/main_screen.dart';
 import 'views/personal_tab/personal_screen.dart';
 import 'views/report_tab/report_screen.dart';
 
-bool seenOnboard = true;
+bool? seenOnboard;
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   // Initialize firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  // Create a shared preferences to store the value if onboarding is seen
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  seenOnboard = preferences.getBool('seenOnboard') ?? false;
 
   runApp(const Monas());
 }
@@ -81,8 +89,10 @@ class Monas extends StatelessWidget {
               accountSetting!..updateAccountInfo(authentication),
         ),
 
-        // Adding budget viewmodel
+        // Budget related viewmodel
         ChangeNotifierProvider(create: (_) => AddingBudgetViewModel()),
+        ChangeNotifierProvider(create: (_) => LoadBudgetViewModel()),
+        ChangeNotifierProvider(create: (_) => EditBudgetViewModel())
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
@@ -112,13 +122,9 @@ class Monas extends StatelessWidget {
         ),
         //initialRoute: getInitialRoute(),
         onGenerateRoute: (route) => getRoute(route),
-        home: const HomePage(),
+        home: seenOnboard == true ? const HomePage() : const OnboardingScreen(),
       ),
     );
-  }
-
-  String getInitialRoute() {
-    return Routes.detailTransactionScreen;
   }
 
   MaterialPageRoute? getRoute(RouteSettings settings) {
@@ -187,7 +193,7 @@ class HomePage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
             child: CircularProgressIndicator(
-              color: S.colors.primaryColor,
+              color: S.colors.secondaryColor,
             ),
           );
         } else if (snapshot.hasError) {
@@ -198,6 +204,6 @@ class HomePage extends StatelessWidget {
           return const LoginScreen();
         }
       },
-    );
+    );  
   }
 }

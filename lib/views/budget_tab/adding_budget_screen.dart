@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/string_constants.dart';
-import 'package:monas/viewmodels/adding_budget_vm.dart';
+import 'package:monas/constants/utils.dart';
+import 'package:monas/viewmodels/budget_tab/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
-import 'package:monas/views/budget_tab/budget_detail.dart';
+import 'package:monas/views/budget_tab/components/budget_detail.dart';
 import 'package:provider/provider.dart';
 
 class AddingBudgetScreen extends StatelessWidget {
@@ -56,9 +57,14 @@ class AddingBudgetScreen extends StatelessWidget {
           backgroundColor: S.colors.primaryColor,
           child: Icon(Icons.check, color: S.colors.whiteColor),
           onPressed: () {
-            double amount = budget.budgetAmount;
-            if (budget.selectedCategoryId != 0 && amount != 0) {
-              //TODO: Handle save budget event
+            if (budget.selectedCategoryId != 0) {
+              // Handle save budget event
+              budget.saveAndPushBudget(amount.amountOfMoney);
+              amount.resetBottomSheetInfo();
+              budget.setSelectedCategoryId(0);
+              Navigator.pop(context);
+            } else {
+              Utils.showSnackBar('Vui lòng chọn danh mục');
             }
           },
         ),

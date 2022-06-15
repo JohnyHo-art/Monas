@@ -14,10 +14,10 @@ class Budget {
   // Decompose a JSON object to a budget object
   factory Budget.fromJSON(json) {
     return Budget(
-      budget: json['budget'],
+      budget: double.parse(json['budget'].toString()),
       categoryId: json['categoryId'],
       walletId: json['walletId'],
-      spent: json['spent'],
+      spent: double.parse(json['spent'].toString()),
     );
   }
 
@@ -25,7 +25,7 @@ class Budget {
   Map<String, dynamic> toJSON() {
     return {
       'budget': budget,
-      'category': categoryId,
+      'categoryId': categoryId,
       'walletId': walletId,
       'spent': spent,
     };
