@@ -78,7 +78,7 @@ class AddingWalletViewModel extends ChangeNotifier {
 
   Wallet newWallet(BuildContext context, var loadWallet) {
     return Wallet(
-        id: loadWallet.currentListWallet.length,
+        id: "wallet" + loadWallet.currentListWallet.length.toString(),
         name: saveWalletName(),
         balance: saveBalance(),
         expense: 0.0,

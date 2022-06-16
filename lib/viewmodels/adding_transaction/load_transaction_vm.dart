@@ -19,8 +19,12 @@ class LoadTransactionViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadTransactionDataFromFirestore() async {
-    var list = await AddingTransactionRepo().getTransactionDataFromFirestore();
+  Future<void> loadTransactionDataFromFirestore(String walletId) async {
+    String month = DateTime.now().month.toString();
+    String year = DateTime.now().year.toString();
+
+    var list = await AddingTransactionRepo()
+        .getTransactionDataFromFirestore(walletId, "$month-$year");
 
     setListTransaction(list);
     loadRecentTransaction();
@@ -28,18 +32,18 @@ class LoadTransactionViewmodel extends ChangeNotifier {
 
   Future<void> loadRecentTransaction() async {
     List<Transaction> tempList = [];
-    AddingTransactionRepo().getTransactionDataFromFirestore().then((value) {
-      Iterable temp = value.reversed;
-      if (value.length < 5) {
-        for (int i = 0; i < value.length; i++) {
-          tempList.add(temp.elementAt(i));
-        }
-      } else {
-        for (int i = 0; i < 5; i++) {
-          tempList.add(temp.elementAt(i));
-        }
-      }
-      setListRecentTransaction(tempList);
-    });
+    // AddingTransactionRepo().getTransactionDataFromFirestore().then((value) {
+    //   Iterable temp = value.reversed;
+    //   if (value.length < 5) {
+    //     for (int i = 0; i < value.length; i++) {
+    //       tempList.add(temp.elementAt(i));
+    //     }
+    //   } else {
+    //     for (int i = 0; i < 5; i++) {
+    //       tempList.add(temp.elementAt(i));
+    //     }
+    //   }
+    //   setListRecentTransaction(tempList);
+    // });
   }
 }
