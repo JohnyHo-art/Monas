@@ -76,6 +76,7 @@ class BudgetEditScreen extends StatelessWidget {
                   Navigator.pop(context);
                   // Set the update success back to false
                   editBudget.setUpDateSuccess = false;
+                  amount.resetBottomSheetInfo();
                 } else {
                   Utils.showSnackBar('Sửa ngân sách thất bại');
                 }

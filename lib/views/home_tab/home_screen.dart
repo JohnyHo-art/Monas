@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
-import 'package:monas/viewmodels/adding_transaction/load_transaction_vm.dart';
 import 'package:monas/viewmodels/authentication/authentic_vm.dart';
 import 'package:monas/views/home_tab/components/home_transactions.dart';
 import 'package:monas/views/home_tab/components/home_wallets.dart';
@@ -14,7 +13,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var loadTransaction = Provider.of<LoadTransactionViewmodel>(context);
 
     return FutureBuilder(
       future: Provider.of<AuthenticViewModel>(context, listen: false)
