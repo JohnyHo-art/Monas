@@ -46,7 +46,7 @@ class HomeTransactions extends StatelessWidget {
             height: 200,
             child: RefreshIndicator(
               onRefresh: () {
-                return loadTransaction.loadTransactionDataFromFirestore();
+                return loadTransaction.loadTransactionDataFromFirestore("wallet1");
               },
               child: ListView.builder(
                 scrollDirection: Axis.vertical,

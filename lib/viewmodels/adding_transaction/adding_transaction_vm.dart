@@ -20,7 +20,7 @@ class AddingTransactionViewmodel extends ChangeNotifier {
         Provider.of<AddingAmountViewModel>(context, listen: false);
     var loadWallet = Provider.of<LoadWalletViewModel>(context, listen: false);
 
-    int walletId =
+    String walletId =
         loadWallet.currentListWallet[basicInfo.getSelectedWallet()].id;
 
     int categoryId = basicInfo.getSelectedCategoryId();

@@ -112,18 +112,14 @@ class DetailTransactionScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 Image.asset(
-                                  loadWallet
-                                      .currentListWallet[transaction.walletId]
-                                      .iconUrl,
+                                  loadWallet.currentListWallet[0].iconUrl,
                                   scale: 0.8,
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16.0),
                                   child: Text(
-                                    loadWallet
-                                        .currentListWallet[transaction.walletId]
-                                        .name,
+                                    loadWallet.currentListWallet[0].name,
                                     style: S.bodyTextStyles.body1(null),
                                   ),
                                 ),

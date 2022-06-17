@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 
 class Transaction {
   double money;
-  int walletId;
+  String walletId;
   int categoryId;
   String? note;
   DateTime date;

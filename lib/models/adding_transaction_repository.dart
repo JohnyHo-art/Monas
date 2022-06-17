@@ -15,7 +15,6 @@ class AddingTransactionRepo {
 
     for (var i in xFile) {
       File file = File(i.path);
-
       final imageRef = storageRef.child("transaction/$userId/${i.name}");
 
       try {
@@ -34,15 +33,21 @@ class AddingTransactionRepo {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
+    String month = DateTime.now().month.toString();
+    String year = DateTime.now().year.toString();
+
     firebaseFirestore
         .collection("transactions")
         .doc(firebaseAuth.currentUser!.uid)
-        .collection("listTransaction")
-        .doc(DateTime.now().toString())
+        .collection(newTransaction.walletId)
+        .doc(month + "-" + year)
+        .collection("listTransactions")
+        .doc(newTransaction.categoryId.toString())
         .set(newTransaction.toMap());
   }
 
-  Future<List<model.Transaction>> getTransactionDataFromFirestore() async {
+  Future<List<model.Transaction>> getTransactionDataFromFirestore(
+      String walletId, String month) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
@@ -51,7 +56,9 @@ class AddingTransactionRepo {
     await firebaseFirestore
         .collection("transactions")
         .doc(firebaseAuth.currentUser!.uid)
-        .collection("listTransaction")
+        .collection(walletId)
+        .doc(month)
+        .collection("listTransactions")
         .get()
         .then((value) {
       var docSnapshots = value.docs;
