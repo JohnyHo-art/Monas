@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:monas/models/adding_transaction_repository.dart';
 import 'package:monas/models/transaction_model.dart';
