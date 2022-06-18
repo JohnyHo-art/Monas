@@ -5,6 +5,8 @@ import 'package:monas/constants/routes.dart';
 import 'package:monas/models/category_item_model.dart';
 import 'package:monas/models/transaction_model.dart';
 import 'package:monas/viewmodels/adding_transaction/load_transaction_vm.dart';
+import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
+import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:provider/provider.dart';
 
 class HomeTransactions extends StatelessWidget {
@@ -13,6 +15,8 @@ class HomeTransactions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var loadTransaction = context.watch<LoadTransactionViewmodel>();
+    var dropdownWallet = context.watch<DropdownWalletViewModel>();
+    var loadWallet = context.watch<LoadWalletViewModel>();
 
     return SizedBox(
       child: Column(
@@ -32,6 +36,8 @@ class HomeTransactions extends StatelessWidget {
                         overlayColor: MaterialStateColor.resolveWith(
                             (states) => S.colors.primaryColorShadeThirty)),
                     onPressed: () {
+                      dropdownWallet
+                          .setSelectedWallet(loadWallet.currentListWallet[0]);
                       Navigator.pushNamed(
                           context, Routes.showTransactionScreen);
                     },
@@ -46,7 +52,8 @@ class HomeTransactions extends StatelessWidget {
             height: 200,
             child: RefreshIndicator(
               onRefresh: () {
-                return loadTransaction.loadTransactionDataFromFirestore("wallet1");
+                return loadTransaction
+                    .loadTransactionDataFromFirestore("wallet0");
               },
               child: ListView.builder(
                 scrollDirection: Axis.vertical,

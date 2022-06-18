@@ -116,16 +116,20 @@ class HomeWallets extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: [
               _walletItem(
-                R.walletIcon.walletIc1,
-                'Saving',
-                10230000,
-                StringConstants.localeString.japan,
+                loadWallet.currentListWallet[0].iconUrl,
+                loadWallet.currentListWallet.isEmpty
+                    ? loadWallet.currentListWallet[0].name
+                    : "---",
+                loadWallet.currentListWallet.isEmpty
+                    ? loadWallet.currentListWallet[0].balance
+                    : 0.0,
+                StringConstants.localeString.vietnam,
                 () {},
               ),
               _walletItem(
-                R.walletIcon.walletIc2,
-                'Daily expense',
-                400000000,
+                loadWallet.currentListWallet[1].iconUrl,
+                loadWallet.currentListWallet[1].name,
+                loadWallet.currentListWallet[1].balance,
                 StringConstants.localeString.vietnam,
                 () {},
               )

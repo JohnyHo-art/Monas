@@ -8,6 +8,7 @@ import 'package:monas/models/transaction_model.dart';
 import 'package:monas/models/wallet_model.dart';
 import 'package:monas/viewmodels/adding_transaction/load_transaction_vm.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
+import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/views/home_tab/components/time_chosen_item.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,8 @@ class ShowTransactionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var dropdownWallet = context.watch<DropdownWalletViewModel>();
+    var loadWallet = context.watch<LoadWalletViewModel>();
+    var loadTransaction = context.watch<LoadTransactionViewmodel>();
 
     Widget _dropdownItems(Wallet wallet) => Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -61,12 +64,16 @@ class ShowTransactionScreen extends StatelessWidget {
           underline: Container(),
           value: dropdownWallet.getSelectedWallet(),
           icon: const Icon(Icons.keyboard_arrow_down),
-          items: dropdownWallet.dropdownWalletList
+          items: loadWallet.currentListWallet
               .map((Wallet wallet) => DropdownMenuItem(
                   value: wallet, child: _dropdownItems(wallet)))
               .toList(),
           onChanged: (newVal) {
             dropdownWallet.setSelectedWallet(newVal);
+            loadTransaction.loadTransactionDataFromFirestore("wallet" +
+                loadWallet.currentListWallet
+                    .indexOf(newVal as Wallet)
+                    .toString());
           },
         );
 
@@ -79,19 +86,10 @@ class ShowTransactionScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () {
             Navigator.pop(context);
+            loadTransaction.loadTransactionDataFromFirestore("wallet0");
           },
         ),
         title: _dropdownWallet(),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.more_vert),
-          ),
-        ],
       ),
       body: Column(
         children: const [
@@ -242,7 +240,7 @@ class ShowDetailExpense extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.25,
                       child: Text(
                         NumberFormat.decimalPattern()
-                            .format(ExpenseTitle.testTitle.income),
+                            .format(loadTransaction.getIncome()),
                         style: S.bodyTextStyles.body2(null),
                       ),
                     ),
@@ -254,7 +252,7 @@ class ShowDetailExpense extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      "${ExpenseTitle.testTitle.numberTransactions} transaction",
+                      "${loadTransaction.getListTransaction().length}  transaction",
                       style: S.bodyTextStyles.caption(S.colors.backgroundIcon2),
                     ),
                     const Spacer(),
@@ -269,7 +267,7 @@ class ShowDetailExpense extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.25,
                       child: Text(
                         NumberFormat.decimalPattern()
-                            .format(ExpenseTitle.testTitle.expense),
+                            .format(loadTransaction.getExpense()),
                         style: S.bodyTextStyles.body2(null),
                       ),
                     ),
