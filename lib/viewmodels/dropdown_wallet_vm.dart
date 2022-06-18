@@ -34,7 +34,7 @@ class DropdownWalletViewModel extends ChangeNotifier {
     ),
   ];
 
-  late Wallet _selectedWallet = dropdownWalletList[0];
+  late Wallet _selectedWallet;
 
   getSelectedWallet() => _selectedWallet;
 

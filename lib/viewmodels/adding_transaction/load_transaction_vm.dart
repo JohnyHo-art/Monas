@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:monas/models/adding_transaction_repository.dart';
 import 'package:monas/models/transaction_model.dart';
+import 'package:monas/viewmodels/load_wallet_vm.dart';
+import 'package:provider/provider.dart';
 
 class LoadTransactionViewmodel extends ChangeNotifier {
   List<Transaction> _listTransaction = [];
@@ -26,6 +29,7 @@ class LoadTransactionViewmodel extends ChangeNotifier {
 
     setListTransaction(list);
     loadRecentTransaction();
+    loadExpenseTittle();
   }
 
   Future<void> loadRecentTransaction() async {
@@ -43,5 +47,34 @@ class LoadTransactionViewmodel extends ChangeNotifier {
     //   }
     //   setListRecentTransaction(tempList);
     // });
+  }
+
+  //load expense tittle
+  double _expense = 0;
+  double getExpense() => _expense;
+  void setExpense(newVal) {
+    _expense = newVal;
+    notifyListeners();
+  }
+
+  double _income = 0;
+  double getIncome() => _income;
+  void setIncome(newVal) {
+    _income = newVal;
+    notifyListeners();
+  }
+
+  void loadExpenseTittle() {
+    _income = 0;
+    _expense = 0;
+    for (var i in getListTransaction()) {
+      if (i.money < 0) {
+        _expense += i.money;
+        setExpense(_expense);
+      } else {
+        _income += i.money;
+        setIncome(_income);
+      }
+    }
   }
 }

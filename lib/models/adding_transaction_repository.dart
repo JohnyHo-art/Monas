@@ -41,7 +41,25 @@ class AddingTransactionRepo {
         .collection(newTransaction.walletId)
         .doc(month + "-" + year)
         .collection("listTransactions")
-        .doc(newTransaction.categoryId.toString())
+        .doc(DateTime.now().toString())
+        .set(newTransaction.toMap());
+  }
+
+  Future<void> pushRecentTransactionToFirestore(
+      model.Transaction newTransaction) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+    String month = DateTime.now().month.toString();
+    String year = DateTime.now().year.toString();
+
+    firebaseFirestore
+        .collection("transactions")
+        .doc(firebaseAuth.currentUser!.uid)
+        .collection(newTransaction.walletId)
+        .doc(month + "-" + year)
+        .collection("listTransactions")
+        .doc(DateTime.now().toString())
         .set(newTransaction.toMap());
   }
 
