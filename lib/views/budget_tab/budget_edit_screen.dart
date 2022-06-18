@@ -94,9 +94,13 @@ class BudgetEditScreen extends StatelessWidget {
               SizedBox(height: S.dimens.smallPadding),
               BudgetDetailItem(
                 leading: Image.asset(loadWallet
-                    .currentListWallet[editBudget.newWalletId].iconUrl),
-                hintText:
-                    loadWallet.currentListWallet[editBudget.newWalletId].name,
+                    .currentListWallet[
+                        S.getInt.getIntFromString(editBudget.newWalletId)]
+                    .iconUrl),
+                hintText: loadWallet
+                    .currentListWallet[
+                        S.getInt.getIntFromString(editBudget.newWalletId)]
+                    .name,
                 title: 'Ví',
                 color: S.colors.textOnSecondaryColor,
                 onPressed: () =>

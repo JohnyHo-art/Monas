@@ -32,8 +32,8 @@ class ListWalletScreen extends StatelessWidget {
                 ),
                 onTap: () {
                   addBasic.setSelectedWallet(index);
-                  budget.setSelectedWalletId(index);
-                  editBudget.setNewWalletId(index);
+                  budget.setSelectedWalletId('wallet$index');
+                  editBudget.setNewWalletId('wallet$index');
                   Navigator.pop(context);
                 },
               ),

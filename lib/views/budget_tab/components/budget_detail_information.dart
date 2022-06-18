@@ -152,10 +152,15 @@ class BudgetDetailInformation extends StatelessWidget {
                 leading: SizedBox(
                   height: S.dimens.iconSize,
                   width: S.dimens.iconSize,
-                  child: Image.asset(
-                      loadWallet.currentListWallet[budget.walletId].iconUrl),
+                  child: Image.asset(loadWallet
+                      .currentListWallet[
+                          S.getInt.getIntFromString(budget.walletId)]
+                      .iconUrl),
                 ),
-                title: Text(loadWallet.currentListWallet[budget.walletId].name),
+                title: Text(loadWallet
+                    .currentListWallet[
+                        S.getInt.getIntFromString(budget.walletId)]
+                    .name),
               ),
               ListTile(
                 leading: const Icon(Icons.event),

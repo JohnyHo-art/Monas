@@ -20,11 +20,11 @@ class AddingBudgetViewModel extends ChangeNotifier {
   }
 
   // Index of the chosen wallet
-  int _selectedWalletId = 0;
+  String _selectedWalletId = 'wallet0';
 
-  int get selectedWalletId => _selectedWalletId;
+  String get selectedWalletId => _selectedWalletId;
 
-  void setSelectedWalletId(newVal) {
+  void setSelectedWalletId(String newVal) {
     _selectedWalletId = newVal;
     notifyListeners();
   }
@@ -44,7 +44,7 @@ class AddingBudgetViewModel extends ChangeNotifier {
     await _firestore
         .collection('budgets')
         .doc(_auth.currentUser!.uid)
-        .collection('wallet$selectedWalletId')
+        .collection(selectedWalletId)
         .doc('${now.month}-${now.year}')
         .collection('budgetList')
         .doc('category$selectedCategoryId')

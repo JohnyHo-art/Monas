@@ -6,6 +6,7 @@ class S {
   static final headerTextStyles = _HeaderText();
   static final bodyTextStyles = _BodyText();
   static final dimens = _Dimens();
+  static final getInt = _GetInt();
 }
 
 class _Colors {
@@ -161,4 +162,12 @@ class _Dimens {
   final extraLargeIconSize = 60.0;
   final largeIconSize = 40.0;
   final smallIconSize = 12.0;
+}
+
+class _GetInt {
+  int getIntFromString(String s) {
+    s = s == '' ? 'wallet0': s;
+    String aString = s.replaceAll(RegExp(r'wallet'), '');
+    return int.parse(aString);
+  }
 }

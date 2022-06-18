@@ -51,9 +51,13 @@ class BudgetDetail extends StatelessWidget {
               padding: EdgeInsets.only(top: S.dimens.smallPadding),
               child: BudgetDetailItem(
                 leading: Image.asset(loadWallet
-                    .currentListWallet[budget.selectedWalletId].iconUrl),
-                hintText:
-                    loadWallet.currentListWallet[budget.selectedWalletId].name,
+                    .currentListWallet[
+                        S.getInt.getIntFromString(budget.selectedWalletId)]
+                    .iconUrl),
+                hintText: loadWallet
+                    .currentListWallet[
+                        S.getInt.getIntFromString(budget.selectedWalletId)]
+                    .name,
                 title: 'Ví',
                 color: S.colors.textOnSecondaryColor,
                 onPressed: () =>
