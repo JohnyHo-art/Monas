@@ -12,7 +12,7 @@ import 'package:monas/viewmodels/budget_tab/load_budget_vm.dart';
 import 'package:monas/views/budget_tab/budget_edit_screen.dart';
 import 'package:monas/views/budget_tab/components/budget_detail_information.dart';
 import 'package:provider/provider.dart';
-  
+
 class BudgetDetailScreen extends StatelessWidget {
   BudgetDetailScreen({Key? key, required this.budget}) : super(key: key);
   Budget budget;
@@ -106,8 +106,8 @@ class BudgetDetailScreen extends StatelessWidget {
                           // If delete success
                           if (editBudget.isDeleteSuccess) {
                             // Navigate to the budget screen
-                            Navigator.pushReplacementNamed(
-                                context, Routes.budgetScreen);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
                             Utils.showSuccessSnackBar(
                                 'Xoá ngân sách thành công');
                             editBudget.setIsDeleteSuccess = false;

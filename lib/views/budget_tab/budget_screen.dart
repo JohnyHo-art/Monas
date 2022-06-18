@@ -47,7 +47,9 @@ class BudgetScreen extends StatelessWidget {
               icon: Padding(
                 padding: const EdgeInsets.all(6.0),
                 child: Image.asset(loadWallet
-                    .currentListWallet[budget.selectedWalletId].iconUrl),
+                    .currentListWallet[
+                        S.getInt.getIntFromString(budget.selectedWalletId)]
+                    .iconUrl),
               ),
               iconSize: S.dimens.smallIconSize,
             ),

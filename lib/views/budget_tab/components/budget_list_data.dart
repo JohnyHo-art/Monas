@@ -18,7 +18,7 @@ class BudgetListData extends StatelessWidget {
 
     return StreamBuilder<QuerySnapshot>(
       // Call a stream from viewmodel which return snapshots from firestore
-      stream: loadBudget.getBudgetStream(budget.selectedWalletId),
+      stream: loadBudget.getBudgetStream(S.getInt.getIntFromString(budget.selectedWalletId)),
       // Builder which is the main part that produces UI with each snapshot state
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         // if the snapshot return data then build a listview

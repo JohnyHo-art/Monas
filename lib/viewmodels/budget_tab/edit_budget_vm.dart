@@ -9,11 +9,11 @@ class EditBudgetViewModel extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // New chosen wallet id
-  int _newWalletId = 0;
+  String _newWalletId = '';
 
-  int get newWalletId => _newWalletId;
+  String get newWalletId => _newWalletId;
 
-  void setNewWalletId(newVal) { 
+  void setNewWalletId(String newVal) { 
     _newWalletId = newVal;
     notifyListeners();
   }
@@ -34,7 +34,7 @@ class EditBudgetViewModel extends ChangeNotifier {
   bool get updateSuccess => _updateSuccess;
 
   set setUpDateSuccess(newVal) {
-    _updateSuccess = newVal;
+    _updateSuccess = newVal; 
     notifyListeners();
   }
 
@@ -50,11 +50,11 @@ class EditBudgetViewModel extends ChangeNotifier {
 
   // Delete current budget
   Future<void> deleteBudget(
-      int chosenMonth, int chosenYear, int walletId, int categoryId) async {
+      int chosenMonth, int chosenYear, String walletId, int categoryId) async {
     await _firestore
         .collection('budgets')
         .doc(_auth.currentUser!.uid)
-        .collection('wallet$walletId')
+        .collection(walletId)
         .doc('$chosenMonth-$chosenYear')
         .collection('budgetList')
         .doc('category$categoryId')
@@ -80,7 +80,7 @@ class EditBudgetViewModel extends ChangeNotifier {
     await _firestore
         .collection('budgets')
         .doc(_auth.currentUser!.uid)
-        .collection('wallet$newWalletId')
+        .collection(newWalletId)
         .doc('$chosenMonth-$chosenYear')
         .collection('budgetList')
         .doc('category$newCategoryId')

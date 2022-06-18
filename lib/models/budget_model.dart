@@ -1,7 +1,7 @@
 class Budget {
   double budget;
   int categoryId;
-  int walletId;
+  String walletId;
   double spent;
 
   Budget({

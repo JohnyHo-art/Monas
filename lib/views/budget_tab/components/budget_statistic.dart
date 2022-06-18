@@ -16,7 +16,8 @@ class BudgetStatistic extends StatelessWidget {
     var budget = context.watch<AddingBudgetViewModel>();
 
     return StreamBuilder<QuerySnapshot>(
-      stream: loadBudget.getBudgetStream(budget.selectedWalletId),
+      stream: loadBudget
+          .getBudgetStream(S.getInt.getIntFromString(budget.selectedWalletId)),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
           loadBudget.setTotalBudget(0.0);
@@ -104,8 +105,10 @@ class BudgetStatistic extends StatelessWidget {
                                 S.dimens.cardCornerRadiusMedium)),
                             child: LinearProgressIndicator(
                               minHeight: 8,
-                              value: loadBudget.totalSpent == 0 ? 0 : loadBudget.totalSpent /
-                                  loadBudget.totalBudget,
+                              value: loadBudget.totalSpent == 0
+                                  ? 0
+                                  : loadBudget.totalSpent /
+                                      loadBudget.totalBudget,
                               valueColor: AlwaysStoppedAnimation<Color>(
                                   S.colors.primaryColor),
                               backgroundColor: S.colors.subTextColor,
