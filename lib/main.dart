@@ -81,18 +81,12 @@ class Monas extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoadTransactionViewmodel()),
 
         // Accout tab viewmodel
-        // Used ChangeNotifier
-        ChangeNotifierProxyProvider<AuthenticViewModel,
-            AccountSettingViewModel>(
-          create: (_) => AccountSettingViewModel(),
-          update: (_, authentication, accountSetting) =>
-              accountSetting!..updateAccountInfo(authentication),
-        ),
+        ChangeNotifierProvider(create: (_) => AccountSettingViewModel()),
 
         // Budget related viewmodel
         ChangeNotifierProvider(create: (_) => AddingBudgetViewModel()),
         ChangeNotifierProvider(create: (_) => LoadBudgetViewModel()),
-        ChangeNotifierProvider(create: (_) => EditBudgetViewModel())
+        ChangeNotifierProvider(create: (_) => EditBudgetViewModel()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
@@ -204,6 +198,6 @@ class HomePage extends StatelessWidget {
           return const LoginScreen();
         }
       },
-    );  
+    );
   }
 }
