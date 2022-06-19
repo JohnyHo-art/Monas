@@ -9,11 +9,11 @@ class EditBudgetViewModel extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // New chosen wallet id
-  String _newWalletId = '';
+  String _newWalletId = 'wallet0';
 
   String get newWalletId => _newWalletId;
 
-  void setNewWalletId(String newVal) { 
+  void setNewWalletId(String newVal) {
     _newWalletId = newVal;
     notifyListeners();
   }
@@ -34,7 +34,7 @@ class EditBudgetViewModel extends ChangeNotifier {
   bool get updateSuccess => _updateSuccess;
 
   set setUpDateSuccess(newVal) {
-    _updateSuccess = newVal; 
+    _updateSuccess = newVal;
     notifyListeners();
   }
 
@@ -45,6 +45,16 @@ class EditBudgetViewModel extends ChangeNotifier {
 
   set setIsDeleteSuccess(newVal) {
     _isDeleteSuccess = newVal;
+    notifyListeners();
+  }
+
+  // A variable to save or calculate all the spent from a transaction list
+  double _newSpent = 0.0;
+
+  double get newSpent => _newSpent;
+
+  set newSpent(double newVal) {
+    _newSpent = newVal;
     notifyListeners();
   }
 
@@ -69,27 +79,42 @@ class EditBudgetViewModel extends ChangeNotifier {
 
   // Update current info and push it to firestore
   Future<void> saveAndPushBudget(
-      double amount, int chosenMonth, int chosenYear) async {
+      double amount, int chosenMonth, int chosenYear, double spent, String? walletId, int? categoryId) async {
     Budget budget = Budget(
       budget: amount,
-      categoryId: newCategoryId,
+      categoryId: categoryId ?? newCategoryId,
       walletId: newWalletId,
-      spent: 0,
+      spent: spent,
     );
 
     await _firestore
         .collection('budgets')
         .doc(_auth.currentUser!.uid)
-        .collection(newWalletId)
+        .collection(walletId ?? newWalletId)
         .doc('$chosenMonth-$chosenYear')
         .collection('budgetList')
-        .doc('category$newCategoryId')
+        .doc('category${categoryId ?? newCategoryId}')
         .set(budget.toJSON(), SetOptions(merge: true))
         .onError((error, stackTrace) => {})
         .then(
-          (value) {
-            setUpDateSuccess = true;
-          },
-        );
+      (value) {
+        setUpDateSuccess = true;
+      },
+    );
+  }
+
+  // Get a specified budget with category
+  Future<Budget> getBudgetWithMonthYear(
+      String walletId, int chosenMonth, int chosenYear, int categoryId) async {
+    final docSnap = await FirebaseFirestore.instance
+        .collection('budgets')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection(walletId)
+        .doc('$chosenMonth-$chosenYear')
+        .collection('budgetList')
+        .doc('category$categoryId')
+        .get();
+
+    return Budget.fromJSON(docSnap.data());
   }
 }

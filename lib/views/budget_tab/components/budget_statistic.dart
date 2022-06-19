@@ -16,8 +16,7 @@ class BudgetStatistic extends StatelessWidget {
     var budget = context.watch<AddingBudgetViewModel>();
 
     return StreamBuilder<QuerySnapshot>(
-      stream: loadBudget
-          .getBudgetStream(S.getInt.getIntFromString(budget.selectedWalletId)),
+      stream: loadBudget.getBudgetStream(budget.selectedWalletId),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
           loadBudget.setTotalBudget(0.0);
@@ -63,7 +62,7 @@ class BudgetStatistic extends StatelessWidget {
                               ),
                               Text(
                                 F.currencyFormat.numberMoneyFormat(
-                                    loadBudget.totalBudget -
+                                    loadBudget.totalBudget +
                                         loadBudget.totalSpent),
                                 style: S.headerTextStyles
                                     .header3(S.colors.backgroundIcon2),
@@ -107,7 +106,7 @@ class BudgetStatistic extends StatelessWidget {
                               minHeight: 8,
                               value: loadBudget.totalSpent == 0
                                   ? 0
-                                  : loadBudget.totalSpent /
+                                  : -loadBudget.totalSpent /
                                       loadBudget.totalBudget,
                               valueColor: AlwaysStoppedAnimation<Color>(
                                   S.colors.primaryColor),
@@ -116,14 +115,18 @@ class BudgetStatistic extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          flex: 2,
+                          flex: 3,
                           child: Padding(
                             padding:
                                 EdgeInsets.only(left: S.dimens.smallPadding),
                             child: Text(
                               loadBudget.totalSpent == 0
                                   ? '0%'
-                                  : '${(loadBudget.totalSpent / loadBudget.totalBudget) * 100}%',
+                                  : ((-loadBudget.totalSpent /
+                                                  loadBudget.totalBudget) *
+                                              100)
+                                          .toStringAsFixed(0) +
+                                      '%',
                               style: S.headerTextStyles
                                   .header3(S.colors.primaryColor),
                             ),

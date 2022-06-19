@@ -38,7 +38,7 @@ class LoadBudgetViewModel extends ChangeNotifier {
 
   double get totalSpent => _totalSpent;
 
-  void setTotalSpent(newVal) {
+  void setTotalSpent(double newVal) {
     _totalSpent = newVal;
   }
 
@@ -57,11 +57,11 @@ class LoadBudgetViewModel extends ChangeNotifier {
   }
 
   // Stream of query snapshot used to pass to the stream builder
-  Stream<QuerySnapshot> getBudgetStream(int walletId) {
+  Stream<QuerySnapshot> getBudgetStream(String walletId) {
     return FirebaseFirestore.instance
         .collection('budgets')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('wallet$walletId')
+        .collection(walletId)
         .doc('$chosenMonth-$chosenYear')
         .collection('budgetList')
         .snapshots();

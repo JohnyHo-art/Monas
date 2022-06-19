@@ -65,6 +65,8 @@ class BudgetDetailInformation extends StatelessWidget {
       return daysInMonth[month - 1];
     }
 
+    double _val = -budget.spent / (budget.budget == 0.0 ? 1 : budget.budget);
+
     return Padding(
       padding: const EdgeInsets.only(top: 45),
       child: Container(
@@ -100,7 +102,9 @@ class BudgetDetailInformation extends StatelessWidget {
                           ),
                           Text(
                             F.currencyFormat.numberMoneyFormat(
-                                budget.budget - budget.spent),
+                                budget.budget + budget.spent < 0
+                                    ? 0
+                                    : budget.budget + budget.spent),
                             style:
                                 S.headerTextStyles.header3(S.colors.greenColor),
                           ),
@@ -121,8 +125,7 @@ class BudgetDetailInformation extends StatelessWidget {
                                 S.bodyTextStyles.body2(S.colors.subTextColor2),
                           ),
                           Text(
-                            F.currencyFormat.numberMoneyFormat(
-                                budget.budget - budget.spent),
+                            F.currencyFormat.numberMoneyFormat(-budget.spent),
                             style:
                                 S.headerTextStyles.header3(S.colors.redColor),
                           ),
@@ -141,9 +144,10 @@ class BudgetDetailInformation extends StatelessWidget {
                       Radius.circular(S.dimens.cardCornerRadiusMedium)),
                   child: LinearProgressIndicator(
                     minHeight: 8,
-                    value: budget.spent == 0 ? 0 : budget.spent / budget.budget,
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(S.colors.primaryColor),
+                    value:
+                        budget.spent == 0 ? 0 : -budget.spent / budget.budget,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        _val > 0.8 ? S.colors.redColor : S.colors.primaryColor),
                     backgroundColor: S.colors.subTextColor,
                   ),
                 ),
@@ -189,7 +193,7 @@ class BudgetDetailInformation extends StatelessWidget {
                 ),
                 subtitle: Text(
                   F.currencyFormat.numberMoneyFormat(
-                    budget.spent / DateTime.now().day,
+                    -budget.spent / DateTime.now().day,
                   ),
                 ),
               ),

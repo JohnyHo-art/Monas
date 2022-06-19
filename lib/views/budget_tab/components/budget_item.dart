@@ -13,6 +13,8 @@ class BudgetItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _val = -budget.spent / (budget.budget == 0.0 ? 1 : budget.budget);
+
     return Column(
       children: [
         ListTile(
@@ -34,15 +36,9 @@ class BudgetItem extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: F.currencyFormat.numberMoneyFormat(budget.spent) +
+                      text: F.currencyFormat.numberMoneyFormat(-budget.spent) +
                           ' / ',
-                      style: S.bodyTextStyles.body1(
-                        budget.spent /
-                                    (budget.budget == 0.0 ? 1 : budget.budget) >
-                                0.8
-                            ? S.colors.redColor
-                            : S.colors.primaryColor,
-                      ),
+                      style: S.bodyTextStyles.body1(S.colors.redColor),
                     ),
                     TextSpan(
                       text: F.currencyFormat.numberMoneyFormat(budget.budget),
@@ -57,10 +53,10 @@ class BudgetItem extends StatelessWidget {
                     Radius.circular(S.dimens.cardCornerRadiusMedium)),
                 child: LinearProgressIndicator(
                   minHeight: 4,
-                  value:
-                      budget.spent / (budget.budget == 0.0 ? 1 : budget.budget),
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(S.colors.secondaryColor),
+                  value: -budget.spent /
+                      (budget.budget == 0.0 ? 1 : budget.budget),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      _val > 0.8 ? S.colors.redColor : S.colors.secondaryColor),
                   backgroundColor: S.colors.subTextColor,
                 ),
               ),
