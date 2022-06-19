@@ -14,11 +14,14 @@ class BudgetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Initialize necessary viewmodel
-    var budget = context.watch<AddingBudgetViewModel>();
+    // Use this adding budget to get selected wallet id, category id
+    var addingBudget = context.watch<AddingBudgetViewModel>();
+    // Use this load wallet view model to get the icon url and name of the wallet
     var loadWallet = context.watch<LoadWalletViewModel>();
+    // Load budget view model to get chosen categories and budget stream
     var loadBudget = context.watch<LoadBudgetViewModel>();
 
-    // Create a custom list of year from current
+    // Create a custom list of year from current year
     int currentYear = DateTime.now().year;
     List yearList = [
       currentYear - 3,
@@ -41,14 +44,15 @@ class BudgetScreen extends StatelessWidget {
             elevation: 0.0,
             leading: IconButton(
               onPressed: () {
-                // Handle choose wallet event
+                // Move to the list wallet screen and pick one
                 Navigator.pushNamed(context, Routes.listWalletScreen);
               },
               icon: Padding(
                 padding: const EdgeInsets.all(6.0),
+                // Use get int from string in constants class to get the index of wallet
                 child: Image.asset(loadWallet
                     .currentListWallet[
-                        S.getInt.getIntFromString(budget.selectedWalletId)]
+                        S.getInt.getIntFromString(addingBudget.selectedWalletId)]
                     .iconUrl),
               ),
               iconSize: S.dimens.smallIconSize,
@@ -113,6 +117,7 @@ class BudgetScreen extends StatelessWidget {
               indicatorSize: TabBarIndicatorSize.tab,
               labelStyle: S.bodyTextStyles.buttonText(null),
               onTap: (index) {
+                // The month is always greater than index 1 
                 loadBudget.setChosenMonth(index + 1);
               },
               tabs: const [
@@ -132,6 +137,7 @@ class BudgetScreen extends StatelessWidget {
             ),
             actions: [
               IconButton(
+                // Move to the adding budget screen
                 onPressed: () =>
                     Navigator.pushNamed(context, Routes.addingBudgetScreen),
                 icon: const Icon(Icons.add),
@@ -141,6 +147,7 @@ class BudgetScreen extends StatelessWidget {
           body: TabBarView(
             physics: const NeverScrollableScrollPhysics(),
             children: [
+              // January tab view
               Column(
                 children: const [
                   BudgetStatistic(),
@@ -148,6 +155,7 @@ class BudgetScreen extends StatelessWidget {
                   SizedBox(height: 16),
                 ],
               ),
+              // February tab view
               Column(
                 children: const [
                   BudgetStatistic(),
@@ -155,6 +163,7 @@ class BudgetScreen extends StatelessWidget {
                   SizedBox(height: 16),
                 ],
               ),
+              // March tab view
               Column(
                 children: const [
                   BudgetStatistic(),
@@ -162,6 +171,7 @@ class BudgetScreen extends StatelessWidget {
                   SizedBox(height: 16),
                 ],
               ),
+              // April tab view
               Column(
                 children: const [
                   BudgetStatistic(),
@@ -169,6 +179,7 @@ class BudgetScreen extends StatelessWidget {
                   SizedBox(height: 16),
                 ],
               ),
+              // May tab view
               Column(
                 children: const [
                   BudgetStatistic(),
@@ -176,6 +187,7 @@ class BudgetScreen extends StatelessWidget {
                   SizedBox(height: 16),
                 ],
               ),
+              // June tab view
               Column(
                 children: const [
                   BudgetStatistic(),
@@ -183,6 +195,7 @@ class BudgetScreen extends StatelessWidget {
                   SizedBox(height: 16),
                 ],
               ),
+              // July tab view
               Column(
                 children: const [
                   BudgetStatistic(),
@@ -190,6 +203,7 @@ class BudgetScreen extends StatelessWidget {
                   SizedBox(height: 16),
                 ],
               ),
+              // August tab view
               Column(
                 children: const [
                   BudgetStatistic(),
@@ -197,6 +211,7 @@ class BudgetScreen extends StatelessWidget {
                   SizedBox(height: 16),
                 ],
               ),
+              // September tab view
               Column(
                 children: const [
                   BudgetStatistic(),
@@ -204,6 +219,7 @@ class BudgetScreen extends StatelessWidget {
                   SizedBox(height: 16),
                 ],
               ),
+              // October tab view
               Column(
                 children: const [
                   BudgetStatistic(),
@@ -211,6 +227,7 @@ class BudgetScreen extends StatelessWidget {
                   SizedBox(height: 16),
                 ],
               ),
+              // November tab view
               Column(
                 children: const [
                   BudgetStatistic(),
@@ -218,6 +235,7 @@ class BudgetScreen extends StatelessWidget {
                   SizedBox(height: 16),
                 ],
               ),
+              // December tab view
               Column(
                 children: const [
                   BudgetStatistic(),

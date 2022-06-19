@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class LoadBudgetViewModel extends ChangeNotifier {
-  // year to show budget
+  // show budget by year
   int _chosenYear = DateTime.now().year;
 
   int get chosenYear => _chosenYear;
@@ -14,7 +14,7 @@ class LoadBudgetViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // month to show budget
+  // show budget by month
   int _chosenMonth = DateTime.now().month;
 
   int get chosenMonth => _chosenMonth;
@@ -24,7 +24,7 @@ class LoadBudgetViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Get the total budget amount
+  // Get the total budget amount of each month to show in the budget dashboard
   double _totalBudget = 0;
 
   double get totalBudget => _totalBudget;
@@ -33,7 +33,7 @@ class LoadBudgetViewModel extends ChangeNotifier {
     _totalBudget = newVal;
   }
 
-  // Get the total spent of each month
+  // Get the total spent of each month to show in the budget dashboard
   double _totalSpent = 0;
 
   double get totalSpent => _totalSpent;
@@ -48,7 +48,7 @@ class LoadBudgetViewModel extends ChangeNotifier {
 
   List<int> get chosenCategories => _chosenCategories;
 
-  void setChosenCategories(newVal) {
+  void setChosenCategories(List<int> newVal) {
     _chosenCategories = newVal;
   }
 
@@ -56,7 +56,9 @@ class LoadBudgetViewModel extends ChangeNotifier {
     _chosenCategories.add(id);
   }
 
-  // Stream of query snapshot used to pass to the stream builder
+  // Stream of query snapshot used to pass to the stream builder 
+  // at the budget screen to get this screen updated 
+  // Pass in the chosen month, year and walletId
   Stream<QuerySnapshot> getBudgetStream(String walletId) {
     return FirebaseFirestore.instance
         .collection('budgets')

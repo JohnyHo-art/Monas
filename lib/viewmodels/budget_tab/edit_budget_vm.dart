@@ -23,7 +23,7 @@ class EditBudgetViewModel extends ChangeNotifier {
 
   int get newCategoryId => _newCategoryId;
 
-  void setNewCategory(newVal) {
+  void setNewCategory(int newVal) {
     _newCategoryId = newVal;
     notifyListeners();
   }
@@ -48,7 +48,8 @@ class EditBudgetViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // A variable to save or calculate all the spent from a transaction list
+  // Check all the spent in a transactions list 
+  // given by month, year and category id
   double _newSpent = 0.0;
 
   double get newSpent => _newSpent;
@@ -59,6 +60,7 @@ class EditBudgetViewModel extends ChangeNotifier {
   }
 
   // Delete current budget
+  // We need to pass the old chosen month and year
   Future<void> deleteBudget(
       int chosenMonth, int chosenYear, String walletId, int categoryId) async {
     await _firestore
@@ -78,8 +80,8 @@ class EditBudgetViewModel extends ChangeNotifier {
   }
 
   // Update current info and push it to firestore
-  Future<void> saveAndPushBudget(
-      double amount, int chosenMonth, int chosenYear, double spent, String? walletId, int? categoryId) async {
+  Future<void> saveAndPushBudget(double amount, int chosenMonth, int chosenYear,
+      double spent, String? walletId, int? categoryId) async {
     Budget budget = Budget(
       budget: amount,
       categoryId: categoryId ?? newCategoryId,
