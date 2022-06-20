@@ -122,4 +122,5 @@ class _Illustrations {
   static const illustrationPath = 'assets/illustrations';
 
   final sadEmotion = '$illustrationPath/sad_emo.png';
+  final pageNotFound = '$illustrationPath/page_not_found.png';
 }

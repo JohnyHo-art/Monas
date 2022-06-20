@@ -60,7 +60,8 @@ class BudgetEditScreen extends StatelessWidget {
                   loadBudget.chosenMonth,
                   loadBudget.chosenYear,
                   //budget.spent,
-                  await Provider.of<LoadTransactionViewmodel>(context, listen: false)
+                  await Provider.of<LoadTransactionViewmodel>(context,
+                          listen: false)
                       .calculateCatExpense(
                     editBudget.newWalletId,
                     editBudget.newCategoryId,
@@ -115,7 +116,15 @@ class BudgetEditScreen extends StatelessWidget {
                     .currentListWallet[
                         S.getInt.getIntFromString(editBudget.newWalletId)]
                     .name,
-                title: 'Ví',
+                title: 'Ví (' +
+                    F.currencyFormat.formatCurrency(
+                      loadWallet
+                          .currentListWallet[
+                              S.getInt.getIntFromString(editBudget.newWalletId)]
+                          .balance,
+                      'vi_VN',
+                    ) +
+                    ')',
                 color: S.colors.textOnSecondaryColor,
                 onPressed: () =>
                     // Handle event choose wallet
