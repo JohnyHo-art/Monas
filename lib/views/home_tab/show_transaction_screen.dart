@@ -123,8 +123,8 @@ class ShowTransactionScreen extends StatelessWidget {
               indicatorSize: TabBarIndicatorSize.tab,
               labelStyle: S.bodyTextStyles.buttonText(null),
               onTap: (index) async {
-                // loadTransaction.loadTransactionDataFromFirestore(
-                //     dropdownWallet.getSelectedWallet().id, "${index + 1}-2022");
+                loadTransaction.loadTransactionDataFromFirestore(
+                    dropdownWallet.getSelectedWallet().id, "${index + 1}-2022");
                 loadTransaction.setChosenMonth(index + 1);
               },
               tabs: const [
@@ -254,9 +254,11 @@ class ShowDetailExpense extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 12.0),
                       child: Text(
-                        // DateFormat('yMMMM').format(
-                        //     loadTransaction.getListTransaction()[0].date)
-                        "aaaa",
+                        loadTransaction.chosenMonth < 10
+                            ? DateFormat('yMMMM').format(DateTime.parse(
+                                "2022-0${loadTransaction.chosenMonth}-01"))
+                            : DateFormat('yMMMM').format(DateTime.parse(
+                                "2022-${loadTransaction.chosenMonth}-01")),
                         style: S.bodyTextStyles.body1(null),
                       ),
                     ),
@@ -284,8 +286,7 @@ class ShowDetailExpense extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      //"${loadTransaction.getListTransaction().length}  transaction",
-                      "bbb",
+                      "${loadTransaction.getLength()}  transaction",
                       style: S.bodyTextStyles.caption(S.colors.backgroundIcon2),
                     ),
                     const Spacer(),
@@ -321,15 +322,15 @@ class ShowDetailExpense extends StatelessWidget {
                     "${loadTransaction.chosenMonth}-2022"),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasData) {
+                    loadTransaction.setLength(snapshot.data!.docs.length);
                     return ListView.builder(
                       shrinkWrap: true,
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
-                        // Create a new budget and decompose it from JSON format
                         model.Transaction transaction =
                             model.Transaction.fromMap(
                                 snapshot.data!.docs[index]);
-                        // Add each budget in the budgets list to the categories list
+                        loadTransaction.addTransaction(transaction);
 
                         return ShowExpenseItem(transaction: transaction);
                       },
