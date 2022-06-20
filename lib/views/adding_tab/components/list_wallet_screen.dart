@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/constants/format_style.dart';
 import 'package:monas/models/wallet_model.dart';
 import 'package:monas/viewmodels/budget_tab/adding_budget_vm.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_basic_info_vm.dart';
@@ -28,7 +29,7 @@ class ListWalletScreen extends StatelessWidget {
                   listWallet[index].name,
                 ),
                 subtitle: Text(
-                  listWallet[index].balance.toString(),
+                  F.currencyFormat.formatCurrency(loadWallet.currentListWallet[index].balance, 'vi_VN'),
                 ),
                 onTap: () {
                   addBasic.setSelectedWallet(index);
