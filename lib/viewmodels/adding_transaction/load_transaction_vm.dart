@@ -3,29 +3,45 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:monas/models/adding_transaction_repository.dart';
-import 'package:monas/models/transaction_model.dart';
+import 'package:monas/models/transaction_model.dart' as model;
+import 'package:monas/viewmodels/load_wallet_vm.dart';
+import 'package:provider/provider.dart';
 
 class LoadTransactionViewmodel extends ChangeNotifier {
-  List<Transaction> _listTransaction = [];
-  List<Transaction> getListTransaction() => _listTransaction;
+  List<model.Transaction> _listTransaction = [];
+  List<model.Transaction> getListTransaction() => _listTransaction;
   void setListTransaction(newVal) {
     _listTransaction = newVal;
     notifyListeners();
   }
 
-  List<Transaction> _listRecentTransaction = [];
-  List<Transaction> getListRecentTransaction() => _listRecentTransaction;
+  void addTransaction(newVal) {
+    _listTransaction.add(newVal);
+    notifyListeners();
+  }
+
+  int _chosenMonth = DateTime.now().month;
+  int get chosenMonth => _chosenMonth;
+  void setChosenMonth(newVal) {
+    _chosenMonth = newVal;
+    notifyListeners();
+  }
+
+  List<model.Transaction> _listRecentTransaction = [];
+  List<model.Transaction> getListRecentTransaction() => _listRecentTransaction;
   void setListRecentTransaction(newVal) {
     _listRecentTransaction = newVal;
     notifyListeners();
   }
 
-  Future<void> loadTransactionDataFromFirestore(String walletId) async {
+  Future<void> loadTransactionDataFromFirestore(
+      String walletId, String? date) async {
     String month = DateTime.now().month.toString();
     String year = DateTime.now().year.toString();
 
-    var list = await AddingTransactionRepo()
-        .getTransactionDataFromFirestore(walletId, "$month-$year");
+    var list = [];
+    list = await AddingTransactionRepo()
+        .getTransactionDataFromFirestore(walletId, date ?? "$month-$year");
 
     setListTransaction(list);
     loadRecentTransaction();
@@ -33,20 +49,9 @@ class LoadTransactionViewmodel extends ChangeNotifier {
   }
 
   Future<void> loadRecentTransaction() async {
-    List<Transaction> tempList = [];
-    // AddingTransactionRepo().getTransactionDataFromFirestore().then((value) {
-    //   Iterable temp = value.reversed;
-    //   if (value.length < 5) {
-    //     for (int i = 0; i < value.length; i++) {
-    //       tempList.add(temp.elementAt(i));
-    //     }
-    //   } else {
-    //     for (int i = 0; i < 5; i++) {
-    //       tempList.add(temp.elementAt(i));
-    //     }
-    //   }
-    //   setListRecentTransaction(tempList);
-    // });
+    var list =
+        await AddingTransactionRepo().getRecentTransactionDataFromFirestore();
+    setListRecentTransaction(list);
   }
 
   //load expense tittle
@@ -107,15 +112,31 @@ class LoadTransactionViewmodel extends ChangeNotifier {
         .where('categoryId', isEqualTo: categoryId)
         .get();
 
-    Transaction transaction;
+    model.Transaction transaction;
 
     // For each document snapshot in the query snapshot above, 
     // convert it to Transaction and add it to the catExpense
     for(query_snapshot.DocumentSnapshot snapshot in querySnap.docs) {
-      transaction = Transaction.fromMap(snapshot);
+      transaction = model.Transaction.fromMap(snapshot);
       categoryExpense += transaction.money;
     }
 
     return categoryExpense;
+    }
+  Stream<query_snapshot.QuerySnapshot> getTransactionStreamA(String walletId, String date) {
+    return query_snapshot.FirebaseFirestore.instance
+        .collection('transactions')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection(walletId)
+        .doc(date)
+        .collection('listTransactions')
+        .snapshots();
+  }
+
+  int _length = 0;
+  int getLength() => _length;
+  void setLength(newVal) {
+    _length = newVal;
+    notifyListeners();
   }
 }

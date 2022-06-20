@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:monas/models/adding_transaction_repository.dart';
 import 'package:monas/models/transaction_model.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
@@ -45,7 +46,7 @@ class AddingTransactionViewmodel extends ChangeNotifier {
         walletId: walletId,
         categoryId: categoryId,
         note: note,
-        date: date,
+        date: DateUtils.dateOnly(date),
         withPerson: withPerson,
         images: listImages);
 
@@ -56,6 +57,7 @@ class AddingTransactionViewmodel extends ChangeNotifier {
     newTransaction = await getInfoNewTransaction(context);
 
     AddingTransactionRepo().pushTransactionToFirestore(newTransaction);
+    AddingTransactionRepo().pushRecentTransactionToFirestore(newTransaction);
   }
 
   Future<void> updateWalletBalanceAfterAddNewTransaction(

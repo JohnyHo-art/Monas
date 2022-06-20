@@ -35,11 +35,16 @@ class HomeTransactions extends StatelessWidget {
                     style: ButtonStyle(
                         overlayColor: MaterialStateColor.resolveWith(
                             (states) => S.colors.primaryColorShadeThirty)),
-                    onPressed: () {
-                      dropdownWallet
+                    onPressed: () async {
+                      await dropdownWallet
                           .setSelectedWallet(loadWallet.currentListWallet[0]);
+
                       Navigator.pushNamed(
                           context, Routes.showTransactionScreen);
+                      // final DateTime now = DateTime.now();
+                      // final DateFormat formatter = DateFormat('yyyy-MM-dd');
+                      // final String formatted = formatter.format(now);
+                      // print(formatted); //
                     },
                     child: Text(
                       'Xem tất cả',
@@ -52,8 +57,7 @@ class HomeTransactions extends StatelessWidget {
             height: 200,
             child: RefreshIndicator(
               onRefresh: () {
-                return loadTransaction
-                    .loadTransactionDataFromFirestore("wallet0");
+                return loadTransaction.loadRecentTransaction();
               },
               child: ListView.builder(
                 scrollDirection: Axis.vertical,

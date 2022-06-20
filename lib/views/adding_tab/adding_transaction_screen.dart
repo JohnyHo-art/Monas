@@ -92,6 +92,10 @@ class AddingTransactionScreen extends StatelessWidget {
               Visibility(
                 visible: loadWallet.currentListWallet.isNotEmpty,
                 child: TextButton(
+                  child: Text(
+                    'LƯU',
+                    style: S.bodyTextStyles.buttonText(S.colors.primaryColor),
+                  ),
                   style: ButtonStyle(
                       overlayColor: MaterialStateColor.resolveWith(
                           (states) => S.colors.primaryColorShadeThirty)),
@@ -125,17 +129,14 @@ class AddingTransactionScreen extends StatelessWidget {
                           transaction.getSelectedCategoryId());
                     }
 
-                    loadTransaction.loadTransactionDataFromFirestore("wallet1");
+                    loadTransaction.loadTransactionDataFromFirestore(
+                        "wallet1", null);
                     transaction.clearBasicInformation();
                     amount.resetBottomSheetInfo();
                     detaiInfo.resetDetailInfo(context);
 
                     Navigator.pop(context);
                   },
-                  child: Text(
-                    'LƯU',
-                    style: S.bodyTextStyles.buttonText(S.colors.primaryColor),
-                  ),
                 ),
               ),
             ],
