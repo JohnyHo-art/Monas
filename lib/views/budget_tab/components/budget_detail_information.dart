@@ -7,6 +7,7 @@ import 'package:monas/models/budget_model.dart';
 import 'package:monas/models/category_item_model.dart';
 import 'package:monas/viewmodels/budget_tab/load_budget_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
+import 'package:monas/views/budget_tab/budget_transactions_list_screen.dart';
 import 'package:monas/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
 
@@ -197,7 +198,17 @@ class BudgetDetailInformation extends StatelessWidget {
                   ),
                 ),
               ),
-              CustomButton(onPressed: () {}, text: 'DANH SÁCH GIAO DỊCH'),
+              CustomButton(
+                  onPressed: () =>
+                      // Move to the budget transactions list screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              BudgetTransactionsListScreen(budget: budget),
+                        ),
+                      ),
+                  text: 'DANH SÁCH GIAO DỊCH'),
               SizedBox(height: S.dimens.padding),
             ],
           ),

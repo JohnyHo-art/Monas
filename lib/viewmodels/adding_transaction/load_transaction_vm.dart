@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart' as query_snapshot;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -80,13 +82,14 @@ class LoadTransactionViewmodel extends ChangeNotifier {
 
   // Get a stream query of transactions with given category
   Stream<query_snapshot.QuerySnapshot> getTransactionStream(
-      String walletId, int chosenMonth, int chosenYear) {
+      String walletId, int categoryId, int chosenMonth, int chosenYear) { 
     return query_snapshot.FirebaseFirestore.instance
         .collection("transactions")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection(walletId)
         .doc('$chosenMonth-$chosenYear')
         .collection("listTransactions")
+        .where('categoryId', isEqualTo: categoryId)
         .snapshots();
   }
 

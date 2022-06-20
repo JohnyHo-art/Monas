@@ -24,7 +24,7 @@ class BudgetListData extends StatelessWidget {
         // if the snapshot return data then build a listview
         if (snapshot.hasData) {
           // Refresh the chosen category list
-          loadBudget.setChosenCategories(<int>[]);
+          loadBudget.setChosenCategories(<int>[26, 27, 30, 31, 32, 33, 34]);
           return ListView.builder(
             shrinkWrap: true,
             itemCount: snapshot.data!.docs.length,

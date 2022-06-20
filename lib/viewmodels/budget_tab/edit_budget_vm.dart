@@ -89,7 +89,7 @@ class EditBudgetViewModel extends ChangeNotifier {
       spent: spent,
     );
 
-    await _firestore
+  await _firestore
         .collection('budgets')
         .doc(_auth.currentUser!.uid)
         .collection(walletId ?? newWalletId)
