@@ -2,12 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/resources.dart';
 import 'package:monas/constants/utils.dart';
 import 'package:monas/models/wallet_model.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
-import 'package:monas/views/adding_tab/components/wallet_icon_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 class AddingWalletViewModel extends ChangeNotifier {
@@ -21,7 +19,7 @@ class AddingWalletViewModel extends ChangeNotifier {
 
   String get iconUrl => _iconUrl;
 
-  set iconUrl(newVal) {
+  set iconUrl(String newVal) {
     _iconUrl = newVal;
     notifyListeners();
   }
@@ -53,21 +51,6 @@ class AddingWalletViewModel extends ChangeNotifier {
     return double.parse(balanceTextFieldController.value.text);
   }
 
-  // Show the wallet icon chosen bottom sheet
-  void showWalletIconBottomSheet(BuildContext context) => showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(S.dimens.cardCornerRadiusMedium),
-            topRight: Radius.circular(S.dimens.cardCornerRadiusMedium),
-          ),
-        ),
-        builder: (BuildContext context) {
-          return const WalletIconBottomSheet();
-        },
-      );
-
   // Reset information before close
   void resetInformation() {
     iconUrl = R.walletIcon.walletIc1;
@@ -76,21 +59,22 @@ class AddingWalletViewModel extends ChangeNotifier {
     balanceTextFieldController.clear();
   }
 
-  Wallet newWallet(BuildContext context, var loadWallet) {
+  Wallet newWallet(var loadWallet) {
     return Wallet(
-        id: "wallet" + loadWallet.currentListWallet.length.toString(),
-        name: saveWalletName(),
-        balance: saveBalance(),
-        expense: 0.0,
-        income: 0.0,
-        iconUrl: iconUrl,
-        includeToTotal: includeToTotal);
+      id: "wallet" + loadWallet.currentListWallet.length.toString(),
+      name: saveWalletName(),
+      balance: saveBalance(),
+      expense: 0.0,
+      income: 0.0,
+      iconUrl: iconUrl,
+      includeToTotal: includeToTotal,
+    );
   }
 
   Future<void> addNewWallet(BuildContext context) async {
     var loadWallet = Provider.of<LoadWalletViewModel>(context, listen: false);
 
-    Wallet newWallet1 = newWallet(context, loadWallet);
+    Wallet newWallet1 = newWallet(loadWallet);
 
     await FirebaseFirestore.instance
         .collection("wallets")

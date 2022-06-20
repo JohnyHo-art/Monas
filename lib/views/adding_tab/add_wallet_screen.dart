@@ -3,6 +3,8 @@ import 'package:monas/constants/constants.dart';
 import 'package:monas/viewmodels/adding_wallet_vm.dart';
 import 'package:provider/provider.dart';
 
+import 'components/wallet_icon_bottom_sheet.dart';
+
 class AddWalletScreen extends StatelessWidget {
   const AddWalletScreen({Key? key}) : super(key: key);
 
@@ -89,7 +91,7 @@ class AddWalletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var addWallet = Provider.of<AddingWalletViewModel>(context, listen: false);
+    var addWallet = Provider.of<AddingWalletViewModel>(context);
 
     // Choose to include or exclude from total wallet section
     Widget _includeTotal() {
@@ -117,14 +119,25 @@ class AddWalletScreen extends StatelessWidget {
       );
     }
 
+    // Show the wallet icon chosen bottom sheet
+    void showWalletIconBottomSheet(BuildContext context) =>
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(S.dimens.cardCornerRadiusMedium),
+              topRight: Radius.circular(S.dimens.cardCornerRadiusMedium),
+            ),
+          ),
+          builder: (BuildContext context) {
+            return const WalletIconBottomSheet();
+          },
+        );
+
     return SafeArea(
       child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
           backgroundColor: S.colors.whiteColor,
           appBar: AppBar(
@@ -160,9 +173,10 @@ class AddWalletScreen extends StatelessWidget {
             children: [
               SizedBox(height: S.dimens.smallPadding),
               _walletName(
-                  addWallet.iconUrl,
-                  () => addWallet.showWalletIconBottomSheet(context),
-                  addWallet.nameTextFieldController),
+                addWallet.iconUrl,
+                () => showWalletIconBottomSheet(context),
+                addWallet.nameTextFieldController,
+              ),
               SizedBox(height: S.dimens.padding),
               _initialBalance(addWallet.balanceTextFieldController),
               SizedBox(height: S.dimens.padding),

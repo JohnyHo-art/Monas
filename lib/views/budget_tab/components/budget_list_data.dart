@@ -18,13 +18,13 @@ class BudgetListData extends StatelessWidget {
 
     return StreamBuilder<QuerySnapshot>(
       // Call a stream from viewmodel which return snapshots from firestore
-      stream: loadBudget.getBudgetStream(S.getInt.getIntFromString(budget.selectedWalletId)),
+      stream: loadBudget.getBudgetStream(budget.selectedWalletId),
       // Builder which is the main part that produces UI with each snapshot state
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         // if the snapshot return data then build a listview
         if (snapshot.hasData) {
-          // Refresh the chosen category list 
-          loadBudget.setChosenCategories(<int>[]);
+          // Refresh the chosen category list
+          loadBudget.setChosenCategories(<int>[26, 27, 30, 31, 32, 33, 34]);
           return ListView.builder(
             shrinkWrap: true,
             itemCount: snapshot.data!.docs.length,
@@ -48,7 +48,7 @@ class BudgetListData extends StatelessWidget {
           return Utils.showErrorDialog(context);
         } else {
           return const Center(
-            child: Text("No budget is added, click '+' to add a new one"),
+            child: Text("Chưa có ngân sách, Bấm '+' để tạo mới"),
           );
         }
       },

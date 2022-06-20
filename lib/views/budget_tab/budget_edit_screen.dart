@@ -9,6 +9,7 @@ import 'package:monas/constants/utils.dart';
 import 'package:monas/models/budget_model.dart';
 import 'package:monas/models/category_item_model.dart';
 import 'package:monas/viewmodels/adding_transaction/adding_amount_vm.dart';
+import 'package:monas/viewmodels/adding_transaction/load_transaction_vm.dart';
 import 'package:monas/viewmodels/budget_tab/edit_budget_vm.dart';
 import 'package:monas/viewmodels/budget_tab/load_budget_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
@@ -54,8 +55,22 @@ class BudgetEditScreen extends StatelessWidget {
             IconButton(
               onPressed: () async {
                 // Save the changes and push it to firestore db
-                await editBudget.saveAndPushBudget(amount.amountOfMoney,
-                    loadBudget.chosenMonth, loadBudget.chosenYear);
+                await editBudget.saveAndPushBudget(
+                  amount.amountOfMoney,
+                  loadBudget.chosenMonth,
+                  loadBudget.chosenYear,
+                  //budget.spent,
+                  await Provider.of<LoadTransactionViewmodel>(context,
+                          listen: false)
+                      .calculateCatExpense(
+                    editBudget.newWalletId,
+                    editBudget.newCategoryId,
+                    loadBudget.chosenMonth,
+                    loadBudget.chosenYear,
+                  ),
+                  null,
+                  null,
+                );
                 // If update success
                 if (editBudget.updateSuccess) {
                   // Navigate back to the budget screen
@@ -101,7 +116,15 @@ class BudgetEditScreen extends StatelessWidget {
                     .currentListWallet[
                         S.getInt.getIntFromString(editBudget.newWalletId)]
                     .name,
-                title: 'Ví',
+                title: 'Ví (' +
+                    F.currencyFormat.formatCurrency(
+                      loadWallet
+                          .currentListWallet[
+                              S.getInt.getIntFromString(editBudget.newWalletId)]
+                          .balance,
+                      'vi_VN',
+                    ) +
+                    ')',
                 color: S.colors.textOnSecondaryColor,
                 onPressed: () =>
                     // Handle event choose wallet
