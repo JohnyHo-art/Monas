@@ -15,12 +15,7 @@ class LoadTransactionViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTransaction(newVal) {
-    _listTransaction.add(newVal);
-    notifyListeners();
-  }
-
-  int _chosenMonth = DateTime.now().month;
+  int _chosenMonth = DateTime.now().month - 1;
   int get chosenMonth => _chosenMonth;
   void setChosenMonth(newVal) {
     _chosenMonth = newVal;
@@ -39,13 +34,18 @@ class LoadTransactionViewmodel extends ChangeNotifier {
     String month = DateTime.now().month.toString();
     String year = DateTime.now().year.toString();
 
-    var list = [];
-    list = await AddingTransactionRepo()
+    var list = await AddingTransactionRepo()
         .getTransactionDataFromFirestore(walletId, date ?? "$month-$year");
 
     setListTransaction(list);
     loadRecentTransaction();
     loadExpenseTittle();
+
+    if (list == []) {
+      _chosenMonth = 0;
+    } else {
+      _chosenMonth = 1;
+    }
   }
 
   Future<void> loadRecentTransaction() async {
@@ -131,12 +131,5 @@ class LoadTransactionViewmodel extends ChangeNotifier {
         .doc(date)
         .collection('listTransactions')
         .snapshots();
-  }
-
-  int _length = 0;
-  int getLength() => _length;
-  void setLength(newVal) {
-    _length = newVal;
-    notifyListeners();
   }
 }
