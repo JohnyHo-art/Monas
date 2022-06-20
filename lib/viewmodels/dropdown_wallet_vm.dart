@@ -36,9 +36,9 @@ class DropdownWalletViewModel extends ChangeNotifier {
 
   late Wallet _selectedWallet;
 
-  getSelectedWallet() => _selectedWallet;
+  Wallet getSelectedWallet() => _selectedWallet;
 
-  void setSelectedWallet(newVal) {
+  Future<void> setSelectedWallet(newVal) async {
     _selectedWallet = newVal;
     notifyListeners();
   }

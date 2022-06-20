@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
 import 'package:monas/constants/routes.dart';
 import 'package:monas/models/category_item_model.dart';
 import 'package:monas/models/show_expense_title_model.dart';
-import 'package:monas/models/transaction_model.dart';
+import 'package:monas/models/transaction_model.dart' as model;
 import 'package:monas/models/wallet_model.dart';
 import 'package:monas/viewmodels/adding_transaction/load_transaction_vm.dart';
 import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
@@ -12,6 +13,7 @@ import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:monas/views/home_tab/components/time_chosen_item.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants/utils.dart';
 import '../../viewmodels/adding_transaction/adding_basic_info_vm.dart';
 import '../../viewmodels/time_chosen_vm.dart';
 
@@ -23,6 +25,17 @@ class ShowTransactionScreen extends StatelessWidget {
     var dropdownWallet = context.watch<DropdownWalletViewModel>();
     var loadWallet = context.watch<LoadWalletViewModel>();
     var loadTransaction = context.watch<LoadTransactionViewmodel>();
+
+    int currentYear = DateTime.now().year;
+    List yearList = [
+      currentYear - 3,
+      currentYear - 2,
+      currentYear - 1,
+      currentYear,
+      currentYear + 1,
+      currentYear + 2,
+      currentYear + 3,
+    ];
 
     Widget _dropdownItems(Wallet wallet) => Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -37,10 +50,10 @@ class ShowTransactionScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 4, 8, 4),
+                    padding: const EdgeInsets.fromLTRB(8.0, 4, 8, 0),
                     child: Text(
                       wallet.name,
-                      style: S.bodyTextStyles.caption(
+                      style: S.bodyTextStyles.body1(
                         S.colors.textOnSecondaryColor,
                       ),
                     ),
@@ -49,8 +62,8 @@ class ShowTransactionScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
                       wallet.balance.toString(),
-                      style: S.headerTextStyles.header3(
-                        S.colors.primaryColor,
+                      style: S.bodyTextStyles.body1(
+                        S.colors.whiteColor,
                       ),
                     ),
                   ),
@@ -60,132 +73,148 @@ class ShowTransactionScreen extends StatelessWidget {
           ],
         );
 
-    Widget _dropdownWallet() => DropdownButton(
-          underline: Container(),
-          value: dropdownWallet.getSelectedWallet(),
-          icon: const Icon(Icons.keyboard_arrow_down),
-          items: loadWallet.currentListWallet
-              .map((Wallet wallet) => DropdownMenuItem(
-                  value: wallet, child: _dropdownItems(wallet)))
-              .toList(),
-          onChanged: (newVal) {
-            dropdownWallet.setSelectedWallet(newVal);
-            loadTransaction.loadTransactionDataFromFirestore("wallet" +
-                loadWallet.currentListWallet
-                    .indexOf(newVal as Wallet)
-                    .toString());
-          },
+    Widget _dropdownWallet() => Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: DropdownButton(
+            underline: Container(),
+            value: dropdownWallet.getSelectedWallet(),
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: S.colors.whiteColor,
+            ),
+            items: loadWallet.currentListWallet
+                .map((Wallet wallet) => DropdownMenuItem(
+                    value: wallet, child: _dropdownItems(wallet)))
+                .toList(),
+            onChanged: (newVal) {
+              dropdownWallet.setSelectedWallet(newVal);
+              loadTransaction.loadTransactionDataFromFirestore(
+                  "wallet" +
+                      loadWallet.currentListWallet
+                          .indexOf(newVal as Wallet)
+                          .toString(),
+                  null);
+            },
+          ),
         );
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: S.colors.whiteColor,
-        foregroundColor: S.colors.textOnSecondaryColor,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () {
-            Navigator.pop(context);
-            loadTransaction.loadTransactionDataFromFirestore("wallet0");
-          },
-        ),
-        title: _dropdownWallet(),
-      ),
-      body: Column(
-        children: const [
-          Classify(),
-          ShowDetailExpense(),
-        ],
-      ),
-    );
-  }
-}
-
-class Classify extends StatelessWidget {
-  const Classify({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var transaction = context.watch<AddingBasicInfoViewModel>();
-    var timeChosen = context.watch<TimeChosenViewModel>();
-
-    Future pickDate() async {
-      final initialDate = transaction.date;
-      final newDate = await showDatePicker(
-        context: context,
-        initialDate: initialDate,
-        firstDate: DateTime(DateTime.now().year - 5),
-        lastDate: DateTime(DateTime.now().year + 5),
-        builder: (context, child) => Theme(
-          data: ThemeData().copyWith(
-              colorScheme: ColorScheme.light(
-            primary: S.colors.primaryColor,
-          )),
-          child: child ?? const SizedBox.shrink(),
-        ),
-      );
-      if (newDate == null) return;
-      transaction.date = newDate;
-    }
-
-    return Container(
-      decoration: BoxDecoration(
-        color: S.colors.whiteColor,
-        boxShadow: [
-          BoxShadow(
-            color: S.colors.shadowElevationColor,
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(0, 1), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TimeChosenItem(
-                number: 0,
-                text: "D",
-                onPressed: () {
-                  timeChosen.setSelectedTime(0);
-                },
-              ),
-            ),
-            TimeChosenItem(
-              number: 1,
-              text: "W",
+    return SafeArea(
+      child: DefaultTabController(
+        initialIndex: DateTime.now().month - 1,
+        length: 12,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: S.colors.primaryColor,
+            foregroundColor: S.colors.textOnSecondaryColor,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
               onPressed: () {
-                timeChosen.setSelectedTime(1);
+                Navigator.pop(context);
+                loadTransaction.loadTransactionDataFromFirestore(
+                    "wallet0", null);
               },
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TimeChosenItem(
-                number: 2,
-                text: "M",
-                onPressed: () {
-                  timeChosen.setSelectedTime(2);
-                },
+            title: _dropdownWallet(),
+            bottom: TabBar(
+              isScrollable: true,
+              unselectedLabelColor: S.colors.subTextColor,
+              indicatorColor: S.colors.whiteColor,
+              indicatorSize: TabBarIndicatorSize.tab,
+              labelStyle: S.bodyTextStyles.buttonText(null),
+              onTap: (index) async {
+                // loadTransaction.loadTransactionDataFromFirestore(
+                //     dropdownWallet.getSelectedWallet().id, "${index + 1}-2022");
+                loadTransaction.setChosenMonth(index + 1);
+              },
+              tabs: const [
+                Tab(text: 'Tháng 1'),
+                Tab(text: 'Tháng 2'),
+                Tab(text: 'Tháng 3'),
+                Tab(text: 'Tháng 4'),
+                Tab(text: 'Tháng 5'),
+                Tab(text: 'Tháng 6'),
+                Tab(text: 'Tháng 7'),
+                Tab(text: 'Tháng 8'),
+                Tab(text: 'Tháng 9'),
+                Tab(text: 'Tháng 10'),
+                Tab(text: 'Tháng 11'),
+                Tab(text: 'Tháng 12'),
+              ],
+            ),
+            actions: [
+              IconButton(
+                onPressed: () =>
+                    Navigator.pushNamed(context, Routes.addingBudgetScreen),
+                icon: const Icon(Icons.add),
+              )
+            ],
+          ),
+          body: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              Column(
+                children: const [
+                  ShowDetailExpense(),
+                ],
               ),
-            ),
-            const Spacer(),
-            Text(
-              transaction.getDateText(),
-              style: S.bodyTextStyles.body1(S.colors.textOnSecondaryColor),
-            ),
-            Material(
-              child: IconButton(
-                onPressed: () => pickDate(),
-                icon: Icon(
-                  Icons.calendar_today,
-                  color: S.colors.primaryColor,
-                ),
+              Column(
+                children: const [
+                  ShowDetailExpense(),
+                ],
               ),
-            ),
-          ],
+              Column(
+                children: const [
+                  ShowDetailExpense(),
+                ],
+              ),
+              Column(
+                children: const [
+                  ShowDetailExpense(),
+                ],
+              ),
+              Column(
+                children: const [
+                  ShowDetailExpense(),
+                ],
+              ),
+              Column(
+                children: const [
+                  ShowDetailExpense(),
+                ],
+              ),
+              Column(
+                children: const [
+                  ShowDetailExpense(),
+                ],
+              ),
+              Column(
+                children: const [
+                  ShowDetailExpense(),
+                ],
+              ),
+              Column(
+                children: const [
+                  ShowDetailExpense(),
+                ],
+              ),
+              Column(
+                children: const [
+                  ShowDetailExpense(),
+                ],
+              ),
+              Column(
+                children: const [
+                  ShowDetailExpense(),
+                ],
+              ),
+              Column(
+                children: const [
+                  ShowDetailExpense(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -198,10 +227,11 @@ class ShowDetailExpense extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var loadTransaction = context.watch<LoadTransactionViewmodel>();
+    var dropdownWallet = context.watch<DropdownWalletViewModel>();
 
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 0),
+        padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 20),
         child: Container(
           decoration: BoxDecoration(
             color: S.colors.whiteColor,
@@ -224,7 +254,9 @@ class ShowDetailExpense extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 12.0),
                       child: Text(
-                        ExpenseTitle.testTitle.date,
+                        // DateFormat('yMMMM').format(
+                        //     loadTransaction.getListTransaction()[0].date)
+                        "aaaa",
                         style: S.bodyTextStyles.body1(null),
                       ),
                     ),
@@ -252,7 +284,8 @@ class ShowDetailExpense extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      "${loadTransaction.getListTransaction().length}  transaction",
+                      //"${loadTransaction.getListTransaction().length}  transaction",
+                      "bbb",
                       style: S.bodyTextStyles.caption(S.colors.backgroundIcon2),
                     ),
                     const Spacer(),
@@ -282,14 +315,42 @@ class ShowDetailExpense extends StatelessWidget {
                   color: S.colors.shadowElevationColor,
                 ),
               ),
-              ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: loadTransaction.getListTransaction().length,
-                  itemBuilder: (context, index) {
-                    return ShowExpenseItem(
-                        transaction:
-                            loadTransaction.getListTransaction()[index]);
-                  })
+              StreamBuilder<QuerySnapshot>(
+                stream: loadTransaction.getTransactionStream(
+                    dropdownWallet.getSelectedWallet().id,
+                    "${loadTransaction.chosenMonth}-2022"),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        // Create a new budget and decompose it from JSON format
+                        model.Transaction transaction =
+                            model.Transaction.fromMap(
+                                snapshot.data!.docs[index]);
+                        // Add each budget in the budgets list to the categories list
+
+                        return ShowExpenseItem(transaction: transaction);
+                      },
+                    );
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: S.colors.secondaryColor,
+                      ),
+                    );
+                  } // If the snapshot has error than show a snackbar
+                  else if (snapshot.hasError) {
+                    return Utils.showErrorDialog(context);
+                  } else {
+                    return const Center(
+                      child: Text("No transaction in this month"),
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -304,7 +365,7 @@ class ShowExpenseItem extends StatelessWidget {
     required this.transaction,
   }) : super(key: key);
 
-  final Transaction transaction;
+  final model.Transaction transaction;
 
   @override
   Widget build(BuildContext context) {

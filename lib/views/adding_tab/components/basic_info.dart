@@ -128,7 +128,6 @@ class BasicInfo extends StatelessWidget {
               ),
             ),
             onTap: () {
-              //Navigator.pushNamed(context, Routes.categoryListScreen);
               Navigator.push(
                 context,
                 MaterialPageRoute(

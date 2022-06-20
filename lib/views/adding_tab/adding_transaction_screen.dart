@@ -87,7 +87,8 @@ class AddingTransactionScreen extends StatelessWidget {
                   await addingTransaction
                       .updateWalletBalanceAfterAddNewTransaction(context);
 
-                  loadTransaction.loadTransactionDataFromFirestore("wallet1");
+                  loadTransaction.loadTransactionDataFromFirestore(
+                      "wallet1", null);
                   transaction.clearBasicInformation();
                   amount.resetBottomSheetInfo();
                   detaiInfo.resetDetailInfo(context);
