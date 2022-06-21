@@ -35,6 +35,7 @@ import 'package:monas/views/log_in/forgot_password_screen.dart';
 import 'package:monas/views/log_in/login_screen.dart';
 import 'package:monas/views/log_in/signup_screen.dart';
 import 'package:monas/views/onboarding/onboarding_screen.dart';
+import 'package:monas/widgets/page_not_found.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -81,18 +82,12 @@ class Monas extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoadTransactionViewmodel()),
 
         // Accout tab viewmodel
-        // Used ChangeNotifier
-        ChangeNotifierProxyProvider<AuthenticViewModel,
-            AccountSettingViewModel>(
-          create: (_) => AccountSettingViewModel(),
-          update: (_, authentication, accountSetting) =>
-              accountSetting!..updateAccountInfo(authentication),
-        ),
+        ChangeNotifierProvider(create: (_) => AccountSettingViewModel()),
 
         // Budget related viewmodel
         ChangeNotifierProvider(create: (_) => AddingBudgetViewModel()),
         ChangeNotifierProvider(create: (_) => LoadBudgetViewModel()),
-        ChangeNotifierProvider(create: (_) => EditBudgetViewModel())
+        ChangeNotifierProvider(create: (_) => EditBudgetViewModel()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
@@ -168,6 +163,9 @@ class Monas extends StatelessWidget {
       // Budget tab
       case Routes.addingBudgetScreen:
         return buildRoute(const AddingBudgetScreen(), settings: settings);
+      // Route from nowhere
+      case Routes.pageNotFound:
+        return buildRoute(const PageNotFound(), settings: settings);
       default:
         return buildRoute(const MainScreen(), settings: settings);
     }
@@ -204,6 +202,6 @@ class HomePage extends StatelessWidget {
           return const LoginScreen();
         }
       },
-    );  
+    );
   }
 }

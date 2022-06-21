@@ -4,6 +4,7 @@ import 'package:monas/constants/format_style.dart';
 import 'package:monas/constants/resources.dart';
 import 'package:monas/constants/routes.dart';
 import 'package:monas/models/wallet_model.dart';
+import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
 import 'package:monas/viewmodels/load_wallet_vm.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ class WalletListScreen extends StatelessWidget {
     var loadWallet = Provider.of<LoadWalletViewModel>(context);
     var loadWalletWithoutListen =
         Provider.of<LoadWalletViewModel>(context, listen: false);
+    var dropdownWallet = context.watch<DropdownWalletViewModel>();
 
     Widget _listWallet(List<Wallet> listWallet) => ListView.builder(
           itemCount: listWallet.length,
@@ -29,10 +31,14 @@ class WalletListScreen extends StatelessWidget {
                   listWallet[index].name,
                 ),
                 subtitle: Text(
-                  listWallet[index].balance.toString(),
+                  //listWallet[index].balance.toString(),
+                  F.currencyFormat
+                        .formatCurrency(listWallet[index].balance, 'vi-VN'),
                 ),
-                onTap: () =>
-                    Navigator.pushNamed(context, Routes.showTransactionScreen),
+                onTap: () {
+                  dropdownWallet.setSelectedWallet(listWallet[index]);
+                  Navigator.pushNamed(context, Routes.showTransactionScreen);
+                },
               ),
             );
           },

@@ -29,4 +29,7 @@ class Routes {
 
   //* routes from budget screen
   static const addingBudgetScreen = '$budgetScreen/adding_budget_screen';
+
+  //* Routes from nowhere
+  static const pageNotFound = 'page_not_found_screen';
 }

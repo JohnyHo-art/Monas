@@ -56,4 +56,12 @@ class LoadWalletViewModel extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+   Stream<QuerySnapshot> getWalletStream() {
+    return FirebaseFirestore.instance
+        .collection("wallets")
+        .doc(auth.currentUser!.uid)
+        .collection("listWallets")
+        .snapshots();
+  }
 }

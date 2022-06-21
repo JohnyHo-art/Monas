@@ -51,10 +51,21 @@ class BudgetDetail extends StatelessWidget {
               padding: EdgeInsets.only(top: S.dimens.smallPadding),
               child: BudgetDetailItem(
                 leading: Image.asset(loadWallet
-                    .currentListWallet[budget.selectedWalletId].iconUrl),
-                hintText:
-                    loadWallet.currentListWallet[budget.selectedWalletId].name,
-                title: 'Ví',
+                    .currentListWallet[
+                        S.getInt.getIntFromString(budget.selectedWalletId)]
+                    .iconUrl),
+                hintText: loadWallet
+                    .currentListWallet[
+                        S.getInt.getIntFromString(budget.selectedWalletId)]
+                    .name,
+                title: 'Ví (' +
+                    F.currencyFormat.formatCurrency(
+                      loadWallet
+                          .currentListWallet[S.getInt
+                              .getIntFromString(budget.selectedWalletId)]
+                          .balance,
+                      'vi_VN',
+                    ) + ')',
                 color: S.colors.textOnSecondaryColor,
                 onPressed: () =>
                     // Handle event choose wallet
@@ -79,7 +90,6 @@ class BudgetDetail extends StatelessWidget {
                       builder: (context) => CategoryListScreen(choice: 1),
                     ),
                   );
-                  //Navigator.pushNamed(context, Routes.categoryListScreen, arguments: 1);
                 },
               ),
             ),

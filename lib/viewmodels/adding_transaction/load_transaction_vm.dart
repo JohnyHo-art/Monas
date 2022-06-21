@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as query_snapshot;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -15,12 +15,7 @@ class LoadTransactionViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTransaction(newVal) {
-    _listTransaction.add(newVal);
-    notifyListeners();
-  }
-
-  int _chosenMonth = DateTime.now().month;
+  int _chosenMonth = DateTime.now().month - 1;
   int get chosenMonth => _chosenMonth;
   void setChosenMonth(newVal) {
     _chosenMonth = newVal;
@@ -39,13 +34,18 @@ class LoadTransactionViewmodel extends ChangeNotifier {
     String month = DateTime.now().month.toString();
     String year = DateTime.now().year.toString();
 
-    var list = [];
-    list = await AddingTransactionRepo()
+    var list = await AddingTransactionRepo()
         .getTransactionDataFromFirestore(walletId, date ?? "$month-$year");
 
     setListTransaction(list);
     loadRecentTransaction();
     loadExpenseTittle();
+
+    if (list == []) {
+      _chosenMonth = 0;
+    } else {
+      _chosenMonth = 1;
+    }
   }
 
   Future<void> loadRecentTransaction() async {
@@ -83,20 +83,53 @@ class LoadTransactionViewmodel extends ChangeNotifier {
     }
   }
 
-  Stream<QuerySnapshot> getTransactionStream(String walletId, String date) {
-    return FirebaseFirestore.instance
+  // Get a stream query of transactions with given category
+  Stream<query_snapshot.QuerySnapshot> getTransactionStream(
+      String walletId, int categoryId, int chosenMonth, int chosenYear) { 
+    return query_snapshot.FirebaseFirestore.instance
+        .collection("transactions")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection(walletId)
+        .doc('$chosenMonth-$chosenYear')
+        .collection("listTransactions")
+        .where('categoryId', isEqualTo: categoryId)
+        .snapshots();
+  }
+
+  // Every time the user change the information of budget like category or wallet id,
+  //they need to have update of latest transaction expense of a specified category
+  // This function will calculate that update based on given, walletId, categoryId and time
+  Future<double> calculateCatExpense(
+      String walletId, int categoryId, int chosenMonth, int chosenYear) async {
+    double categoryExpense = 0.0;
+
+    final querySnap = await query_snapshot.FirebaseFirestore.instance
+        .collection('transactions')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection(walletId)
+        .doc('$chosenMonth-$chosenYear')
+        .collection('listTransactions')
+        .where('categoryId', isEqualTo: categoryId)
+        .get();
+
+    model.Transaction transaction;
+
+    // For each document snapshot in the query snapshot above, 
+    // convert it to Transaction and add it to the catExpense
+    for(query_snapshot.DocumentSnapshot snapshot in querySnap.docs) {
+      transaction = model.Transaction.fromMap(snapshot);
+      categoryExpense += transaction.money;
+    }
+
+    return categoryExpense;
+    }
+  Stream<query_snapshot.QuerySnapshot> getTransactionStreamA(String walletId, String date) {
+    return query_snapshot.FirebaseFirestore.instance
         .collection('transactions')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection(walletId)
         .doc(date)
         .collection('listTransactions')
         .snapshots();
-  }
-
-  int _length = 0;
-  int getLength() => _length;
-  void setLength(newVal) {
-    _length = newVal;
-    notifyListeners();
   }
 }

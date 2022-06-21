@@ -13,24 +13,39 @@ class PersonalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: S.colors.whiteColor,
-          title: Text(
-            'Tài khoản',
-            style: S.headerTextStyles.appbarTitle(null),
-          ),
-          elevation: 0,
-        ),
-        backgroundColor: S.colors.appBackground,
-        body: Column(
-          children: const [
-            _NameSection(),
-            Expanded(child: _SettingSection()),
-          ],
-        ),
-      ),
+    return FutureBuilder(
+      future: Provider.of<AccountSettingViewModel>(context, listen: false)
+          .updateAccountInfo(
+              Provider.of<AuthenticViewModel>(context, listen: false).account),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: S.colors.whiteColor,
+                title: Text(
+                  'Tài khoản',
+                  style: S.headerTextStyles.appbarTitle(null),
+                ),
+                elevation: 0,
+              ),
+              backgroundColor: S.colors.appBackground,
+              body: Column(
+                children: const [
+                  _NameSection(),
+                  Expanded(child: _SettingSection()),
+                ],
+              ),
+            ),
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(
+              color: S.colors.secondaryColor,
+            ),
+          );
+        }
+      },
     );
   }
 }
@@ -101,6 +116,7 @@ class _NameSection extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: S.dimens.largePadding),
             child: Text(
               Provider.of<AccountSettingViewModel>(context).userName,
+              //authentication.account.userName,
               style: S.headerTextStyles.header2(S.colors.primaryColor),
               overflow: TextOverflow.ellipsis,
             ),
@@ -178,8 +194,8 @@ class _SettingSection extends StatelessWidget {
         ),
         ListTile(
           title: const Text('Chọn định dạng ngày tháng'),
-          subtitle: Text(DateFormat(accountSetting.dateFormat)
-              .format(DateTime.now())),
+          subtitle: Text(
+              DateFormat(accountSetting.dateFormat).format(DateTime.now())),
           onTap: () => accountSetting.showDateFormatPickerDialog(context),
         ),
         ListTile(
