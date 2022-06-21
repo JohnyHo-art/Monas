@@ -108,7 +108,7 @@ class ShowTransactionScreen extends StatelessWidget {
             foregroundColor: S.colors.textOnSecondaryColor,
             elevation: 0,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new),
+              icon: Icon(Icons.arrow_back_ios_new, color: S.colors.whiteColor,),
               onPressed: () {
                 Navigator.pop(context);
                 loadTransaction.loadTransactionDataFromFirestore(
@@ -146,7 +146,7 @@ class ShowTransactionScreen extends StatelessWidget {
               IconButton(
                 onPressed: () =>
                     Navigator.pushNamed(context, Routes.addingBudgetScreen),
-                icon: const Icon(Icons.add),
+                icon: Icon(Icons.add, color: S.colors.whiteColor,),
               )
             ],
           ),
@@ -317,7 +317,7 @@ class ShowDetailExpense extends StatelessWidget {
                 ),
               ),
               StreamBuilder<QuerySnapshot>(
-                stream: loadTransaction.getTransactionStream(
+                stream: loadTransaction.getTransactionStreamA(
                     dropdownWallet.getSelectedWallet().id,
                     "${loadTransaction.chosenMonth}-2022"),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {

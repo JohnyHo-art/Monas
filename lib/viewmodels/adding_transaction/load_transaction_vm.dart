@@ -112,19 +112,20 @@ class LoadTransactionViewmodel extends ChangeNotifier {
         .where('categoryId', isEqualTo: categoryId)
         .get();
 
-    Transaction transaction;
+    model.Transaction transaction;
 
     // For each document snapshot in the query snapshot above, 
     // convert it to Transaction and add it to the catExpense
     for(query_snapshot.DocumentSnapshot snapshot in querySnap.docs) {
-      transaction = Transaction.fromMap(snapshot);
+      transaction = model.Transaction.fromMap(snapshot);
       categoryExpense += transaction.money;
     }
 
     return categoryExpense;
+      }
     
-  Stream<QuerySnapshot> getTransactionStream(String walletId, String date) {
-    return FirebaseFirestore.instance
+  Stream<query_snapshot.QuerySnapshot> getTransactionStreamA(String walletId, String date) {
+    return query_snapshot.FirebaseFirestore.instance
         .collection('transactions')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection(walletId)
