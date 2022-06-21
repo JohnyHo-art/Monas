@@ -100,7 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           onSuffixIconTap: () {
                             // Must call setState because the view model listen is false
                             setState(() {
-                              authentication.isObscurePass = !authentication.isObscurePass;
+                              authentication.isObscurePass =
+                                  !authentication.isObscurePass;
                             });
                           },
                         ),
@@ -131,12 +132,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: S.dimens.padding,
                   ),
                   CustomButton(
-                    onPressed: () =>
-                        authentication.signInWithEmailAndPassword(
-                      context,
-                      _emailController.text.trim(),
-                      _passwordController.text,
-                    ),
+                    onPressed: () {
+                      authentication.signInWithEmailAndPassword(
+                        context,
+                        _emailController.text.trim(),
+                        _passwordController.text,
+                      );
+                    },
                     text: "ĐĂNG NHẬP",
                   ),
                   Padding(
@@ -155,8 +157,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           WidgetSpan(
                             alignment: PlaceholderAlignment.middle,
                             child: Padding(
-                              padding: EdgeInsets.only(
-                                  right: S.dimens.tinyPadding),
+                              padding:
+                                  EdgeInsets.only(right: S.dimens.tinyPadding),
                               child: SvgPicture.asset(R.logIn.googleIc),
                             ),
                           ),
@@ -178,12 +180,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: S.dimens.padding),
+                          padding:
+                              EdgeInsets.symmetric(vertical: S.dimens.padding),
                           child: Text(
                             "Lần đầu đến Monas? ",
-                            style: S.bodyTextStyles
-                                .body1(S.colors.subTextColor2),
+                            style:
+                                S.bodyTextStyles.body1(S.colors.subTextColor2),
                           ),
                         ),
                         GestureDetector(

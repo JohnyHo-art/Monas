@@ -69,8 +69,8 @@ flutter:
     - assets/log_in/
     - assets/logo/
     - assets/onboard/
-    - assets/
     - assets/icons/others/
+    - assets/illustrations/
 
   fonts:
     - family: Roboto

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:monas/constants/string_constants.dart';
 import 'package:monas/constants/utils.dart';
 import 'package:monas/models/account_model.dart';
-import 'package:monas/viewmodels/authentication/authentic_vm.dart';
 import 'package:monas/views/personal_tab/date_format_picker_dialog.dart';
 
 class AccountSettingViewModel extends ChangeNotifier {
@@ -12,6 +11,10 @@ class AccountSettingViewModel extends ChangeNotifier {
   late String _userName;
 
   get userName => _userName;
+
+  void setUserName(newVal) {
+    _userName = newVal;
+  }
 
   // Variable to check notification sound is on or not
   late bool _soundNotificationOn;
@@ -47,14 +50,11 @@ class AccountSettingViewModel extends ChangeNotifier {
 
   // Because every variable is initialize as late
   // so we need to create a function to update and initialize all the variable before use it
-  void updateAccountInfo(AuthenticViewModel authenticViewModel) {
-    Account account = authenticViewModel.account;
-
+  Future<void> updateAccountInfo(Account account) async {
     _soundNotificationOn = account.soundNotificationOn;
     _dateFormat = account.dateFormat;
     _notificationTime = account.notificationTime;
     _userName = account.userName;
-    notifyListeners();
   }
 
   // Show time picker dialog to choose a time for notification

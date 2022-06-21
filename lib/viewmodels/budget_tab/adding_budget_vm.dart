@@ -20,31 +20,31 @@ class AddingBudgetViewModel extends ChangeNotifier {
   }
 
   // Index of the chosen wallet
-  int _selectedWalletId = 0;
+  String _selectedWalletId = 'wallet0';
 
-  int get selectedWalletId => _selectedWalletId;
+  String get selectedWalletId => _selectedWalletId;
 
-  void setSelectedWalletId(newVal) {
+  void setSelectedWalletId(String newVal) {
     _selectedWalletId = newVal;
     notifyListeners();
   }
 
   // Add new budget and push it data to firstore
-  Future<void> saveAndPushBudget(double amount) async {
+  Future<void> saveAndPushBudget(double amount, double? spent) async {
     // Get the current time when the budget is created
     DateTime now = DateTime.now();
 
-  Budget budget = Budget(
+    Budget budget = Budget(
       budget: amount,
       categoryId: selectedCategoryId,
       walletId: selectedWalletId,
-      spent: 0,
+      spent: spent ?? 0,
     );
 
     await _firestore
         .collection('budgets')
         .doc(_auth.currentUser!.uid)
-        .collection('wallet$selectedWalletId')
+        .collection(selectedWalletId)
         .doc('${now.month}-${now.year}')
         .collection('budgetList')
         .doc('category$selectedCategoryId')
@@ -56,5 +56,25 @@ class AddingBudgetViewModel extends ChangeNotifier {
         Utils.showSuccessSnackBar('Thêm ngân sách thành công');
       },
     );
+  }
+
+  // Check whether a budget exists or not
+  Future<bool> isBudgetExist(
+      String walletId, int chosenMonth, int chosenYear, int categoryId) async {
+    bool isExist = false;
+
+    await _firestore
+        .collection('budgets')
+        .doc(_auth.currentUser!.uid)
+        .collection(walletId)
+        .doc('$chosenMonth-$chosenYear')
+        .collection('budgetList')
+        .doc('category$categoryId')
+        .get()
+        .then((value) => {
+              if (value.exists) {isExist = true}
+            });
+
+    return isExist;
   }
 }

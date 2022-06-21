@@ -5,6 +5,7 @@ class R {
   static final categoryIcon = _CategoryIcon();
   static final logIn = _LogIn();
   static final othersIcon = _OthersIcon();
+  static final illutrations = _Illustrations();
 }
 
 class _Logo {
@@ -115,4 +116,11 @@ class _OthersIcon {
   static const otherIcon = 'assets/icons/others';
 
   final notificationLoudSpeaker = '$otherIcon/notification_speaker.png';
+}
+
+class _Illustrations {
+  static const illustrationPath = 'assets/illustrations';
+
+  final sadEmotion = '$illustrationPath/sad_emo.png';
+  final pageNotFound = '$illustrationPath/page_not_found.png';
 }

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as query_snapshot;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -83,6 +83,46 @@ class LoadTransactionViewmodel extends ChangeNotifier {
     }
   }
 
+  // Get a stream query of transactions with given category
+  Stream<query_snapshot.QuerySnapshot> getTransactionStream(
+      String walletId, int categoryId, int chosenMonth, int chosenYear) { 
+    return query_snapshot.FirebaseFirestore.instance
+        .collection("transactions")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection(walletId)
+        .doc('$chosenMonth-$chosenYear')
+        .collection("listTransactions")
+        .where('categoryId', isEqualTo: categoryId)
+        .snapshots();
+  }
+
+  // Every time the user change the information of budget like category or wallet id,
+  //they need to have update of latest transaction expense of a specified category
+  // This function will calculate that update based on given, walletId, categoryId and time
+  Future<double> calculateCatExpense(
+      String walletId, int categoryId, int chosenMonth, int chosenYear) async {
+    double categoryExpense = 0.0;
+
+    final querySnap = await query_snapshot.FirebaseFirestore.instance
+        .collection('transactions')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection(walletId)
+        .doc('$chosenMonth-$chosenYear')
+        .collection('listTransactions')
+        .where('categoryId', isEqualTo: categoryId)
+        .get();
+
+    Transaction transaction;
+
+    // For each document snapshot in the query snapshot above, 
+    // convert it to Transaction and add it to the catExpense
+    for(query_snapshot.DocumentSnapshot snapshot in querySnap.docs) {
+      transaction = Transaction.fromMap(snapshot);
+      categoryExpense += transaction.money;
+    }
+
+    return categoryExpense;
+    
   Stream<QuerySnapshot> getTransactionStream(String walletId, String date) {
     return FirebaseFirestore.instance
         .collection('transactions')

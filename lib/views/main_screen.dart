@@ -8,6 +8,7 @@ import 'package:monas/views/budget_tab/budget_screen.dart';
 import 'package:monas/views/home_tab/home_screen.dart';
 import 'package:monas/views/personal_tab/personal_screen.dart';
 import 'package:monas/views/report_tab/report_screen.dart';
+import 'package:monas/widgets/page_not_found.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -21,7 +22,8 @@ class _MainScreenState extends State<MainScreen> {
   int _currentTabIndex = 0;
   final List<Widget> screens = const [
     HomeScreen(),
-    ReportScreen(),
+    //ReportScreen(),
+    PageNotFound(),
     BudgetScreen(),
     PersonalScreen(),
   ];
