@@ -124,11 +124,15 @@ class AddingTransactionScreen extends StatelessWidget {
                           addingBudget.selectedWalletId,
                           transaction.getSelectedCategoryId());
                     }
-
                     loadTransaction.loadTransactionDataFromFirestore("wallet1");
                     transaction.clearBasicInformation();
                     amount.resetBottomSheetInfo();
                     detaiInfo.resetDetailInfo(context);
+                  loadTransaction.loadTransactionDataFromFirestore(
+                      "wallet1", null);
+                  transaction.clearBasicInformation();
+                  amount.resetBottomSheetInfo();
+                  detaiInfo.resetDetailInfo(context);
 
                     Navigator.pop(context);
                   },
