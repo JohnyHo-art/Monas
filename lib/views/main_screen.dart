@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/constants/routes.dart';
+import 'package:monas/viewmodels/adding_transaction/load_transaction_vm.dart';
+import 'package:monas/viewmodels/load_wallet_vm.dart';
+import 'package:monas/viewmodels/authentication/authentic_vm.dart';
+import 'package:monas/views/budget_tab/budget_screen.dart';
 import 'package:monas/views/home_tab/home_screen.dart';
 import 'package:monas/views/personal_tab/personal_screen.dart';
-import 'package:monas/views/plan_tab/planning_screen.dart';
 import 'package:monas/views/report_tab/report_screen.dart';
+import 'package:monas/widgets/page_not_found.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -16,8 +22,9 @@ class _MainScreenState extends State<MainScreen> {
   int _currentTabIndex = 0;
   final List<Widget> screens = const [
     HomeScreen(),
-    ReportScreen(),
-    PlanningScreen(),
+    //ReportScreen(),
+    PageNotFound(),
+    BudgetScreen(),
     PersonalScreen(),
   ];
 
@@ -51,39 +58,16 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  void _showAddingOptions() {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(24),
-        topRight: Radius.circular(24),
-      )),
-      builder: (BuildContext context) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 10),
-            ListTile(
-              leading: const Icon(Icons.arrow_upward),
-              title: const Text('Thêm thu nhập mới'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.arrow_downward),
-              title: const Text('Thêm chi tiêu mới'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.account_balance_wallet),
-              title: const Text('Thêm ví mới'),
-              onTap: () {},
-            ),
-          ],
-        );
-      },
-    );
+  @override
+  void initState() {
+    Provider.of<LoadWalletViewModel>(context, listen: false)
+        .loadListWalletFromFirestore();
+    Provider.of<AuthenticViewModel>(context, listen: false)
+        .getUserDataFromFirestore();
+
+    // Provider.of<LoadTransactionViewmodel>(context, listen: false)
+    //     .loadTransactionDataFromFirestore("wallet0", null);
+    super.initState();
   }
 
   @override
@@ -93,7 +77,8 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: S.colors.appBackground,
         floatingActionButton: FloatingActionButton(
           backgroundColor: S.colors.primaryColor,
-          onPressed: _showAddingOptions,
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.addTransactionScreen),
           child: Icon(Icons.add, color: S.colors.textOnPrimaryColor),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -115,6 +100,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           shape: const CircularNotchedRectangle(),
+          elevation: 10,
           notchMargin: 5,
         ),
       ),

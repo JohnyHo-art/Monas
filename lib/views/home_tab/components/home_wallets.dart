@@ -1,13 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/constants/format_style.dart';
+import 'package:monas/constants/routes.dart';
+import 'package:monas/constants/utils.dart';
+import 'package:monas/models/wallet_model.dart';
+import 'package:monas/viewmodels/dropdown_wallet_vm.dart';
+import 'package:monas/widgets/custom_button.dart';
+import 'package:provider/provider.dart';
+
+import '../../../viewmodels/load_wallet_vm.dart';
 
 class HomeWallets extends StatelessWidget {
   const HomeWallets({Key? key}) : super(key: key);
 
+  // Create an item to show information of recent wallet
   Padding _walletItem(String iconUrl, String name, double totalBalance,
-      String currencyUnit, VoidCallback onPressed) {
+      String locale, VoidCallback onPressed) {
     return Padding(
-      padding: EdgeInsets.only(left: S.dimens.padding),
+      padding: EdgeInsets.symmetric(horizontal: S.dimens.tinyPadding),
       child: InkWell(
         onTap: onPressed,
         splashColor: S.colors.primaryColorShadeThirty,
@@ -17,8 +28,7 @@ class HomeWallets extends StatelessWidget {
           width: 170,
           decoration: BoxDecoration(
             border: Border.all(color: S.colors.primaryColor),
-            borderRadius:
-                BorderRadius.circular(S.dimens.cardCornerRadiusMedium),
+            borderRadius: BorderRadius.circular(S.dimens.cardCornerRadiusSmall),
           ),
           child: Padding(
             padding: EdgeInsets.only(
@@ -43,7 +53,6 @@ class HomeWallets extends StatelessWidget {
                       ),
                       TextSpan(
                         text: '  ' + name,
-                        //TODO: text overflow
                         style: S.bodyTextStyles.body1(S.colors.primaryColor),
                       )
                     ],
@@ -56,13 +65,10 @@ class HomeWallets extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: totalBalance.toString(),
+                        text: F.currencyFormat
+                            .compactSimpleFormatCurrency(totalBalance, locale),
                         style:
                             S.headerTextStyles.header3(S.colors.primaryColor),
-                      ),
-                      TextSpan(
-                        text: ' ' + currencyUnit.toUpperCase(),
-                        style: S.bodyTextStyles.caption(S.colors.primaryColor),
                       ),
                     ],
                   ),
@@ -79,6 +85,9 @@ class HomeWallets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var loadWallet = Provider.of<LoadWalletViewModel>(context);
+    var dropdownWallet = context.watch<DropdownWalletViewModel>();
+
     return Column(
       children: [
         Padding(
@@ -95,7 +104,10 @@ class HomeWallets extends StatelessWidget {
                   style: ButtonStyle(
                       overlayColor: MaterialStateColor.resolveWith(
                           (states) => S.colors.primaryColorShadeThirty)),
-                  onPressed: () {},
+                  onPressed: () async => {
+                        await loadWallet.loadListWalletFromFirestore(),
+                        Navigator.pushNamed(context, Routes.walletListScreen),
+                      },
                   child: Text(
                     'Xem tất cả',
                     style: S.bodyTextStyles.buttonText(S.colors.primaryColor),
@@ -105,25 +117,58 @@ class HomeWallets extends StatelessWidget {
         ),
         SizedBox(
           height: 100,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              _walletItem(
-                'assets/icons/wallet_ic/wallet_ic1.png',
-                'Saving',
-                2000000,
-                'usd',
-                () {},
-              ),
-              _walletItem(
-                'assets/icons/wallet_ic/wallet_ic5.png',
-                'Daily expense',
-                4000000,
-                'vnđ',
-                () {},
-              )
-            ],
-          ),
+          child: StreamBuilder(
+              stream: loadWallet.getWalletStream(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data!.docs.length < 5
+                          ? snapshot.data!.docs.length
+                          : 5,
+                      itemBuilder: (context, index) {
+                        Wallet wallet =
+                            Wallet.fromMap(snapshot.data!.docs[index]);
+                        if (snapshot.data!.docs.isEmpty) {
+                          return Center(
+                            child: CustomButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, Routes.addWalletScreen);
+                              },
+                              text: 'THÊM VÍ MỚI',
+                            ),
+                          );
+                        } else {
+                          return _walletItem(
+                            wallet.iconUrl,
+                            wallet.name,
+                            wallet.balance,
+                            'vi-VN',
+                            () {
+                              dropdownWallet.setSelectedWallet(
+                                  loadWallet.currentListWallet[index]);
+                              Navigator.pushNamed(
+                                  context, Routes.showTransactionScreen);
+                            },
+                          );
+                        }
+                      });
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: S.colors.secondaryColor,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Utils.showSnackBar('Xảy ra lỗi!');
+                } else {
+                  return const Center(
+                    child: Text("Chưa có ví, Bấm '+' để tạo mới"),
+                  );
+                }
+              }),
         ),
       ],
     );

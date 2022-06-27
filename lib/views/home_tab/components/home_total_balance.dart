@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:monas/constants/constants.dart';
+import 'package:monas/viewmodels/adding_transaction/load_transaction_vm.dart';
+import 'package:monas/viewmodels/load_wallet_vm.dart';
+import 'package:provider/provider.dart';
+
+import '../../../constants/format_style.dart';
 
 class HomeTotalBalance extends StatelessWidget {
   const HomeTotalBalance({Key? key}) : super(key: key);
 
-  Row _totalBalance() {
+  Row _totalBalance(double totalAmount) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.max,
@@ -20,37 +26,29 @@ class HomeTotalBalance extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                        //TODO: Add total balance
-                        text: '2.000.000',
+                        // Add total balance
+                        text: F.currencyFormat.numberMoneyFormat(totalAmount),
                         style: S.headerTextStyles
                             .header1(S.colors.textOnPrimaryColor)),
                     TextSpan(
-                        //TODO: Add currency unit
-                        text: ' VNĐ',
-                        style: S.bodyTextStyles
-                            .body1(S.colors.textOnPrimaryColor)),
+                      // Add currency unit
+                      text: NumberFormat.currency(locale: 'vi_VN')
+                          .currencySymbol
+                          .toString(),
+                      style:
+                          S.bodyTextStyles.body1(S.colors.textOnPrimaryColor),
+                    ),
                   ],
                 ),
               )
             ],
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(right: S.dimens.padding),
-          child: IconButton(
-            onPressed: () {},
-            splashColor: S.colors.secondaryColor,
-            icon: Icon(
-              Icons.visibility_off,
-              color: S.colors.textOnPrimaryColor,
-            ),
-          ),
-        )
       ],
     );
   }
 
-  Row _detailSatistic() {
+  Row _detailSatistic(double income, double expense) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -83,13 +81,15 @@ class HomeTotalBalance extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                        //TODO: Add income money
-                        text: '3.000.000',
+                        // Add income money
+                        text: F.currencyFormat.numberMoneyFormat(income),
                         style: S.headerTextStyles
                             .header3(S.colors.textOnPrimaryColor)),
                     TextSpan(
-                      //TODO: Add currency unit
-                      text: 'VNĐ',
+                      // Add currency unit
+                      text: NumberFormat.currency(locale: 'vi_VN')
+                          .currencySymbol
+                          .toString(),
                       style:
                           S.bodyTextStyles.caption(S.colors.textOnPrimaryColor),
                     ),
@@ -128,13 +128,15 @@ class HomeTotalBalance extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                        //TODO: Add expenses
-                        text: '1.000.000',
+                        // Add expenses
+                        text: F.currencyFormat.numberMoneyFormat(expense),
                         style: S.headerTextStyles
                             .header3(S.colors.textOnPrimaryColor)),
                     TextSpan(
-                      //TODO: Add currency unit
-                      text: 'VNĐ',
+                      // Add currency unit
+                      text: NumberFormat.currency(locale: 'vi_VN')
+                          .currencySymbol
+                          .toString(),
                       style:
                           S.bodyTextStyles.caption(S.colors.textOnPrimaryColor),
                     ),
@@ -150,6 +152,10 @@ class HomeTotalBalance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var loadWalletWithoutListen =
+        Provider.of<LoadWalletViewModel>(context, listen: false);
+    var loadTransaction = Provider.of<LoadTransactionViewmodel>(context);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: S.dimens.padding),
       child: Container(
@@ -160,9 +166,12 @@ class HomeTotalBalance extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: S.dimens.padding),
-            _totalBalance(),
+            _totalBalance(loadWalletWithoutListen.total),
             SizedBox(height: S.dimens.smallPadding),
-            _detailSatistic(),
+            _detailSatistic(
+              loadTransaction.getIncome(),
+              -loadTransaction.getExpense(),
+            ),
             SizedBox(height: S.dimens.padding),
           ],
         ),

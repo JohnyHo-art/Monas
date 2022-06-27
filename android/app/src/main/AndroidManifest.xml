@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.monas">
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
    <application
         android:label="monas"
         android:name="${applicationName}"
